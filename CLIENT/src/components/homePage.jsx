@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../App';
 import { serverRequests } from '../Api';
 
 const [allComments, setAllComments] = useState([]);
 const [allTutors, setAllTutors] = useState([]);
 
+function  HomePage(){
 
 useEffect(() => {
     const fetchDataOfAllComments = async () => {
@@ -31,3 +31,13 @@ useEffect(() => {
     };
     fetchDataOfAllTutors();
   }, []);
+
+return(
+  <>
+<h1>hello</h1>
+  </>
+)
+
+
+}
+export default HomePage;

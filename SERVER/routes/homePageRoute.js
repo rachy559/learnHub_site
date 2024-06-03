@@ -7,22 +7,22 @@ const cors = require('cors');
 router.use(cors());
 
 
-router.get("/", async (req, res) => {
+router.get("/comments", async (req, res) => {
     try {
        res.send(await controller.getAllComments());
-       res.send(await controller.getAllTutors());
     } catch (err) {
         res.status(500).send(err);
     }
 })
 
-// router.get("/", async (req, res) => {
-//     try {
-//         res.send(await controller.getAllTutors());
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// })
-module.exports = router
+router.get("/tutors", async (req, res) => {
+    try {
+        res.send(await controller.getAllTutors());
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
+module.exports = router;
 
 

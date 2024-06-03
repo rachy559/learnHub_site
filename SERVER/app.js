@@ -6,8 +6,7 @@ app.use(express.urlencoded({ extended: true }));
 const port = 3000;
 
  const homePage=require('./routes/homePageRoute');
- app.use('/comments',homePage);
- app.use('/tutors',homePage);
+ app.use('/',homePage);
 
 
 app.listen(port, () => {
