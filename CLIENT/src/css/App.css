@@ -33,3 +33,9 @@
   margin: 7%;
   font-size: 25px;
 }
+
+.photo{
+  border-radius: 50%;
+  width: 215px;
+	height: 200px; 
+}

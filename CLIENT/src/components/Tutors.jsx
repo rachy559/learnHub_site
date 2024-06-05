@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, NavLink } from "react-router-dom";
 import { serverRequests } from '../Api';
+import '../css/App.css';
 import { UserContext } from '../App';
 
 const Tutors = () => {
