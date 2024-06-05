@@ -120,11 +120,11 @@ CREATE TABLE payments(
 
 
 CREATE TABLE students(
-student_id INT PRIMARY KEY,
-studentStatus varchar(30) NOT NULL,
-payment_id INT,
-FOREIGN KEY (student_id) REFERENCES users (userId),
-FOREIGN KEY (payment_id) REFERENCES payments (payment_id)
+    student_id INT PRIMARY KEY,
+    studentStatus varchar(30) NOT NULL,
+    payment_id INT,
+    FOREIGN KEY (student_id) REFERENCES users (userId),
+    FOREIGN KEY (payment_id) REFERENCES payments (payment_id)
 );
 
 CREATE TABLE lessons(

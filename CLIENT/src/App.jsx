@@ -1,6 +1,8 @@
 import React, { useState, createContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
-import HomePage from './components/homePage'
+import Layout from './pages/Layout';
+import HomePage from './pages/HomePage';
+
  
 export const UserContext = createContext()
 
@@ -20,8 +22,11 @@ function App() {
     <UserContext.Provider value={user}>
                 <BrowserRouter basename='/'>
                     <Routes>
-                      <Route path="/" element={<Navigate to="/homePage"/>}/>
+                    <Route path="/" element={<Layout />}>
+                      {/* <Route path="/" element={<Navigate to="/homePage"/>}/> */}
+                      <Route index element={<HomePage />} />
                       <Route path="/homePage" element={<HomePage />} />
+                   </Route>
                    </Routes>
              </BrowserRouter>
      </UserContext.Provider>

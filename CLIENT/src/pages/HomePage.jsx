@@ -3,6 +3,7 @@ import { serverRequests } from '../Api';
 
 
 
+
 function HomePage() {
 
   const [allComments, setAllComments] = useState([]);
@@ -40,7 +41,7 @@ function HomePage() {
     <>
       <h1>hello</h1>
       <p className="read-the-docs">
-        <img src='../public/pictures/L.png' />
+        
       </p>
     </>
   )
