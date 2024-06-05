@@ -3,18 +3,19 @@ import { UserContext } from '../App'
 import { Outlet, Link } from "react-router-dom"
 import Header from '../components/Header';
 import '../css/App.css';
+import Footer from '../components/Footer';
 
 
 
-const Home = () => {
+const Layout = () => {
   const user = useContext(UserContext);
   return (
     <div>
       <Header></Header>
-      <h1 className="title"> Welcome </h1>
       <Outlet/>
+      <Footer/>
     </div>
   )
 }
 
-export default Home
+export default Layout;

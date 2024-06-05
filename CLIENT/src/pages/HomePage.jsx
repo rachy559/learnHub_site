@@ -1,27 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { serverRequests } from '../Api';
+import Comments from '../components/Comments';
 
 
 
 
-function HomePage() {
+const HomePage=()=> {
 
-  const [allComments, setAllComments] = useState([]);
   const [allTutors, setAllTutors] = useState([]);
 
-  useEffect(() => {
-    const fetchDataOfAllComments = async () => {
-      try {
-        await serverRequests('GET', `comments`, null).then((foundComments) => {
-          setAllComments(foundComments);
-          console.log("comments",allComments,foundComments)
-        })
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      }
-    };
-    fetchDataOfAllComments();
-  }, []);
 
   useEffect(() => {
     const fetchDataOfAllTutors = async () => {
@@ -39,10 +26,19 @@ function HomePage() {
 
   return (
     <>
-      <h1>hello</h1>
-      <p className="read-the-docs">
-        
-      </p>
+      <p className='about'>ברוכים הבאים לאתר לימודים פרטיים - מקום המציע פתרונות ללמידה איכותית ומותאמת אישית לכל גיל ורמה. <br/>באמצעות האתר נוצר חיבור ייחודי בין מורים מקצועיים ומנוסים לבין סטודנטים מרכזי קהילת הלמידה שלנו.<br/>
+
+אנו מאמינים שכל אדם רואה בפניו את האפשרויות האישיות שלו להתפתח ולהשגת הישגים בעזרת ייעוץ והדרכה מתוך אהבה ללמידה. <br/>לכן, האתר מציע מגוון רחב של קורסים ושיעורים, החל מלימודי יסוד ועד להכנה לבחינות ולתוארים אקדמיים.<br/>
+
+המורים שנרשמים אלינו מייחסים חשיבות רבה לחינוך ולהובלת התהליכים הלמידתיים של התלמידים שלהם. הם מספקים שיעורים מותאמים אישית, משולבים בשיטות הוראה מודרניות ומספקים כלים להצלחה אישית ואקדמית.<br/>
+
+סטודנטים מכל הגילאים והרקעים מוזמנים להצטרף אלינו ולהתחיל את מסע הלמידה וההתפתחות שלהם.<br/> באמצעות אפשרויות הלמידה המגוונות שאנו מציעים, כל אחד יכול למצוא את הדרך המתאימה לו להשגת היעדים האישיים שלו.
+<br/>
+אנו מתרגשים להיות חלק ממסע ההתפתחות והלמידה שלך. בואו נתחיל יחד ליצור את העתיד שאתם מעוניינים בו!
+
+
+</p>
+<Comments />
     </>
   )
 

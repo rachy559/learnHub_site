@@ -28,3 +28,8 @@
 .profile-select select:focus {
   outline: none;
 }
+
+.about{
+  margin: 7%;
+  font-size: 25px;
+}

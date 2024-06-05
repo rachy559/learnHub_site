@@ -23,8 +23,7 @@ function App() {
                 <BrowserRouter basename='/'>
                     <Routes>
                     <Route path="/" element={<Layout />}>
-                      {/* <Route path="/" element={<Navigate to="/homePage"/>}/> */}
-                      <Route index element={<HomePage />} />
+                      <Route path="/" element={<Navigate to="/homePage"/>}/>
                       <Route path="/homePage" element={<HomePage />} />
                    </Route>
                    </Routes>

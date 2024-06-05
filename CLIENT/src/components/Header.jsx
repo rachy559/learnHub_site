@@ -14,18 +14,18 @@ const Header = () => {
 
   return (
     <header className="app-header">
-      <Link className="app-logo" to={`/homePage`}><img width={200} src='../pictures/L.png' /></Link>
+      <Link className="app-logo" to={`/homePage`}><img width={150} src='../pictures/L.png' /></Link>
       <nav className="app-nav">
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/about`}>About</NavLink>
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>Lessons</NavLink>
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/instructors`}>Instructors</NavLink>
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/recommendations`}>Recommendations</NavLink>
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/login`}>Login</NavLink>
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/about`}>אודות</NavLink>
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/instructors`}>המרצים שלנו</NavLink>
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/recommendations`}>המלצות</NavLink>
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/login`}>התחבר</NavLink>
         <div className="profile-select">
           <select value={selectedProfile} onChange={(e) => setSelectedProfile(e.target.value)}>
-            <option value="">Add Profile</option>
-            <option value="student">Student</option>
-            <option value="instructor">Instructor</option>
+            <option value="">הוסף פרופיל</option>
+            <option value="student">פרופיל מורה</option>
+            <option value="instructor">פרופיל תלמיד</option>
           </select>
         </div>
       </nav>
