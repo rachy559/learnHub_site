@@ -199,7 +199,9 @@ INSERT INTO users (firstName, lastName, email, phone, gender, birth_date, addres
 ('Bob', 'Brown', 'bob.brown@example.com', '3456789012', 'Male', '1985-04-04', 4),
 ('Charlie', 'Davis', 'charlie.davis@example.com', '4567890123', 'Male', '1975-05-05', 5),
 ('Rachel', 'Avraham', 'rachel.avraham@example.com', '0531234567', 'Female', '2000-10-25', 4),
-('Moshe', 'Israel', 'moshe.israel@example.com', '0554567890', 'Male', '1970-12-31', 5);
+('Moshe', 'Israel', 'moshe.israel@example.com', '0554567890', 'Male', '1970-12-31', 5),
+('שלמה', 'קיפניס', 'kipnis@example.com', '0556373893', 'Male', '1970-12-31', 5);
+
 
 -- Insert data into roll_for_user table
 INSERT INTO roll_for_user (userId, rollId) VALUES
@@ -235,7 +237,8 @@ INSERT INTO files (fileUrl) VALUES
 ('http://example.com/file2'),
 ('http://example.com/file3'),
 ('http://example.com/file4'),
-('http://example.com/file5');
+('http://example.com/file5'),
+('https://static.wixstatic.com/media/9216b7_f5f7f38be2744bd59f9261a67e41f9d8~mv2_d_2729_2390_s_2.jpg/v1/fill/w_268,h_235,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/9216b7_f5f7f38be2744bd59f9261a67e41f9d8~mv2_d_2729_2390_s_2.jpg');
 
 -- Insert data into subjects table
 INSERT INTO subjects (subjectName) VALUES
@@ -249,6 +252,7 @@ INSERT INTO subjects (subjectName) VALUES
 INSERT INTO tutors (tutor_id, intended_for_gender) VALUES
 (3, 'Both'),
 (4, 'Female'),
+(8, 'Male'),
 (5, 'Male');
 
 
@@ -263,6 +267,7 @@ INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES
 INSERT INTO files_for_tutors (file_id, tutor_id) VALUES
 (1, 3),
 (2, 4),
+(6, 8),
 (3, 5);
 
 

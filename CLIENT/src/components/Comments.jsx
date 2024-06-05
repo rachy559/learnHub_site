@@ -22,25 +22,29 @@ const Comments = () => {
     }, []);
 
 
-    return(
+    return (
         <>
-         {allComments.map((comment,key)=>{
-                <div className="commentDiv" key={key}>
-                    {/* <span className="todoIndex comment">{index}</span>
+        <h2>Comments</h2>
+            <div className='allComments'>
+                {allComments.map((comment, key) => 
+                    <div className="commentDiv" key={key}>
+                        {/* <span className="todoIndex comment">{index}</span>
                     <br /> */}
-                    <span className="comment">{comment.firstName}</span>
-                    <span className="comment">{comment.lastName}</span>
-                    <br />
-                    <label className="comment"> {comment.email}</label>
-                    <br />
-                    <label className="comment">{comment.body}</label>
-                    
+                        <label className="comment">{comment.dateComment}</label>
+                        <br />
+                        <span className="comment">{comment.studentName}</span>
+                        <br />
+                        <span className="comment">{comment.tutorName}</span>
+                        <br />
+                        <label className="comment"> {comment.nameOfSubject}</label>
+                        <br />
+                        <label className="comment">{comment.bodyComment}</label>
                     </div>
 
-         })}
-        
-        
-      </>  
+                )}
+
+            </div>
+        </>
     )
 }
 
