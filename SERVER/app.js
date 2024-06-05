@@ -6,10 +6,11 @@ app.use(express.urlencoded({ extended: true }));
 const port = 3000;
 
  const homePage=require('./routes/homePageRoute');
- app.use('/',homePage);
+ app.use('/',homePage);    
 
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
 
+hhhh
