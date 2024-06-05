@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <header className="app-header">
-      <Link className="app-logo" to={`/homePage`}><img width={150} src='../pictures/L.png' /></Link>
+      <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' /></Link>
       <nav className="app-nav">
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/about`}>אודות</NavLink>
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
