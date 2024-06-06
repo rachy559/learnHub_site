@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, NavLink } from "react-router-dom";
 import { UserContext } from '../App';
 
+
 const Header = () => {
   const user = useContext(UserContext);
   const [selectedProfile, setSelectedProfile] = useState('');
@@ -16,7 +17,8 @@ const Header = () => {
     <header className="app-header">
       <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' /></Link>
       <nav className="app-nav">
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/about`}>אודות</NavLink>
+      {/* <Link to="/homePage#about">אודות</Link> */}
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/`}>אודות</NavLink>
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/instructors`}>המרצים שלנו</NavLink>
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/recommendations`}>המלצות</NavLink>
