@@ -260,6 +260,7 @@ INSERT INTO tutors (tutor_id, intended_for_gender) VALUES
 INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES
 (3, 1),
 (4, 2),
+(3, 2),
 (5, 3);
 
 

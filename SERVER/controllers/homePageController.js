@@ -9,12 +9,12 @@ async function getAllComments(){
     }
 }
 
-async function getAllTutors(){
-    try{
-        return model.getTutors();
-    }catch(err){
-        throw err;
-    }
-}
+// async function getAllTutors(){
+//     try{
+//         return model.getTutors();
+//     }catch(err){
+//         throw err;
+//     }
+// }
 
 module.exports={getAllComments, getAllTutors};

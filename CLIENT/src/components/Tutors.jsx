@@ -27,7 +27,7 @@ const Tutors = () => {
             <div className='allTutors'>
                 {allTutors.map((tutor, key) => 
                     <div className="tutorDiv" key={key}>
-                        <img className="photo" src={tutor.fileUrl} />
+                        <img className="photo" src={tutor.fileUrls} />
                         <br />
                         <span className="tutor">{tutor.tutorName}</span>
                     </div>
