@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { serverRequests } from '../Api';
 import Comments from '../components/Comments';
-import Tutors from '../components/Tutors';
-
-
-
+import TutorsCircles from '../components/TutorsCircles';
 const HomePage = () => {
 
   return (
     <>
-      <Tutors />
+    
+    <TutorsCircles />
       <div id="about">
         אודותנו:<br/>
         ברוכים הבאים לאתר לימודים פרטיים - מקום המציע פתרונות ללמידה איכותית ומותאמת אישית לכל גיל ורמה. <br />באמצעות האתר נוצר חיבור ייחודי בין מורים מקצועיים ומנוסים לבין סטודנטים מרכזי קהילת הלמידה שלנו.<br />

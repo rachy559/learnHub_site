@@ -2,9 +2,12 @@ import React, { useState, createContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
+import Tutors from './pages/Tutors';
 
  
 export const UserContext = createContext()
+export const TutorsContext = createContext()
+
 
 function App() {
   const [user, setUser] = useState({});
@@ -25,6 +28,7 @@ function App() {
                     <Route path="/" element={<Layout />}>
                       <Route path="/" element={<Navigate to="/homePage"/>}/>
                       <Route path="/homePage" element={<HomePage />} />
+                      <Route path="/tutors" element={<Tutors />} />
                    </Route>
                    </Routes>
              </BrowserRouter>

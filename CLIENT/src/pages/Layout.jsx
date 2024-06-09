@@ -4,6 +4,7 @@ import { Outlet, Link } from "react-router-dom"
 import Header from '../components/Header';
 import '../css/App.css';
 import Footer from '../components/Footer';
+import Tutors from './Tutors';
 
 
 
@@ -12,8 +13,10 @@ const Layout = () => {
   return (
     <div>
       <Header></Header>
-      <Outlet/>
-      <Footer/>
+      <Tutors>
+        <Outlet />
+      </Tutors>
+      <Footer />
     </div>
   )
 }

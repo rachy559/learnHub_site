@@ -20,8 +20,8 @@ const Header = () => {
       {/* <Link to="/homePage#about">אודות</Link> */}
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/`}>אודות</NavLink>
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/instructors`}>המרצים שלנו</NavLink>
-        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/recommendations`}>המלצות</NavLink>
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/tutors`}>המרצים שלנו</NavLink>
+        <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/comments`}>המלצות</NavLink>
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/login`}>התחבר</NavLink>
         <div className="profile-select">
           <select value={selectedProfile} onChange={(e) => setSelectedProfile(e.target.value)}>

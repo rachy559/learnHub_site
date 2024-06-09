@@ -6,13 +6,14 @@ router.use(express.urlencoded({ extended: true }));
 const cors = require('cors');
 router.use(cors());
 
-// router.get("/", async (req, res) => {
-//     try {
-//         res.send(await controller.getAllTutors());
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// })
+router.get("/", async (req, res) => {
+    try {
+        const { _limit } = req.query;
+        res.send(await controller.getAllTutors(_limit));
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
 
 
 
