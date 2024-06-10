@@ -36,8 +36,7 @@ function App() {
         fetchDataOfAllTutors();
     }, []);
 
-  return (
-    
+  return (   
     <> 
     <TutorsContext.Provider value={allTutors}>
                 <BrowserRouter basename='/'>
@@ -49,9 +48,7 @@ function App() {
                    </Route>
                    </Routes>
              </BrowserRouter>
-     </TutorsContext.Provider>
-
-            
+     </TutorsContext.Provider>       
     </>
   )
 }
