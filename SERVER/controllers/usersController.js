@@ -12,22 +12,26 @@ const bcrypt = require('bcrypt');
 async function login(email, password) {
     try {
         const user = await model.getByUsername(email);
-        console.log("u",user)
+        console.log("u", user)
         if (!user) {
             throw new Error('User not exist');
         } else {
             const passwordUser = await model.getPassword(user.userId)
-            const response = bcrypt.compare(password, passwordUser.password)
-            if (response) {
-                 console.log("u", user)
+            if (password == passwordUser.password) {
+                console.log("u1", user)
                 return user;
-            } else {
-                throw new Error('Passwords are not matching');
             }
+            // const response = bcrypt.compare(password, passwordUser.password)
+            // if (response) {
+            //      console.log("u", user)
+            //     return user;
+        else {
+            throw new Error('Passwords are not matching');
         }
-    } catch (err) {
-        throw err;
     }
+    } catch (err) {
+    throw err;
+}
 
 }
 
@@ -39,4 +43,4 @@ async function getById(id) {
     }
 }
 
-module.exports={ getById,login};
+module.exports = { getById, login };

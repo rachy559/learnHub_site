@@ -21,13 +21,13 @@ const Login = () => {
 
         serverRequests('POST', 'login', formData)
         .then((user) => {
-          if (user) {
+          if (user[0]) {
             console.log('User data:', user[0]); 
             //setUserData(user[0]);
             alert(`Login successful! Welcome back ${user[0].email}😎`);
             localStorage.setItem('loggedInUser', JSON.stringify(user[0]));
             console.log('Stored user data:', user[0]); 
-            navigate(`/home`);
+            navigate(`/homePage`);
           } else {
             alert("Login failed. Invalid username or password.");
           }
