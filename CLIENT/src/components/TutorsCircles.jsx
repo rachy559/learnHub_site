@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link, NavLink } from "react-router-dom";
 import { serverRequests } from '../Api';
 import '../css/App.css';
-import { TutorsContext } from '../pages/Tutors';
-
+import { TutorsContext } from '../App';
 const TutorsCircles = () => {
     
 
@@ -15,7 +14,7 @@ const TutorsCircles = () => {
         
             <>
                 <h2>Tutors</h2>
-            <div className='allTutors'>
+            <div className='allTutorCircles'>
                 {tutorsCircles.map((tutor, key) =>
                     <div className="tutorDiv" key={key}>
                         <img className="photo" src={tutor.fileUrls} />

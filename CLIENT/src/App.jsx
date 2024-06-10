@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
 import Tutors from './pages/Tutors';
+import { serverRequests } from './Api';
 
  
 export const UserContext = createContext()
@@ -10,6 +11,8 @@ export const TutorsContext = createContext()
 
 
 function App() {
+  const limit=10;
+  const [allTutors, setAllTutors] = useState([]);
   const [user, setUser] = useState({});
       useEffect(() => {
          const userInLocalStorage = localStorage.getItem('user');
@@ -19,10 +22,24 @@ function App() {
          }
        }, []);
 
+       useEffect(() => {
+        const fetchDataOfAllTutors = async () => {
+            try {
+                await serverRequests('GET', `tutors?_limit=${limit}`, null).then((foundTutors) => {
+                    setAllTutors(foundTutors);
+                    console.log("tutors", allTutors, foundTutors)
+                })
+            } catch (error) {
+                console.error('Error fetching tutors:', error);
+            }
+        };
+        fetchDataOfAllTutors();
+    }, []);
+
   return (
     
     <> 
-    <UserContext.Provider value={user}>
+    <TutorsContext.Provider value={allTutors}>
                 <BrowserRouter basename='/'>
                     <Routes>
                     <Route path="/" element={<Layout />}>
@@ -32,7 +49,7 @@ function App() {
                    </Route>
                    </Routes>
              </BrowserRouter>
-     </UserContext.Provider>
+     </TutorsContext.Provider>
 
             
     </>

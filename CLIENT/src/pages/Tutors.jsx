@@ -1,36 +1,30 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect,useContext } from 'react';
 import { Link, NavLink } from "react-router-dom";
 import { serverRequests } from '../Api';
 import '../css/App.css';
+import { TutorsContext } from '../App';
 
-
-export const TutorsContext = createContext()
 
 
 
 const Tutors = ({ children }) => {
+    const  allTutors  = useContext(TutorsContext);
+
    
-    const [allTutors, setAllTutors] = useState([]);
-    const limit=10;
-    useEffect(() => {
-        const fetchDataOfAllTutors = async () => {
-            try {
-                await serverRequests('GET', `tutors?_limit=${limit}`, null).then((foundTutors) => {
-                    setAllTutors(foundTutors);
-                    console.log("tutors", allTutors, foundTutors)
-                })
-            } catch (error) {
-                console.error('Error fetching tutors:', error);
-            }
-        };
-        fetchDataOfAllTutors();
-    }, []);
 console.log("array",allTutors)
 return(
+<>
+<div className='allTutors'>
+                {allTutors.map((tutor, key) =>
+                    <div className="tutorDiv" key={key}>
+                        <img className="photo" src={tutor.fileUrls} />
+                        <br />
+                        <span className="tutor">{tutor.tutorName}</span>
+                    </div>  )}
+                </div>  
+  
     
-    <TutorsContext.Provider value={allTutors}>
-       {children}
-    </TutorsContext.Provider>
+    </>
     )
 }
 
