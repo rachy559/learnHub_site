@@ -4,6 +4,7 @@ import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
 import Tutors from './pages/Tutors';
 import { serverRequests } from './Api';
+import LogIn from './pages/Login';
 
  
 export const UserContext = createContext()
@@ -45,6 +46,7 @@ function App() {
                       <Route path="/" element={<Navigate to="/homePage"/>}/>
                       <Route path="/homePage" element={<HomePage />} />
                       <Route path="/tutors" element={<Tutors />} />
+                      <Route path="/login" element={<LogIn />} />
                    </Route>
                    </Routes>
              </BrowserRouter>

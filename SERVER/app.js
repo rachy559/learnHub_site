@@ -11,6 +11,10 @@ const port = 3000;
  const tutors=require('./routes/tutorsRoute');
  app.use('/tutors',tutors);
 
+ const login=require('./routes/loginRoute');
+ console.log("2")
+ app.use('/login',login);
+
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
