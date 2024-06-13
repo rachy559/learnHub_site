@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink ,useNavigate} from "react-router-dom";
 import { UserContext } from '../App';
 
 
 const Header = () => {
+  const navigate = useNavigate();
   const user = useContext(UserContext);
   const [selectedProfile, setSelectedProfile] = useState('');
 
@@ -12,6 +13,8 @@ const Header = () => {
     textDecoration: "underline",
     color: "#161616"
   };
+  
+
 
   return (
     <header className="app-header">
@@ -24,10 +27,10 @@ const Header = () => {
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/comments`}>המלצות</NavLink>
         <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/login`}>התחבר</NavLink>
         <div className="profile-select">
-          <select value={selectedProfile} onChange={(e) => setSelectedProfile(e.target.value)}>
+          <select  value={selectedProfile} onChange={(e) => {console.log(e.target.value); setSelectedProfile(e.target.value); navigate(`/signUp`);}}>
             <option value="">הוסף פרופיל</option>
-            <option value="student">פרופיל מורה</option>
-            <option value="instructor">פרופיל תלמיד</option>
+            <option value="instructor" >פרופיל מורה</option>
+            <option value="student">פרופיל תלמיד</option>
           </select>
         </div>
       </nav>

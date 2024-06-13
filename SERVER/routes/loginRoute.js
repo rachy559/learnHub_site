@@ -10,7 +10,6 @@ router.use(express.urlencoded({ extended: true }));
 
 router.post("/", async(req, res) => {
     try{
-        console.log("r",req)
         const response=await controller.login(req.body.email,req.body.password)
         console.log("username: ", req.body.email)
         console.log("password: ", req.body.password)

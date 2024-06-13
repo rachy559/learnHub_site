@@ -6,13 +6,23 @@ router.use(express.urlencoded({ extended: true }));
 const cors = require('cors');
 router.use(cors());
 
-// router.get("/", async (req, res) => {
-//     try {
-//         res.send(await controller.getUser());
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// })
+router.get("/", async (req, res) => {
+    try {
+        console.log(req.query)
+        res.send(await controller.getUsers(req.query));
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
+router.post("/", async (req, res) => {
+    try {
+        console.log(req.body)
+        res.send(await controller.create(req.body.firstName,req.body.lastName,req.body.email,req.body.phone,req.body.gender,req.body.birth_date,req.body.password,req.body.city,req.body.street,req.body.house_number));
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
 
 
 

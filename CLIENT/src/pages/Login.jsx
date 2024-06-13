@@ -80,7 +80,7 @@ const Login = () => {
 
       </form>
       <NavLink
-        to="/register"
+        to="/signUp"
       >
         Dont have an account? Register here
       </NavLink>

@@ -1,13 +1,13 @@
 const model = require('../models/usersModel');
 const bcrypt = require('bcrypt');
 
-// async function getUser(){
-//     try{
-//         return model.getUserData();
-//     }catch(err){
-//         throw err;
-//     }
-// }
+async function getUsers(query){
+    try{
+        return model.getUsers(query);
+    }catch(err){
+        throw err;
+    }
+}
 
 async function login(email, password) {
     try {
@@ -43,4 +43,12 @@ async function getById(id) {
     }
 }
 
-module.exports = { getById, login };
+async function create(firstName,lastName,email,phone,gender,birth_date,password,city,street,house_number) {
+    try {
+        return model.createUser(firstName,lastName,email,phone,gender,birth_date,password,city,street,house_number);
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { getById, login, getUsers, create };

@@ -14,6 +14,11 @@ const port = 3000;
  const login=require('./routes/loginRoute');
  app.use('/login',login);
 
+ const users=require('./routes/usersRoute');
+ app.use('/users',users);
+
+
+
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });

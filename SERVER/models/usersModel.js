@@ -1,15 +1,17 @@
 const pool = require('../DB');
 
 
-// async function getUserData() {
-//     try {
-//         const sql;
-//         const [rows, fields] = await pool.query(sql);
-//         return rows;
-//     } catch (err) {
-//         throw err;
-//     }
-// }
+async function getUsers(query) {
+    try {
+        console.log(query.email)
+        const sql=`SELECT * FROM users NATURAL JOIN addresses where email=?`;
+        const [rows, fields] = await pool.query(sql,[query.email]);
+        console.log("r",rows)
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
 
 async function getByUsername(email) {
     try {
@@ -33,17 +35,29 @@ async function getPassword(userId) {
     }
 }
 
-async function getUser(id) {
+async function createUser(firstName,lastName,email,phone,gender,birth_date,password,city,street,house_number) {
     try {
-        console.log(id)
-        const sql = 'SELECT * FROM users NATURAL JOIN addresses where userId=?';
-        const result = await pool.query(sql, [id]);
-        console.log(result)
-        return result[0];
+        const sql1 = "INSERT INTO addresses (`city`,`street`,`house_number`) VALUES(?,?,?)";
+        const result1 =await pool.query(sql1, [city,street,house_number]);
+        const address_id = result1[0].insertId;
+        console.log(address_id)
+
+        const sql = "INSERT INTO users (`firstName`, `lastName`, `email`, `phone`, `gender`, `birth_date`,`address_id`) VALUES(?,?,?,?,?,?,?)";
+        const result = await pool.query(sql, [firstName,lastName,email,phone,gender,birth_date,address_id]);
+        console.log("resu",result[0][0],result[0])
+        const userId = result[0].insertId;
+
+        
+
+        const sql2 = "INSERT INTO passwords (`userId`, `password`) VALUES(?, ?)";
+        await pool.query(sql2, [userId, password]);
+
+        return userId; 
+
     } catch (err) {
         console.log(err);
         throw err;
     }
 }
 
-module.exports = { getPassword,getByUsername,getUser }
+module.exports = { getPassword,getByUsername,getUsers, createUser }
