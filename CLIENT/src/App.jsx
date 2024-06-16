@@ -9,12 +9,14 @@ import SignUp from './pages/SignUp';
 
  
 export const UserContext = createContext()
+export const ShowHeadersContext = createContext();
 export const TutorsContext = createContext()
 
 
 function App() {
   const limit=10;
   const [allTutors, setAllTutors] = useState([]);
+  const [showHeaders, setShowHeaders] = useState(true);
   const [user, setUser] = useState({});
       useEffect(() => {
          const userInLocalStorage = localStorage.getItem('user');
@@ -40,19 +42,23 @@ function App() {
 
   return (   
     <> 
+    <UserContext.Provider value={{user,setUser}}>
+    <ShowHeadersContext.Provider value={showHeaders}>
     <TutorsContext.Provider value={allTutors}>
                 <BrowserRouter basename='/'>
                     <Routes>
-                    <Route path="/" element={<Layout />}>
+                    <Route path="/" element={<Layout setShowHeaders={setShowHeaders} setUser={setUser}/>}>
                       <Route path="/" element={<Navigate to="/homePage"/>}/>
                       <Route path="/homePage" element={<HomePage />} />
                       <Route path="/tutors" element={<Tutors />} />
-                      <Route path="/login" element={<LogIn />} />
-                      <Route path="/signUp" element={<SignUp />} />
+                      <Route path="/login" element={<LogIn setShowHeaders={setShowHeaders} setUser={setUser}/>} />
+                      <Route path="/signUp" element={<SignUp setShowHeaders={setShowHeaders} setUser={setUser}/>} />
                    </Route>
                    </Routes>
              </BrowserRouter>
      </TutorsContext.Provider>       
+     </ShowHeadersContext.Provider>
+     </UserContext.Provider>
     </>
   )
 }

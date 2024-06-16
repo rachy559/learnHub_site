@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
+import { ShowHeadersContext, UserContext } from "../App";
 
-const Login = () => {
 
+const Login = ({ setShowHeaders}) => {
+  const showHeaders = useContext(ShowHeadersContext);
+  const userContext = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -11,6 +14,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  
   function handleLogin() {
     
     // const USERS_API_URL = `users?email=${formData.username}&password=${formData.password}`;
@@ -24,7 +28,8 @@ const Login = () => {
           if (user[0]) {
             console.log('User data:', user[0]); 
             //setUserData(user[0]);
-            alert(`Login successful! Welcome back ${user[0].email}😎`);
+            alert(`Login successful! Welcome back ${user[0].firstName}😎`);
+            setShowHeaders(false);
             localStorage.setItem('loggedInUser', JSON.stringify(user[0]));
             console.log('Stored user data:', user[0]); 
             navigate(`/homePage`);

@@ -1,11 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext,useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
+import { ShowHeadersContext,UserContext } from "../App";
 
-const SignUp = ({ setUserData }) => {
 
+const SignUp = ({setShowHeaders ,setUserData}) => {
+    const showHeaders = useContext(ShowHeadersContext);
+    const userContext = useContext(UserContext);
+    console.log("us",userContext)
     const navigate = useNavigate();
-
+    const [currentRoll, setCurrentRoll] = useState(location.state?.selectedProfile || '');
+    console.log(currentRoll)
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -13,6 +18,7 @@ const SignUp = ({ setUserData }) => {
         phone: "",
         gender: "",
         birth_date: new Date().toISOString().substring(0, 10),
+        rollId:userContext.user.rollId,
         city: "",
         street: "",
         house_number: 0,
@@ -20,7 +26,15 @@ const SignUp = ({ setUserData }) => {
         confirm_password: ""
     });
 
-
+    // useEffect(() => {
+    //     const profile = location.state?.selectedProfile;
+    //     if (profile) {
+    //         console.log("Received Profile:", profile); // Debug log
+    //         setCurrentRoll(profile);
+    //       } else {
+    //         console.log("No Profile Received");
+    //       }
+    //   }, [location.state]);
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
@@ -42,9 +56,10 @@ const SignUp = ({ setUserData }) => {
                 serverRequests('GET', USERS_API_URL, null).then((usersArr) => {
                     if (formData.confirm_password === formData.password) {
                         if (usersArr.length !== 0) {
-                            alert('The username is already exists, choose another username!')
+                            alert('The email is already exists, choose another email!')
                         }
                         else {
+
                             const user = {
                                 firstName: formData.firstName,
                                 lastName: formData.lastName,
@@ -52,19 +67,23 @@ const SignUp = ({ setUserData }) => {
                                 phone: formData.phone,
                                 gender: formData.gender,
                                 birth_date: formData.birth_date,
+                                rollId: formData.rollId,
                                 city: formData.city,
                                 street: formData.street,
                                 house_number: formData.house_number,
                                 password: formData.password,
+                                // rollId:userContext.user.rollId
                             }
+                            
                             serverRequests('POST', 'users', user).then((response) => {
                                 console.log("res", response[0])
-                                setUserData(response[0]);
+                               //  setUserData(response[0]);
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
 
                             })
-                            alert(`You can continue filling in your details ${user.username}! 😀`);
-                            //   navigate('/end-of-registration');
+                            alert(`You can continue filling in your details ${user.firstName}! 😀`);
+                            setShowHeaders(!showHeaders);
+                            //navigate('/end-of-registration');
                         }
                     }
                     else {
