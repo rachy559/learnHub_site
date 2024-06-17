@@ -9,8 +9,6 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
     const userContext = useContext(UserContext);
     console.log("us",userContext)
     const navigate = useNavigate();
-    const [currentRoll, setCurrentRoll] = useState(location.state?.selectedProfile || '');
-    console.log(currentRoll)
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -26,22 +24,11 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
         confirm_password: ""
     });
 
-    // useEffect(() => {
-    //     const profile = location.state?.selectedProfile;
-    //     if (profile) {
-    //         console.log("Received Profile:", profile); // Debug log
-    //         setCurrentRoll(profile);
-    //       } else {
-    //         console.log("No Profile Received");
-    //       }
-    //   }, [location.state]);
-
     const USERS_API_URL = `users?email=${formData.email}`;
 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         setFormData({
             ...formData,
             [name]: value
@@ -72,7 +59,6 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
                                 street: formData.street,
                                 house_number: formData.house_number,
                                 password: formData.password,
-                                // rollId:userContext.user.rollId
                             }
                             
                             serverRequests('POST', 'users', user).then((response) => {

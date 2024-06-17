@@ -6,6 +6,7 @@ import Tutors from './pages/Tutors';
 import { serverRequests } from './Api';
 import LogIn from './pages/Login';
 import SignUp from './pages/SignUp';
+import EndOfSignUp from './pages/EndOfSignUp';
 
  
 export const UserContext = createContext()
@@ -53,6 +54,7 @@ function App() {
                       <Route path="/tutors" element={<Tutors />} />
                       <Route path="/login" element={<LogIn setShowHeaders={setShowHeaders} setUser={setUser}/>} />
                       <Route path="/signUp" element={<SignUp setShowHeaders={setShowHeaders} setUser={setUser}/>} />
+                      <Route path="/endOfSignUp" element={<EndOfSignUp setShowHeaders={setShowHeaders} setUser={setUser}/>} />
                    </Route>
                    </Routes>
              </BrowserRouter>
