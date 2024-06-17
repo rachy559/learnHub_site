@@ -6,9 +6,9 @@ import { ShowHeadersContext, UserContext } from "../App";
 
 
 const EndOfSignUp = () => {
-    const userContext = useContext(UserContext);
-    const flag=false;
-    if(userContext.user.rollId==2)
+    const {user, setUser} = useContext(UserContext);
+    let flag=false;
+    if(user.rollId==2)
        flag=true;
     else
        flag=false;   

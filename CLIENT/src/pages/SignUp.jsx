@@ -63,13 +63,16 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
                             
                             serverRequests('POST', 'users', user).then((response) => {
                                 console.log("res", response[0])
+                                userContext.setUser( {...userContext.user,user });
                                //  setUserData(response[0]);
+                               console.log("user",userContext.user)
+
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
 
                             })
                             alert(`You can continue filling in your details ${user.firstName}! 😀`);
                             setShowHeaders(!showHeaders);
-                            //navigate('/end-of-registration');
+                            navigate('/endOfSignUp');
                         }
                     }
                     else {
