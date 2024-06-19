@@ -1,265 +1,184 @@
+/* כלל הגדרות הבסיס */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* הגדרות לשורת הניווט */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #f0f0f0;
+  padding: 10px 20px;
+  background-color: #3f454e; /* צבע רקע כהה */
+  opacity: 80%;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-logo img {
+  width: 120px;
 }
 
 .app-nav {
   display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
-.app-nav a {
-  margin-right: 20px;
-  color: #333;
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #f0f0f0; /* טקסט אפור בהיר */
+  font-weight: bold;
   text-decoration: none;
+  margin-left: 20px;
+  font-size: 1.2em;
 }
 
-.app-logo img {
-  display: block;
+.profile-select {
+  display: flex;
+  align-items: center;
 }
 
 .profile-select select {
-  padding: 5px;
-  font-size: 16px;
+  background: none;
+  color: #f0f0f0;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
-.profile-select select:focus {
-  outline: none;
+.picture_homepage{
+  width: 100%;
+} 
+
+/* הגדרות לחלק האודות */
+.about-container {
+  padding: 50px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+  margin-top: 20px;
 }
 
-.about{
-  margin: 7%;
-  font-size: 25px;
+.about-container h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-.photo{
-  border-radius: 50%;
-  width: 215px;
-	height: 200px; 
+.about-container p {
+  font-size: 1.2em;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
 }
 
-
-.logInAndSignIn {
-
-  background-image: url(../pictures/WELCOME.png);
-  direction: rtl;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-.sign_in {
-  max-width: 500px;
-  margin: auto;
-  overflow: auto;
-  padding: 4vh 60px 5vh;
-}
-.inputs {
-  align-items: center;
-  margin-right: 20%;
-  margin-top: 1%;
-  font-size: 100%;
-  width: 60%;
-  direction: rtl;
-  border-radius: 5px;
-  border-color: gray;
-  border: 1px solid ;
-  width: 95%;
-  padding: 15px 15px;
-}
-input[type='checkbox'] {
-  color: #6e6d7d;
-  margin-right: 4px;
-}
-
-.takanon {
-  margin-top: 7%;
-  font-size: 120%;
-  font-family: sans-serif;
-}
-.btns {
-  background-color: #ff41ea;
-  box-shadow: 0 0 24px 0 #ff41ea99;
+.allTutorCircles {
   display: flex;
-  justify-content: center;
-  max-height: 55px;
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 45px;
-  padding: 20px 15px;
-  border-radius: 5px;
-  width: 95%;
-  color: #fff;
-  border: 0;
-  border-radius: 5px;
+  overflow: hidden;
+  margin: 20px;
+  padding-top: 20px;
+  position: relative;
+  white-space: nowrap;
+  animation: scrollTutors 10s linear infinite;
 }
-.link {
-  font-size: 100%;
-  margin-right: 20%;
-  margin-top: 5%;
-  font-size: 13px;
-  color: var(--grey);
-  text-align: left;
-  font-family: sans-serif;
+
+.allTutorCircles .tutorDiv {
+  margin: 0 10px; /* מרווח בין עיגולי המורים */
 }
-.message {
-  margin-right: 25%;
-  margin-top: 10%;
-  font-size: 150%;
-}
-.sign {
-  margin-right: 40%;
-  font-size: 200%;
-  margin-top: 0%;
-}
-.log_in {
-  max-width: 500px;
-  margin: auto;
-  overflow: auto;
-  padding: 4vh 60px 5vh;
-}
-.changeS {
-  text-decoration: underline;
-  color: #e29de2;
-}
-.changeL {
-  text-decoration: underline;
-  color: #e29de2;
-}
-.btnl {
-  background-color: #ff41ea;
-  box-shadow: 0 0 24px 0 #ff41ea99;
-  display: flex;
-  justify-content: center;
-  max-height: 55px;
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 45px;
-  padding: 20px 15px;
-  border-radius: 5px;
-  width: 95%;
-  color: #fff;
-  border: 0;
-  border-radius: 5px;
-}
-.log {
-  margin-right: 40%;
-  font-size: 200%;
-  margin-bottom: 10%;
-}
-@media screen and (max-width: 900px) {
-  .logo {
-      width: 40%;
+
+@keyframes scrollTutors {
+  0% {
+      transform: translateX(0%);
+  }
+  100% {
+      transform: translateX(-50%);
   }
 }
-.type{
-  margin-top: 3%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-  font-size: 36px;
-  font-weight: 800;
-  cursor: pointer;
-  color: #abaab6;
-  font-size: 36px;
-  font-weight: 800;
-  cursor: pointer;
-}
-.selected{
-  color: #ff41ea;
-}
-.space{
-  display: flex;
-  align-items: center;
-  color: #d9d9d9;
-  font-weight: 100;
-  font-size: 20px;
-  margin: 0 20px;
-}
-.addP{
-  width: 7vw;
-  height: 8vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 30px;
-  box-shadow: 0 0 24px 0 #ffc000c7;
-  font-weight: 800;
-  margin-top: 2vh;
-  background-color: #ffc000c7;
-  color: #fff;
-  border: 0;
-  margin-left: 28%;
-}
-.begin{
-  width: 8vw;
-  height: 9vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 30px;
-  box-shadow: 0 0 24px 0 #ffc000c7;
-  font-weight: 800;
-  background-color: #ffc000c7;
-  color: #fff;
-  border: 0; 
-  margin-left: 45%;
+
+.tutorDiv {
+  display: inline-block;
+  text-align: center;
 }
 
-#profile.scroll{
-  top: 100;
-  left: 100;
-  behavior: "smooth";
-};
-
-.user-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-.user-icon img {
-  width: 50px;
-  height: 50px;
+.tutorDiv img {
   border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  top: 0;
-  right: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
+.allTutors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px;
 }
 
-.sidebar.active {
-  width: 250px;
+.comments-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
-.sidebar a {
-  padding: 10px 15px;
-  text-decoration: none;
-  font-size: 25px;
-  color: white;
-  display: block;
-  transition: 0.3s;
+.allComments {
+  display: flex;
+  overflow: hidden;
+  width: calc(100% - 80px); /* התאמת הרוחב בהתחשב בחצים */
+  margin: 20px;
 }
 
-.sidebar a:hover {
-  background-color: #575757;
+.commentDiv {
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 10px;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 10px;
+  flex-shrink: 0;
 }
 
-.sidebar .closebtn {
-  position: absolute;
-  top: 10px;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+.commentDiv .comment {
+  margin: 5px 0;
 }
 
+.arrow {
+  font-size: 2em;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 10px;
+}
+
+.arrow.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #f1f1f1;
+  color: #161616;
+  font-weight: bold;
+  font-size: 0.8em;
+}
