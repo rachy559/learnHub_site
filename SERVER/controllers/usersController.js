@@ -75,4 +75,14 @@ async function create(firstName,lastName,email,phone,gender,birth_date,rollId,pa
     }
 }
 
-module.exports = { getById, login, getUsers, create };
+async function createTutor(intended_for_gender,subjects,languages) {
+    try {
+        const response= model.createTutor(intended_for_gender,subjects,languages);
+       console.log("response=", response[0])
+        return response[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { getById, login, getUsers, create,createTutor };

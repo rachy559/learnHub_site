@@ -7,7 +7,7 @@ import { ShowHeadersContext,UserContext } from "../App";
 const SignUp = ({setShowHeaders ,setUserData}) => {
     const showHeaders = useContext(ShowHeadersContext);
     const userContext = useContext(UserContext);
-    console.log("us",userContext)
+    const [hide, setHide] = useState(false);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         firstName: "",
@@ -16,26 +16,83 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
         phone: "",
         gender: "",
         birth_date: new Date().toISOString().substring(0, 10),
-        rollId:userContext.user.rollId,
+        rollId: userContext.user.rollId,
         city: "",
         street: "",
         house_number: 0,
         password: "",
         confirm_password: ""
     });
+    const [formDataTutor, setFormDataTutor] = useState({
+        intended_for_gender: "",
+        languages: [],
+        subjects: []
+    });
+
+    const [formDataStudent, setFormDataStudent] = useState({
+      status:"",
+  });
+
+    const [currentLanguage, setCurrentLanguage] = useState("");
+    const [currentSubject, setCurrentSubject] = useState("");
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
+    function createProfileTutor()
+    {
+        serverRequests('POST', 'users', formDataTutor).then((response) => {
+            console.log("res", response[0])
+            userContext.setUser( {...userContext.user,...formDataTutor });
+        })
+    }
 
+    function createProfileStudent()
+    {
+       setHide(false);
+    }
+
+
+console.log(userContext.user.rollId)
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-
-        });
+        if(userContext.user.rollId===2)
+            {
+                setFormDataStudent((prevFormData) => ({
+                    ...prevFormData,
+                    [name]: value
+                }));
+            }
+            else if(userContext.user.rollId===3){
+                setFormDataTutor((prevFormData) => ({
+                    ...prevFormData,
+                    [name]: value
+                }));
+            }
+            
+                setFormData({
+                    ...formData,
+                    [name]: value
+        
+                });
+            
+  
     };
 
+    const handleAddLanguage = () => {
+        setFormDataTutor((prevFormData) => ({
+              ...prevFormData,
+              languages: [...prevFormData.languages, currentLanguage]
+          }));
+          setCurrentLanguage(""); 
+      };
+  
+      const handleAddSubject = () => {
+        setFormDataTutor((prevFormData) => ({
+              ...prevFormData,
+              subjects: [...prevFormData.subjects, currentSubject]
+          }));
+          setCurrentSubject(""); 
+      };
     const ContinueDetails = async () => {
         console.log(formData)
         if (formData.lastName && formData.password && formData.confirm_password) {
@@ -63,16 +120,12 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
                             
                             serverRequests('POST', 'users', user).then((response) => {
                                 console.log("res", response[0])
-                                userContext.setUser( {...userContext.user,user });
-                               //  setUserData(response[0]);
-                               console.log("user",userContext.user)
-
+                                userContext.setUser( {...userContext.user,...user });
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
-
                             })
                             alert(`You can continue filling in your details ${user.firstName}! 😀`);
                             setShowHeaders(!showHeaders);
-                            navigate('/endOfSignUp');
+                            setHide(true);
                         }
                     }
                     else {
@@ -88,6 +141,7 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
             alert('You didnt fill all fields.')
         }
     };
+    console.log("user",userContext.user)
 
     return (
         <div className="registerDiv">
@@ -208,6 +262,68 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
                     Continue filling in details
                 </button>
             </form>
+<div className=''>
+    {console.log(userContext.user.rollId)}
+            {hide? (userContext.user.rollId === 2 ? (
+               <>
+                 <div>
+                            <select
+                                name="status"
+                                value={formDataStudent.status}
+                                onChange={handleChange}
+                            >
+                                <option value="">בחר רמה</option>
+                                <option value="יסודי">יסודי</option>
+                                <option value="תיכון">תיכון</option>
+                                <option value="על תיכוני">על תיכוני</option>
+                            </select>
+                            <button type='button' onClick={createProfileStudent}>אישור</button>
+                        </div>
+                        <br />
+               </>
+            ) : (
+                <>
+                    <h2>Hello Tutor</h2>
+                    <form className="registerForm">
+                        <div>
+                            <input
+                                placeholder="מיועד למגדר"
+                                type="text"
+                                name="intended_for_gender"
+                                value={formDataTutor.intended_for_gender}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <br />
+
+                        <div>
+                            <input
+                                placeholder="מקצוע"
+                                type="text"
+                                name="currentSubject"
+                                value={currentSubject}
+                                onChange={(e) => setCurrentSubject(e.target.value)}
+                            />
+                            <button type="button" onClick={handleAddSubject}>+ הוסף</button>
+                        </div>
+                        <br />
+
+                        <div>
+                            <input
+                                placeholder="שפה"
+                                type="text"
+                                name="currentLanguage"
+                                value={currentLanguage}
+                                onChange={(e) => setCurrentLanguage(e.target.value)}
+                            />
+                            <button type="button" onClick={handleAddLanguage}>+ הוסף</button>
+                        </div>
+                        <button type='button' onClick={createProfileTutor}>אישור</button>
+                    </form>
+                </>
+
+            )):(<></>)}
+            </div>
             <NavLink
                 to="/login"
             >

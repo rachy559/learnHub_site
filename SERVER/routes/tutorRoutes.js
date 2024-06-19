@@ -10,9 +10,9 @@ router.use(express.urlencoded({ extended: true }));
 
 router.post("/", async(req, res) => {
     try{
-        const response=await controller.login(req.body.email,req.body.password)
-        console.log("username: ", req.body.email)
-        console.log("password: ", req.body.password)
+        const subjects=req.body.subjects.toString();
+        const languages=req.body.languages.toString();
+        const response=await controller.createTutor(req.body.intended_for_gender,subjects,languages)
         console.log("response:", response);
         res.send(await controller.getById(response.userId))
     } catch(err){
