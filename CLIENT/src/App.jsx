@@ -6,6 +6,8 @@ import Tutors from './pages/Tutors';
 import { serverRequests } from './Api';
 import LogIn from './pages/Login';
 import SignUp from './pages/SignUp';
+import Lessons from './pages/Lessons';
+
 
  
 export const UserContext = createContext()
@@ -53,6 +55,7 @@ function App() {
                       <Route path="/tutors" element={<Tutors />} />
                       <Route path="/login" element={<LogIn setShowHeaders={setShowHeaders} setUser={setUser}/>} />
                       <Route path="/signUp" element={<SignUp setShowHeaders={setShowHeaders} setUser={setUser}/>} />
+                      <Route path="/lessons" element={<Lessons />} />
                    </Route>
                    </Routes>
              </BrowserRouter>
@@ -74,25 +77,3 @@ export default App
 
 
 
-//     return (
-       
-//                     
-//                     <Route path="/register" element={<Register setUser={setUser} />} />
-//                     <Route path="/login" element={<LogIn setUser={setUser} />} />
-//                     <Route path="/details" element={<Details setUser={setUser} />} />
-
-//                     <Route path="/home/users/:id" element={<Home />} >
-//                         <Route path="/home/users/:id/info" element={<Info />} />
-//                         <Route path="/home/users/:id/todos" element={<Todos />} />
-//                         <Route path="/home/users/:id/posts" element={<Posts />} />
-//                         <Route path="/home/users/:id/alboms" element={<Alboms />} />
-//                         <Route path="/home/users/:id/albums/:albumId/photos" element={<Photos />} />
-//                         <Route path="/home/users/:id/posts/:postId/comments" element={<Comments />} />
-                             //                     </Route>
-   
-
-//     );
-// }
-
-
-// export default App;

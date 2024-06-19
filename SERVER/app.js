@@ -17,6 +17,9 @@ const port = 3000;
  const users=require('./routes/usersRoute');
  app.use('/users',users);
 
+//  const lessons=require('./routes/lessonsRoute');
+//  app.use('/lessons',lessons);
+
 
 
 
