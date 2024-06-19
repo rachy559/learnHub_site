@@ -18,9 +18,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         console.log("ee",req.body)
-        const response=await controller.create(req.body.firstName,req.body.lastName,req.body.email,req.body.phone,req.body.gender,req.body.birth_date,req.body.rollId,req.body.password,req.body.city,req.body.street,req.body.house_number);
-       console.log("d",response)
-        res.send(response)
+        res.send(await controller.create(req.body.firstName,req.body.lastName,req.body.email,req.body.phone,req.body.gender,req.body.birth_date,req.body.rollId,req.body.password,req.body.city,req.body.street,req.body.house_number));
     } catch (err) {
         res.status(500).send(err);
     }

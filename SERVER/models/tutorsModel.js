@@ -11,4 +11,34 @@ async function getTutors(limit) {
         throw err;
     }
 }
-module.exports = { getTutors }
+
+async function createTutor(intended_for_gender,subjects,languages,userId) {
+    try {
+        console.log("i",userId)
+        const languageArray = languages.split(' ').map(language => language.trim());
+        const sql1 = "INSERT INTO languages (`language_name`) VALUES(?)";
+        for (const language of languageArray) {
+            if (language) {
+              await pool.query(sql1, [language]);
+            }
+          }
+        
+          const subjectsArray = subjects.split(' ').map(subject => subject.trim());
+          const sql = "INSERT INTO subjects (`subjectName`) VALUES(?)";
+          for (const subject of subjectsArray) {
+              if (subject) {
+                await pool.query(sql, [subject]);
+              }
+            }
+
+        const sql2 = "INSERT INTO tutors (`tutor_id`, `intended_for_gender`) VALUES(?, ?)";
+        await pool.query(sql2, [userId, intended_for_gender]);
+        return userId; 
+
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+module.exports = { getTutors,createTutor }

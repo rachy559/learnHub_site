@@ -12,7 +12,7 @@ router.post("/", async(req, res) => {
     try{
         const subjects=req.body.subjects.toString();
         const languages=req.body.languages.toString();
-        const response=await controller.createTutor(req.body.intended_for_gender,subjects,languages)
+        const response=await controller.createTutor(req.body.intended_for_gender,subjects,languages,req.body.email)
         console.log("response:", response);
         res.send(await controller.getById(response.userId))
     } catch(err){

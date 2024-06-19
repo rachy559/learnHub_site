@@ -67,18 +67,19 @@ async function create(firstName,lastName,email,phone,gender,birth_date,rollId,pa
     try {
         //const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
         const hashedPassword = await bcrypt.hash(password, 10);
-        const response= model.createUser(firstName,lastName,email,phone,gender,birth_date,rollId,hashedPassword,city,street,house_number);
-       console.log("response=", response[0])
+        const response = model.createUser(firstName,lastName,email,phone,gender,birth_date,rollId,hashedPassword,city,street,house_number);
+        console.log("response=", response[0])
         return response[0];
     } catch (err) {
         throw err;
     }
 }
 
-async function createTutor(intended_for_gender,subjects,languages) {
+async function createTutor(intended_for_gender,subjects,languages,e,email) {
     try {
-        const response= model.createTutor(intended_for_gender,subjects,languages);
-       console.log("response=", response[0])
+        const userId=model.getByEmail(email).userId;
+        const response= model.createTutor(intended_for_gender,subjects,languages,userId);
+       console.log("response=", response)
         return response[0];
     } catch (err) {
         throw err;

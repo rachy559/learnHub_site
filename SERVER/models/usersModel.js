@@ -64,7 +64,6 @@ async function createUser(firstName,lastName,email,phone,gender,birth_date,rollI
         
         const sql3 = "INSERT INTO roll_for_user (`userId`, `rollId`) VALUES(?, ?)";
         await pool.query(sql3, [userId, rollId]);
-
         return userId; 
 
     } catch (err) {
@@ -74,35 +73,6 @@ async function createUser(firstName,lastName,email,phone,gender,birth_date,rollI
 }
 
 
-async function createTutor(intended_for_gender,subjects,languages) {
-    try {
-        // const languagesA = languages.split(' ').map(language => (
-
-        // ));
-
-        const sql1 = "INSERT INTO languages (`city`,`street`,`house_number`) VALUES(?,?,?)";
-        const result1 =await pool.query(sql1, [city,street,house_number]);
-        const address_id = result1[0].insertId;
-        console.log(address_id)
-
-        const sql = "INSERT INTO users (`firstName`, `lastName`, `email`, `phone`, `gender`, `birth_date`,`address_id`) VALUES(?,?,?,?,?,?,?)";
-        const result = await pool.query(sql, [firstName,lastName,email,phone,gender,birth_date,address_id]);
-        console.log("resu",result[0][0],result[0])
-        const userId = result[0].insertId;
-
-        const sql2 = "INSERT INTO passwords (`userId`, `password`) VALUES(?, ?)";
-        await pool.query(sql2, [userId, password]);
-        
-        const sql3 = "INSERT INTO roll_for_user (`userId`, `rollId`) VALUES(?, ?)";
-        await pool.query(sql3, [userId, rollId]);
-
-        return userId; 
-
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
-}
 
 
-module.exports = { getPassword,getByEmail,getUsers, createUser,getUser,createTutor }
+module.exports = { getPassword, getByEmail, getUsers, createUser, getUser}

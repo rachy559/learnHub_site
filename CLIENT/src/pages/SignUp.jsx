@@ -1,10 +1,9 @@
-import React, { useState, useContext,useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
-import { ShowHeadersContext,UserContext } from "../App";
+import { ShowHeadersContext, UserContext } from "../App";
 
-
-const SignUp = ({setShowHeaders ,setUserData}) => {
+const SignUp = ({ setShowHeaders, setUserData }) => {
     const showHeaders = useContext(ShowHeadersContext);
     const userContext = useContext(UserContext);
     const [hide, setHide] = useState(false);
@@ -26,73 +25,71 @@ const SignUp = ({setShowHeaders ,setUserData}) => {
     const [formDataTutor, setFormDataTutor] = useState({
         intended_for_gender: "",
         languages: [],
-        subjects: []
+        subjects: [], 
+        email:userContext.user.email
     });
 
     const [formDataStudent, setFormDataStudent] = useState({
-      status:"",
-  });
+        status: "",
+    });
 
     const [currentLanguage, setCurrentLanguage] = useState("");
     const [currentSubject, setCurrentSubject] = useState("");
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
-    function createProfileTutor()
-    {
-        serverRequests('POST', 'users', formDataTutor).then((response) => {
-            console.log("res", response[0])
-            userContext.setUser( {...userContext.user,...formDataTutor });
+    function createProfileTutor() {
+        serverRequests('POST', 'tutors', formDataTutor).then((response) => {
+            userContext.setUser({ ...userContext.user, ...formDataTutor });
         })
+        console.log("n",userContext.user)
     }
 
-    function createProfileStudent()
-    {
-       setHide(false);
+    function createProfileStudent() {
+        setHide(false);
     }
 
 
-console.log(userContext.user.rollId)
+    console.log(userContext.user.rollId)
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if(userContext.user.rollId===2)
-            {
-                setFormDataStudent((prevFormData) => ({
-                    ...prevFormData,
-                    [name]: value
-                }));
-            }
-            else if(userContext.user.rollId===3){
-                setFormDataTutor((prevFormData) => ({
-                    ...prevFormData,
-                    [name]: value
-                }));
-            }
-            
-                setFormData({
-                    ...formData,
-                    [name]: value
-        
-                });
-            
-  
+        if (userContext.user.rollId === 2) {
+            setFormDataStudent((prevFormData) => ({
+                ...prevFormData,
+                [name]: value
+            }));
+        }
+        else if (userContext.user.rollId === 3) {
+            setFormDataTutor((prevFormData) => ({
+                ...prevFormData,
+                [name]: value
+            }));
+        }
+
+        setFormData({
+            ...formData,
+            [name]: value
+
+        });
+
+
     };
 
     const handleAddLanguage = () => {
         setFormDataTutor((prevFormData) => ({
-              ...prevFormData,
-              languages: [...prevFormData.languages, currentLanguage]
-          }));
-          setCurrentLanguage(""); 
-      };
-  
-      const handleAddSubject = () => {
+            ...prevFormData,
+            languages: [...prevFormData.languages, currentLanguage]
+        }));
+        setCurrentLanguage("");
+    };
+
+    const handleAddSubject = () => {
         setFormDataTutor((prevFormData) => ({
-              ...prevFormData,
-              subjects: [...prevFormData.subjects, currentSubject]
-          }));
-          setCurrentSubject(""); 
-      };
+            ...prevFormData,
+            subjects: [...prevFormData.subjects, currentSubject]
+        }));
+        setCurrentSubject("");
+    };
     const ContinueDetails = async () => {
         console.log(formData)
         if (formData.lastName && formData.password && formData.confirm_password) {
@@ -117,10 +114,10 @@ console.log(userContext.user.rollId)
                                 house_number: formData.house_number,
                                 password: formData.password,
                             }
-                            
+
                             serverRequests('POST', 'users', user).then((response) => {
                                 console.log("res", response[0])
-                                userContext.setUser( {...userContext.user,...user });
+                                userContext.setUser({ ...userContext.user, ...user });
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
                             })
                             alert(`You can continue filling in your details ${user.firstName}! 😀`);
@@ -141,7 +138,7 @@ console.log(userContext.user.rollId)
             alert('You didnt fill all fields.')
         }
     };
-    console.log("user",userContext.user)
+    console.log("user", userContext.user)
 
     return (
         <div className="registerDiv">
@@ -262,11 +259,11 @@ console.log(userContext.user.rollId)
                     Continue filling in details
                 </button>
             </form>
-<div className=''>
-    {console.log(userContext.user.rollId)}
-            {hide? (userContext.user.rollId === 2 ? (
-               <>
-                 <div>
+            <div className=''>
+                {console.log(userContext.user.rollId)}
+                {hide ? (userContext.user.rollId === 2 ? (
+                    <>
+                        <div>
                             <select
                                 name="status"
                                 value={formDataStudent.status}
@@ -280,49 +277,49 @@ console.log(userContext.user.rollId)
                             <button type='button' onClick={createProfileStudent}>אישור</button>
                         </div>
                         <br />
-               </>
-            ) : (
-                <>
-                    <h2>Hello Tutor</h2>
-                    <form className="registerForm">
-                        <div>
-                            <input
-                                placeholder="מיועד למגדר"
-                                type="text"
-                                name="intended_for_gender"
-                                value={formDataTutor.intended_for_gender}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <br />
+                    </>
+                ) : (
+                    <>
+                        <h2>Hello Tutor</h2>
+                        <form className="registerForm">
+                            <div>
+                                <input
+                                    placeholder="מיועד למגדר"
+                                    type="text"
+                                    name="intended_for_gender"
+                                    value={formDataTutor.intended_for_gender}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <br />
 
-                        <div>
-                            <input
-                                placeholder="מקצוע"
-                                type="text"
-                                name="currentSubject"
-                                value={currentSubject}
-                                onChange={(e) => setCurrentSubject(e.target.value)}
-                            />
-                            <button type="button" onClick={handleAddSubject}>+ הוסף</button>
-                        </div>
-                        <br />
+                            <div>
+                                <input
+                                    placeholder="מקצוע"
+                                    type="text"
+                                    name="currentSubject"
+                                    value={currentSubject}
+                                    onChange={(e) => setCurrentSubject(e.target.value)}
+                                />
+                                <button type="button" onClick={handleAddSubject}>+ הוסף</button>
+                            </div>
+                            <br />
 
-                        <div>
-                            <input
-                                placeholder="שפה"
-                                type="text"
-                                name="currentLanguage"
-                                value={currentLanguage}
-                                onChange={(e) => setCurrentLanguage(e.target.value)}
-                            />
-                            <button type="button" onClick={handleAddLanguage}>+ הוסף</button>
-                        </div>
-                        <button type='button' onClick={createProfileTutor}>אישור</button>
-                    </form>
-                </>
+                            <div>
+                                <input
+                                    placeholder="שפה"
+                                    type="text"
+                                    name="currentLanguage"
+                                    value={currentLanguage}
+                                    onChange={(e) => setCurrentLanguage(e.target.value)}
+                                />
+                                <button type="button" onClick={handleAddLanguage}>+ הוסף</button>
+                            </div>
+                            <button type='button' onClick={createProfileTutor}>אישור</button>
+                        </form>
+                    </>
 
-            )):(<></>)}
+                )) : (<></>)}
             </div>
             <NavLink
                 to="/login"
