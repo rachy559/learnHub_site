@@ -5,7 +5,8 @@ const pool = mysql.createPool({
   user: 'root',
   database: 'learnHubDB',
   port: 3306,
-  password: 'mysql24',
+  password: 'rySQL2024',
+  // password: 'mysql24',
 }).promise();
 
 module.exports = pool;

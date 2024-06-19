@@ -32,42 +32,6 @@ return(
                 </div>  
     </>
     )
-birth_date
-: 
-"2000-03-02T22:00:00.000Z"
-city
-: 
-"Chicago"
-email
-: 
-"alice.johnson@example.com"
-fileUrls
-: 
-"http://example.com/file1"
-gender
-: 
-"Female"
-house_number
-: 
-789
-intended_for_gender
-: 
-"Both"
-languages
-: 
-"English"
-phone
-: 
-"2345678901"
-street
-: 
-"Wacker Dr"
-subjects
-: 
-"Math,Science"
-tutorName
-: 
-"Alice Johnson"
-}
+ }
 
 export default Tutors;
