@@ -20,6 +20,8 @@ const port = 3000;
  const students=require('./routes/studentsRoute');
  app.use('/students',students);
 
+ const upload=require('./routes/filesRoute');
+ app.use('/upload',upload);
 //  const lessons=require('./routes/lessonsRoute');
 //  app.use('/lessons',lessons);
 

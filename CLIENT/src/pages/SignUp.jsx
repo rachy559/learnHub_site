@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import { ShowHeadersContext, UserContext } from "../App";
-
 const SignUp = ({ setShowHeaders, setUserData }) => {
     const showHeaders = useContext(ShowHeadersContext);
     const userContext = useContext(UserContext);
@@ -36,6 +35,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
     const [currentLanguage, setCurrentLanguage] = useState("");
     const [currentSubject, setCurrentSubject] = useState("");
+    const [file, setFile] = useState();
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
@@ -46,14 +46,13 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     }
 
     function createProfileStudent() {
-    serverRequests('POST', 'students', formDataStudent).then((response) => {
+        serverRequests('POST', 'students', formDataStudent).then((response) => {
             userContext.setUser({ ...userContext.user, ...formDataStudent });
         })
         setHide(false);
     }
 
 
-    console.log(userContext.user.rollId)
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (userContext.user.rollId === 2) {
@@ -141,7 +140,16 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
             alert('You didnt fill all fields.')
         }
     };
-    console.log("user", userContext.user)
+
+    const handleFile = (e) =>{
+          setFile(e.target.files[0]);
+    }
+
+    const handleUpload = () =>{
+        const formdata = new FormData();
+        formdata.append('file',file)
+        serverRequests('POST','upload',formdata).then((res)=>{console.log(res)})
+    }
 
     return (
         <div className="registerDiv">
@@ -324,6 +332,10 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             </div>
                             <button type='button' onClick={createProfileTutor}>אישור</button>
                         </form>
+                        <div className='container'>
+                            <input type='file' onChange={handleFile}/>
+                           <button onClick={handleUpload}>העלה קבצים</button> 
+                        </div>
                     </>
 
                 )) : (<></>)}
