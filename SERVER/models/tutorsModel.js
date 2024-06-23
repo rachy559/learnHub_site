@@ -14,33 +14,50 @@ async function getTutors(limit) {
 
 async function createSingleTutor(intended_for_gender,subjects,languages,userId) {
     try {
-        console.log("i",userId)
-        const languageArray = languages.includes(',') ? languages.split(',') : languages.split(' ');
-        const trimmedLanguages = languageArray.map(language => language.trim());
-        
+        const languageArray = languages.split(',');
+        const sql1Check = "SELECT language_name FROM languages WHERE language_name = ?";
         const sql1 = "INSERT INTO languages (language_name) VALUES(?)";
-        for (const language of trimmedLanguages) {
+        for (const language of languageArray) {
             if (language) {
+                const [rows] = await pool.query(sql1Check, [language]);
+                if (rows.length === 0) {
                 await pool.query(sql1, [language]);
-            }
+            }}
         }
         
-          const subjectsArray = subjects.split(' ').map(subject => subject.trim());
+          const subjectsArray = subjects.split(',');
+          const sql2Check = "SELECT subjectName FROM subjects WHERE subjectName = ?";
           const sql = "INSERT INTO subjects (`subjectName`) VALUES(?)";
           for (const subject of subjectsArray) {
               if (subject) {
-                await pool.query(sql, [subject]);
+                const [rows] = await pool.query(sql2Check, [subject]);
+                if (rows.length === 0) {
+                    await pool.query(sql, [subject]);
+                }
               }
             }
 
         const sql2 = "INSERT INTO tutors (`tutor_id`, `intended_for_gender`) VALUES(?, ?)";
         await pool.query(sql2, [userId, intended_for_gender]);
 
-        // const sql3 = "INSERT INTO subject_of_tutor (`tutor_id`, `subject_id`) VALUES(?, ?)";
-        // await pool.query(sql2, [userId, subject]);
+        const sql3 = "INSERT INTO subject_of_tutor (`tutor_id`, `subject_id`) VALUES(?, ?)";
+        for (const subject of subjectsArray) {
+            const sql5=`SELECT * from subjects where subjectName=?`;
+            const result=await pool.query(sql5, [subject]);
+            console.log("h",result[0][0])
+            if (subject) {
+              await pool.query(sql3, [userId,result[0][0].subject_id]);
+            }
+          }
 
-        // const sql4 = "INSERT INTO tutors (`tutor_id`, `intended_for_gender`) VALUES(?, ?)";
-        // await pool.query(sql2, [userId, language]);
+        const sql4 = "INSERT INTO tutors_languages (`tutor_id`, `language_id`) VALUES(?, ?)";
+        for (const language of languageArray) {
+            const sql6=`SELECT * from languages where language_name=?`;
+            const result1=await pool.query(sql6, [language]);
+            if (language) {
+              await pool.query(sql4, [userId,result1[0][0].language_id]);
+            }
+        }
         return userId; 
 
     } catch (err) {

@@ -25,12 +25,13 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     const [formDataTutor, setFormDataTutor] = useState({
         intended_for_gender: "",
         languages: [],
-        subjects: [], 
-        email:userContext.user.email
+        subjects: [],
+        email: userContext.user.email
     });
 
     const [formDataStudent, setFormDataStudent] = useState({
         status: "",
+        email: userContext.user.email
     });
 
     const [currentLanguage, setCurrentLanguage] = useState("");
@@ -42,10 +43,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         serverRequests('POST', 'tutors', formDataTutor).then((response) => {
             userContext.setUser({ ...userContext.user, ...formDataTutor });
         })
-        console.log("n",userContext.user)
     }
 
     function createProfileStudent() {
+    serverRequests('POST', 'students', formDataStudent).then((response) => {
+            userContext.setUser({ ...userContext.user, ...formDataStudent });
+        })
         setHide(false);
     }
 
@@ -185,13 +188,15 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 </div><br></br>
 
                 <div>
-                    <input
-                        placeholder="gender"
-                        type="text"
+                    <select
                         name="gender"
-                        value={formData.gender}
+                        value={formDataTutor.gender}
                         onChange={handleChange}
-                    />
+                    >
+                        <option value="" disabled>בחר מגדר</option>
+                        <option value="זכר">זכר</option>
+                        <option value="נקבה">נקבה</option>
+                    </select>
                 </div><br></br>
 
 
@@ -283,13 +288,15 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                         <h2>Hello Tutor</h2>
                         <form className="registerForm">
                             <div>
-                                <input
-                                    placeholder="מיועד למגדר"
-                                    type="text"
+                                <select
                                     name="intended_for_gender"
                                     value={formDataTutor.intended_for_gender}
                                     onChange={handleChange}
-                                />
+                                >
+                                    <option value="" disabled>בחר מגדר</option>
+                                    <option value="זכר">זכר</option>
+                                    <option value="נקבה">נקבה</option>
+                                </select>
                             </div>
                             <br />
 

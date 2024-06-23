@@ -122,9 +122,9 @@ CREATE TABLE payments(
 CREATE TABLE students(
     student_id INT PRIMARY KEY,
     studentStatus varchar(30) NOT NULL,
-    payment_id INT,
-    FOREIGN KEY (student_id) REFERENCES users (userId),
-    FOREIGN KEY (payment_id) REFERENCES payments (payment_id)
+--     payment_id INT,
+    FOREIGN KEY (student_id) REFERENCES users (userId)
+   --  FOREIGN KEY (payment_id) REFERENCES payments (payment_id)
 );
 
 CREATE TABLE lessons(
@@ -286,10 +286,10 @@ INSERT INTO payments VALUES
 (5);
 
 -- Insert data into students table
-INSERT INTO students (student_id, studentStatus, payment_id) VALUES
-(2, 'Primary', 1),
-(6, 'High-School', 2),
-(7, 'Other', 4);
+INSERT INTO students (student_id, studentStatus) VALUES
+(2, 'Primary'),
+(6, 'High-School'),
+(7, 'Other');
 
 -- Insert data into lessons table
 INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, payment_id, student_id, tutor_id) VALUES
