@@ -2,7 +2,7 @@ const model = require('../models/lessonsModel');
 
 async function getAllLenguages(){
     try{
-        return model.getLenguages();
+        return await model.getLenguages();
     }catch(err){
         throw err;
     }

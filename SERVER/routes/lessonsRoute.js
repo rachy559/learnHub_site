@@ -8,9 +8,13 @@ router.use(cors());
 
 router.get("/", async (req, res) => {
     try {
-        res.send(await controller.getAllLenguages());
+        const languages = await controller.getAllLenguages();
+        res.setHeader('Content-Type', 'application/json');  // הוסף כותרת JSON
+        res.send(languages);
     } 
     catch (err) {
         res.status(500).send(err);
     }
 })
+
+module.exports = router
