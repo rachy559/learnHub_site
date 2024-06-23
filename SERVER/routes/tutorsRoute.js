@@ -20,7 +20,7 @@ router.post("/", async(req, res) => {
         const subjects=req.body.subjects.toString();
         const languages=req.body.languages.toString();
         console.log("s",subjects,languages)
-        const response=await controller.createTutor(req.body.intended_for_gender,subjects,languages,req.body.email)
+        const response = await controller.createTutor(req.body.intended_for_gender,subjects,languages,req.body.email)
         console.log("response:", response);
         res.send(response)
     } catch(err){

@@ -12,16 +12,18 @@ async function getTutors(limit) {
     }
 }
 
-async function createTutor(intended_for_gender,subjects,languages,userId) {
+async function createSingleTutor(intended_for_gender,subjects,languages,userId) {
     try {
         console.log("i",userId)
-        const languageArray = languages.split(' ').map(language => language.trim());
-        const sql1 = "INSERT INTO languages (`language_name`) VALUES(?)";
-        for (const language of languageArray) {
+        const languageArray = languages.includes(',') ? languages.split(',') : languages.split(' ');
+        const trimmedLanguages = languageArray.map(language => language.trim());
+        
+        const sql1 = "INSERT INTO languages (language_name) VALUES(?)";
+        for (const language of trimmedLanguages) {
             if (language) {
-              await pool.query(sql1, [language]);
+                await pool.query(sql1, [language]);
             }
-          }
+        }
         
           const subjectsArray = subjects.split(' ').map(subject => subject.trim());
           const sql = "INSERT INTO subjects (`subjectName`) VALUES(?)";
@@ -33,6 +35,12 @@ async function createTutor(intended_for_gender,subjects,languages,userId) {
 
         const sql2 = "INSERT INTO tutors (`tutor_id`, `intended_for_gender`) VALUES(?, ?)";
         await pool.query(sql2, [userId, intended_for_gender]);
+
+        // const sql3 = "INSERT INTO subject_of_tutor (`tutor_id`, `subject_id`) VALUES(?, ?)";
+        // await pool.query(sql2, [userId, subject]);
+
+        // const sql4 = "INSERT INTO tutors (`tutor_id`, `intended_for_gender`) VALUES(?, ?)";
+        // await pool.query(sql2, [userId, language]);
         return userId; 
 
     } catch (err) {
@@ -41,4 +49,6 @@ async function createTutor(intended_for_gender,subjects,languages,userId) {
     }
 }
 
-module.exports = { getTutors,createTutor }
+
+
+module.exports = { getTutors,createSingleTutor }
