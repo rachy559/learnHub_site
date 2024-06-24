@@ -21,17 +21,14 @@ const Login = ({ setShowHeaders}) => {
 
     const fetchUsers = async () => {
       try {
-        console.log("1",formData)
-
         serverRequests('POST', 'login', formData)
         .then((user) => {
-          if (user[0]) {
-            console.log('User data:', user[0]); 
-            //setUserData(user[0]);
-            alert(`Login successful! Welcome back ${user[0].firstName}😎`);
+          if (user) {
+            console.log(user)
+            alert(`Login successful! Welcome back ${user.firstName}😎`);
             setShowHeaders(false);
-            localStorage.setItem('loggedInUser', JSON.stringify(user[0]));
-            console.log('Stored user data:', user[0]); 
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            console.log('Stored user data:', user); 
             navigate(`/homePage`);
           } else {
             alert("Login failed. Invalid username or password.");
@@ -56,6 +53,7 @@ const Login = ({ setShowHeaders}) => {
   };
 
   return (
+    <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
 
     <div className='loginDiv'>
 
@@ -90,7 +88,7 @@ const Login = ({ setShowHeaders}) => {
         Dont have an account? Register here
       </NavLink>
     </div>
-
+</div>
   );
 };
 

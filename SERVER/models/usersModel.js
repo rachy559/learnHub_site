@@ -3,7 +3,12 @@ const pool = require('../DB');
 
 async function getUser(userId) {
     try {
-        const sql=`SELECT * FROM users JOIN addresses where userId=?`;
+        const sql=`SELECT u.*, a.city, a.street, a.house_number
+            FROM users u
+            INNER JOIN addresses a ON u.address_id = a.id
+            WHERE u.userId = ?
+        `;
+        // `SELECT * FROM users JOIN addresses where userId=?`;
         const [rows, fields] = await pool.query(sql,[userId]);
         console.log("r",rows)
         return rows;
