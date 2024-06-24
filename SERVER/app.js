@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
+// const jwt=require('jsonwebtoken');
 const port = 3000;
 
  const homePage=require('./routes/homePageRoute');
@@ -22,10 +23,11 @@ const port = 3000;
 
  const upload=require('./routes/filesRoute');
  app.use('/upload',upload);
-//  const lessons=require('./routes/lessonsRoute');
-//  app.use('/lessons',lessons);
+
  const lessons=require('./routes/lessonsRoute');
  app.use('/lessons',lessons);
+
+
 
  const filter=require('./routes/filterRoute');
  app.use('/filter',filter);
