@@ -13,11 +13,17 @@ import Lessons from './pages/Lessons';
 export const UserContext = createContext()
 export const ShowHeadersContext = createContext();
 export const TutorsContext = createContext()
+export const FilterContext = createContext();
 
 
 function App() {
   const limit=10;
   const [allTutors, setAllTutors] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+  const [selectedGender, setSelectedGender] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedLocations, setSelectedLocations] = useState([]);
   const [showHeaders, setShowHeaders] = useState(true);
   const [user, setUser] = useState({});
       useEffect(() => {
@@ -43,6 +49,18 @@ function App() {
 
   return (   
     <> 
+    <FilterContext.Provider value={{
+      selectedLanguages,
+      setSelectedLanguages,
+      selectedSubjects,
+      setSelectedSubjects,
+      selectedGender,
+      setSelectedGender,
+      selectedOptions,
+      setSelectedOptions,
+      selectedLocations,
+      setSelectedLocations
+    }}>
     <UserContext.Provider value={{user,setUser}}>
     <ShowHeadersContext.Provider value={showHeaders}>
     <TutorsContext.Provider value={allTutors}>
@@ -61,6 +79,7 @@ function App() {
      </TutorsContext.Provider>       
      </ShowHeadersContext.Provider>
      </UserContext.Provider>
+     </FilterContext.Provider>
     </>
   )
 }

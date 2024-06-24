@@ -8,14 +8,16 @@ router.use(cors());
 
 router.get("/", async (req, res) => {
     try {
-        const languages = await controller.getAllLanguages();
-        const subjects = await controller.getAllSubjects();
+        const lessons = await controller.getAllLessons();
         res.setHeader('Content-Type', 'application/json');
-        res.send({ languages, subjects });
+        res.send({ lessons });
     } 
     catch (err) {
         res.status(500).send(err);
     }
+})
+router.get("/:type",async (req, res)=>{
+
 })
 
 module.exports = router

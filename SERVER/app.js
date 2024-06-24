@@ -26,10 +26,9 @@ const port = 3000;
 //  app.use('/lessons',lessons);
  const lessons=require('./routes/lessonsRoute');
  app.use('/lessons',lessons);
-//  app.use('/languages',lessons);
 
-
-
+ const filter=require('./routes/filterRoute');
+ app.use('/filter',filter);
 
 
 app.listen(port, () => {
