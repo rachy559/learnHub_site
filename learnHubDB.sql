@@ -221,7 +221,8 @@ INSERT INTO passwords (userId, password) VALUES
 (4, 'password4'),
 (5, 'password5'),
 (6, 'password6'),
-(7, 'password7');
+(7, 'password7'),
+(8, 'sh');
 
 -- Insert data into languages table
 INSERT INTO languages (language_name) VALUES

@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
+import '../css/signup.css';
+
 import { ShowHeadersContext, UserContext } from "../App";
 const SignUp = ({ setShowHeaders, setUserData }) => {
     const showHeaders = useContext(ShowHeadersContext);
@@ -154,8 +156,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     }
 
     return (
+        <>
+<div style={{ paddingTop: '100px' }}></div>
         <div className="registerDiv">
-            <h1>🌈 Join FriendsHub Today!</h1><br></br>
+            
+            <h1> הצטרף לצוות המרצים שלנו:</h1><br></br>
             <form className="registerForm">
                 <div>
                     <input
@@ -349,7 +354,9 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
             </NavLink>
 
         </div>
+        </>
     );
+
 };
 
 export default SignUp

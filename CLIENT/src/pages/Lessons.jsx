@@ -40,9 +40,9 @@ const Lessons = () => {
         return updatedOptions;
       } else {
         const updatedOptions = [...prev, option1];
-        if (option1 === "פרונטלי"||option1 === "2 האפשרויות טובות לי") {
+        if (option1 === "פרונטלי" || option1 === "2 האפשרויות טובות לי") {
           setFlag(true);
-          serverRequests('GET', `filter/frontali`, null).then((foundFilters) => {
+          serverRequests('GET', 'filter/frontali', null).then((foundFilters) => {
             if (foundFilters) {
               const { locations } = foundFilters;
               if (Array.isArray(locations)) {
@@ -70,16 +70,16 @@ const Lessons = () => {
     const filteredLessons = initialLessons.filter(lesson => {
       const matchLanguages = selectedLanguages.length === 0 || selectedLanguages.includes(lesson.language);
       const matchSubjects = selectedSubjects.length === 0 || selectedSubjects.includes(lesson.subject);
-      const matchGender = selectedGender.length === 0 || 
-      selectedGender.includes('2 האפשרויות טובות לי') || 
-      selectedGender.includes(lesson.tutor_gender) || 
-      (selectedGender.includes('זכר') && lesson.tutor_gender === 'זכר') || 
-      (selectedGender.includes('נקבה') && lesson.tutor_gender === 'נקבה');      
-      const matchOption = selectedOptions.length === 0 || 
-                        selectedOptions.includes('2 האפשרויות טובות לי') || 
-                        selectedOptions.includes(lesson.lesson_type) || 
-                        (selectedOptions.includes('פרונטלי') && lesson.lesson_type === 'פרונטלי') || 
-                        (selectedOptions.includes('אונליין') && lesson.lesson_type === 'אונליין');
+      const matchGender = selectedGender.length === 0 ||
+        selectedGender.includes('2 האפשרויות טובות לי') ||
+        selectedGender.includes(lesson.tutor_gender) ||
+        (selectedGender.includes('זכר') && lesson.tutor_gender === 'זכר') ||
+        (selectedGender.includes('נקבה') && lesson.tutor_gender === 'נקבה');
+      const matchOption = selectedOptions.length === 0 ||
+        selectedOptions.includes('2 האפשרויות טובות לי') ||
+        selectedOptions.includes(lesson.lesson_type) ||
+        (selectedOptions.includes('פרונטלי') && lesson.lesson_type === 'פרונטלי') ||
+        (selectedOptions.includes('אונליין') && lesson.lesson_type === 'אונליין');
       const matchLocation = selectedLocations.length === 0 || selectedLocations.includes(lesson.city_tutor);
 
       return matchLanguages && matchSubjects && matchGender && matchOption && matchLocation;
@@ -92,10 +92,10 @@ const Lessons = () => {
   return (
     <>
       <div style={{ paddingTop: '100px' }}>
-        <h1>Lessons</h1>
+        <h1>שיעורים</h1>
       </div>
       <Filter />
-      <h3 className="options-header">options:</h3>
+      <h3 className="options-header">אפשרויות:</h3>
       <div className="allSubjects">
         {allOptions.map((option1, key) => (
           <div
@@ -109,7 +109,7 @@ const Lessons = () => {
       </div>
       {flag && (
         <>
-          <h3 className="locations-header">locations:</h3>
+          <h3 className="locations-header">מיקומים:</h3>
           <div className="allSubjects">
             {allLocations.map((location, key) => (
               <div
@@ -123,20 +123,19 @@ const Lessons = () => {
           </div>
         </>
       )}
-      <button className="search-button" onClick={handleSearch}>Search</button>
-      <h3 className="found-lessons-header">Found Lessons:</h3>
+      <button className="search-button" onClick={handleSearch}>חפש</button>
+      <h3 className="found-lessons-header">שיעורים שנמצאו:</h3>
       <div className="allSubjects">
         {allLessons.map((lesson, key) => (
           <div key={key} className="subjectDiv">
             <div className="lessonHeader">
-              <div className="recommendationBanner">המלצת האתר</div>
+              <div className="lessonTitle">{lesson.subject}</div>
               <div className="lessonInfo">
-                <div className="lessonPrice">{lesson.price} לשעה</div>
+                <div className="lessonPrice">₪{lesson.price} לשעה</div>
               </div>
             </div>
             <div className="lessonBody">
               <div className="lessonDetails">
-                <p><strong>מקצוע:</strong> {lesson.subject}</p>
                 <p><strong>שפה:</strong> {lesson.language}</p>
                 <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
                 <p><strong>זמן שיעור:</strong> {lesson.lesson_time}</p>

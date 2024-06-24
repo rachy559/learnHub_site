@@ -29,6 +29,7 @@ const Login = ({ setShowHeaders}) => {
             setShowHeaders(false);
             localStorage.setItem('loggedInUser', JSON.stringify(user));
             console.log('Stored user data:', user); 
+            userContext.setUser({ ...userContext.user, ...user })
             navigate(`/homePage`);
           } else {
             alert("Login failed. Invalid username or password.");
@@ -40,6 +41,7 @@ const Login = ({ setShowHeaders}) => {
         console.log(err);
       }
     }; 
+
     fetchUsers();
   }
   
@@ -51,6 +53,7 @@ const Login = ({ setShowHeaders}) => {
       [name]: value,
     });
   };
+  console.log(userContext)
 
   return (
     <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
