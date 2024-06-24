@@ -22,11 +22,9 @@ const port = 3000;
 
  const upload=require('./routes/filesRoute');
  app.use('/upload',upload);
-//  const lessons=require('./routes/lessonsRoute');
-//  app.use('/lessons',lessons);
+
  const lessons=require('./routes/lessonsRoute');
  app.use('/lessons',lessons);
-//  app.use('/languages',lessons);
 
 
 
