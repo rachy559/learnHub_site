@@ -1,0 +1,14 @@
+.languageDiv.selected,
+.subjectDiv.selected {
+  background-color: blue;
+  color: white;
+}
+
+.languageDiv,
+.subjectDiv {
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid black;
+  display: inline-block;
+}

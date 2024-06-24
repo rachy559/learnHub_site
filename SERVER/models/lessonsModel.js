@@ -1,14 +1,23 @@
 const pool = require('../DB');
 
-
-
-async function getLenguages() {
+async function getLanguages() {
     try {
-        const sql=`SELECT language_name FROM languages`
+        const sql = `SELECT language_name FROM languages`;
         const [rows, fields] = await pool.query(sql);
         return rows;
     } catch (err) {
         throw err;
     }
 }
-module.exports = { getLenguages }
+
+async function getSubjects() {
+    try {
+        const sql = `SELECT subjectName FROM subjects`;
+        const [rows, fields] = await pool.query(sql);
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { getLanguages, getSubjects };

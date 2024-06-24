@@ -1,10 +1,18 @@
 const model = require('../models/lessonsModel');
 
-async function getAllLenguages(){
+async function getAllLanguages(){
     try{
-        return await model.getLenguages();
+        return await model.getLanguages();
     }catch(err){
         throw err;
     }
 }
-module.exports={ getAllLenguages};
+
+async function getAllSubjects(){
+    try{
+        return await model.getSubjects();
+    }catch(err){
+        throw err;
+    }
+}
+module.exports={ getAllLanguages,getAllSubjects};

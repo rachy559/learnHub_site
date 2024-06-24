@@ -33,7 +33,6 @@ function App() {
             try {
                 await serverRequests('GET', `tutors?_limit=${limit}`, null).then((foundTutors) => {
                     setAllTutors(foundTutors);
-                    console.log("tutors", allTutors, foundTutors)
                 })
             } catch (error) {
                 console.error('Error fetching tutors:', error);

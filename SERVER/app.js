@@ -26,7 +26,7 @@ const port = 3000;
 //  app.use('/lessons',lessons);
  const lessons=require('./routes/lessonsRoute');
  app.use('/lessons',lessons);
- app.use('/lenguages',lessons);
+//  app.use('/languages',lessons);
 
 
 

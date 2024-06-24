@@ -1,45 +1,92 @@
 import React, { useState, useEffect, useContext } from 'react';
 import '../css/App.css';
+import '../css/lessons.css';
 import { serverRequests } from '../Api';
 import { UserContext } from "../App";
 
 const Lessons = () => {
   const [allLanguages, setAllLanguages] = useState([]);
+  const [allSubjects, setAllSubjects] = useState([]);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
   const user = useContext(UserContext);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const foundLanguages = await serverRequests('GET', 'languages', null);
-        console.log("resLen",response)
-        if (response.ok) {  // בדוק אם התשובה מוצלחת
-          const foundLanguages = await response.json();
-          if (Array.isArray(foundLanguages)) {
-            setAllLanguages(foundLanguages);
+        serverRequests('GET', 'lessons', null).then((foundLanguages)=>{
+             console.log("resLen",foundLanguages)
+        if (foundLanguages) {  // בדוק אם התשובה מוצלחת
+          const { languages, subjects } = foundLanguages;
+          if (Array.isArray(languages) && Array.isArray(subjects)) {
+            setAllLanguages(languages);
+            setAllSubjects(subjects);
           } else {
-            console.error('Expected array but got:', foundLanguages);
+            console.error('Expected arrays but got:', languages, subjects);
           }
         } else {
-          console.error('Server returned an error:', response.statusText);
+          console.error('Server returned an error:', foundLanguages.statusText);
         }
+        })
       } catch (error) {
-        console.error('Error fetching languages:', error);
+        console.error('Error fetching data:', error);
       }
     };
     fetchData();
   }, []);
 
+  const handleLanguageClick = (language) => {
+    setSelectedLanguages(prev =>
+      prev.includes(language) ? prev.filter(l => l !== language) : [...prev, language]
+    );
+  };
+
+  const handleSubjectClick = (subject) => {
+    setSelectedSubjects(prev =>
+      prev.includes(subject) ? prev.filter(s => s !== subject) : [...prev, subject]
+    );
+  };
+
+  const handleSearch = () => {
+    console.log('Selected Languages:', selectedLanguages);
+    console.log('Selected Subjects:', selectedSubjects);
+    // Add logic here to filter lessons based on selected languages and subjects
+  };
+
   return (
     <>
       <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
-        <h1>hi</h1>
+
+      <h1>Lessons</h1>
       </div>
-      <div className="allLanguages">
-        {allLanguages.map((language, key) => (
-          <div className="languageDiv" key={key}>
-            <label className="language">{language.language_name}</label>
-          </div>
-        ))}
+      <div className="filter">
+        <h2>Filter by:</h2>
+        <h3>Language:</h3>
+        <div className="allLanguages">
+          {allLanguages.map((language, key) => (
+            <div
+              className={`languageDiv ${selectedLanguages.includes(language.language_name) ? 'selected' : ''}`}
+              key={key}
+              onClick={() => handleLanguageClick(language.language_name)}
+            >
+              <label className="language">{language.language_name}</label>
+            </div>
+          ))}
+        </div>
+        <h3>subject:</h3>
+        <div className="allSubjects">
+          {allSubjects.map((subject, key) => (
+            <div
+              className={`subjectDiv ${selectedSubjects.includes(subject.subjectName) ? 'selected' : ''}`}
+              key={key}
+              onClick={() => handleSubjectClick(subject.subjectName)}
+            >
+              <label className="subject">{subject.subjectName}</label>
+            </div>
+          ))}
+        </div>
+        <button onClick={handleSearch}>Search</button>
       </div>
     </>
   );
