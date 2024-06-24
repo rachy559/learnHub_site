@@ -40,7 +40,7 @@ const Lessons = () => {
         return updatedOptions;
       } else {
         const updatedOptions = [...prev, option1];
-        if (option1 === "פרונטלי") {
+        if (option1 === "פרונטלי"||option1 === "2 האפשרויות טובות לי") {
           setFlag(true);
           serverRequests('GET', `filter/frontali`, null).then((foundFilters) => {
             if (foundFilters) {
@@ -70,17 +70,23 @@ const Lessons = () => {
     const filteredLessons = initialLessons.filter(lesson => {
       const matchLanguages = selectedLanguages.length === 0 || selectedLanguages.includes(lesson.language);
       const matchSubjects = selectedSubjects.length === 0 || selectedSubjects.includes(lesson.subject);
-      const matchGender = selectedGender.length === 0 || selectedGender.includes(lesson.tutor_gender);
-      const matchOption = selectedOptions.length === 0 ||
-        selectedOptions.includes(lesson.lesson_type) ||
-        (selectedOptions.includes('פרונטלי') && lesson.lesson_type === 'פרונטלי') ||
-        (selectedOptions.includes('אונליין') && lesson.lesson_type === 'אונליין');
+      const matchGender = selectedGender.length === 0 || 
+      selectedGender.includes('2 האפשרויות טובות לי') || 
+      selectedGender.includes(lesson.tutor_gender) || 
+      (selectedGender.includes('זכר') && lesson.tutor_gender === 'זכר') || 
+      (selectedGender.includes('נקבה') && lesson.tutor_gender === 'נקבה');      
+      const matchOption = selectedOptions.length === 0 || 
+                        selectedOptions.includes('2 האפשרויות טובות לי') || 
+                        selectedOptions.includes(lesson.lesson_type) || 
+                        (selectedOptions.includes('פרונטלי') && lesson.lesson_type === 'פרונטלי') || 
+                        (selectedOptions.includes('אונליין') && lesson.lesson_type === 'אונליין');
       const matchLocation = selectedLocations.length === 0 || selectedLocations.includes(lesson.city_tutor);
 
       return matchLanguages && matchSubjects && matchGender && matchOption && matchLocation;
     });
 
     setAllLessons(filteredLessons);
+
   };
 
   return (

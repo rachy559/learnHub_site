@@ -63,7 +63,7 @@ function App() {
     }}>
     <UserContext.Provider value={{user,setUser}}>
     <ShowHeadersContext.Provider value={showHeaders}>
-    <TutorsContext.Provider value={allTutors}>
+    <TutorsContext.Provider value={{allTutors,setAllTutors}}>
                 <BrowserRouter basename='/'>
                     <Routes>
                     <Route path="/" element={<Layout setShowHeaders={setShowHeaders} setUser={setUser}/>}>
