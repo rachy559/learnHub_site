@@ -145,6 +145,8 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
           setFile(e.target.files[0]);
     }
 
+
+
     const handleUpload = () =>{
         const formdata = new FormData();
         formdata.append('file',file)
@@ -333,7 +335,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             <button type='button' onClick={createProfileTutor}>אישור</button>
                         </form>
                         <div className='container'>
-                            <input type='file' onChange={handleFile}/>
+                            <input type='file' onChange={handleFile} name="file"/>
                            <button onClick={handleUpload}>העלה קבצים</button> 
                         </div>
                     </>
