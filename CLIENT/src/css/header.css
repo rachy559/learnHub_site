@@ -1,0 +1,111 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  direction: rtl;
+  background-color: #f0f0f0; /* רקע בהיר לאתר */
+}
+
+.app-header {
+  background-color: #ffffff; /* צבע רקע לבן */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333333; /* צבע טקסט כהה */
+}
+
+.app-logo img {
+  display: block;
+  width: 120px;
+  cursor: pointer;
+}
+
+.app-nav {
+  display: flex;
+  align-items: center;
+}
+
+.app-nav a {
+  margin: 0 15px;
+  color: #333333; /* צבע טקסט כהה */
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.app-nav a:hover {
+  color: #6a11cb; /* צבע הובר סגול */
+}
+
+.activeStyles {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #6a11cb; /* צבע טקסט סגול */
+}
+
+.profile-select select {
+  padding: 10px 20px;
+  border: 2px solid #6a11cb; /* צבע מסגרת סגול */
+  border-radius: 5px;
+  background-color: #ffffff; /* רקע לבן */
+  color: #333333; /* צבע טקסט כהה */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  outline: none;
+  margin-left: 15px;
+}
+
+.profile-select select:hover {
+  background-color: #f3e5f5; /* רקע הובר בהיר */
+  color: #6a11cb; /* צבע טקסט סגול */
+}
+
+.user-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #333333; /* צבע רקע כהה */
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  color: white;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #ffd700; /* צבע הובר זהב */
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.sidebar.active {
+  width: 250px;
+}

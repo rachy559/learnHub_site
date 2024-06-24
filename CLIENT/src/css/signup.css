@@ -1,0 +1,120 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input, select {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #fda085;
+}
+
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 30px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.registerDiv {
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin: 40px auto;
+    max-width: 700px;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+NavLink {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #4A90E2;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+NavLink:hover {
+    text-decoration: underline;
+}
+
+input[type="file"] {
+    border: none;
+    margin: 20px 0;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background: #4A90E2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: #357ABD;
+}

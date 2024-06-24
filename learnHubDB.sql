@@ -134,10 +134,10 @@ CREATE TABLE lessons(
 	priceLesson INT NOT NULL,
 	zoomLink varchar(255),
 	accessibility bool NOT NULL,
-	payment_id INT,
+-- 	payment_id INT,
 	student_id INT,
 	tutor_id INT,
-	FOREIGN KEY (payment_id) REFERENCES payments (payment_id),
+-- 	FOREIGN KEY (payment_id) REFERENCES payments (payment_id),
 	FOREIGN KEY (student_id) REFERENCES students (student_id),
 	FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
 );
@@ -193,14 +193,14 @@ INSERT INTO rolls (rollName) VALUES
 
 -- Insert data into users table
 INSERT INTO users (firstName, lastName, email, phone, gender, birth_date, address_id) VALUES
-('John', 'Doe', 'john.doe@example.com', '1234567890', 'Male', '1980-01-01', 1),
-('Jane', 'Smith', 'jane.smith@example.com', '0987654321', 'Female', '1990-02-02', 2),
-('Alice', 'Johnson', 'alice.johnson@example.com', '2345678901', 'Female', '2000-03-03', 3),
-('Bob', 'Brown', 'bob.brown@example.com', '3456789012', 'Male', '1985-04-04', 4),
-('Charlie', 'Davis', 'charlie.davis@example.com', '4567890123', 'Male', '1975-05-05', 5),
-('Rachel', 'Avraham', 'rachel.avraham@example.com', '0531234567', 'Female', '2000-10-25', 4),
-('Moshe', 'Israel', 'moshe.israel@example.com', '0554567890', 'Male', '1970-12-31', 5),
-('שלמה', 'קיפניס', 'kipnis@example.com', '0556373893', 'Male', '1970-12-31', 5);
+('John', 'Doe', 'john.doe@example.com', '1234567890', 'זכר', '1980-01-01', 1),
+('Jane', 'Smith', 'jane.smith@example.com', '0987654321', 'נקבה', '1990-02-02', 2),
+('Alice', 'Johnson', 'alice.johnson@example.com', '2345678901', 'נקבה', '2000-03-03', 3),
+('Bob', 'Brown', 'bob.brown@example.com', '3456789012', 'זכר', '1985-04-04', 4),
+('Charlie', 'Davis', 'charlie.davis@example.com', '4567890123', 'זכר', '1975-05-05', 5),
+('Rachel', 'Avraham', 'rachel.avraham@example.com', '0531234567', 'נקבה', '2000-10-25', 4),
+('Moshe', 'Israel', 'moshe.israel@example.com', '0554567890', 'זכר', '1970-12-31', 5),
+('שלמה', 'קיפניס', 'kipnis@example.com', '0556373893', 'זכר', '1970-12-31', 5);
 
 
 -- Insert data into roll_for_user table
@@ -221,7 +221,8 @@ INSERT INTO passwords (userId, password) VALUES
 (4, 'password4'),
 (5, 'password5'),
 (6, 'password6'),
-(7, 'password7');
+(7, 'password7'),
+(8, 'sh');
 
 -- Insert data into languages table
 INSERT INTO languages (language_name) VALUES
@@ -251,9 +252,9 @@ INSERT INTO subjects (subjectName) VALUES
 -- Insert data into tutors table
 INSERT INTO tutors (tutor_id, intended_for_gender) VALUES
 (3, 'Both'),
-(4, 'Female'),
-(8, 'Male'),
-(5, 'Male');
+(4, 'נקבה'),
+(8, 'זכר'),
+(5, 'זכר');
 
 
 -- Insert data into subject_of_tutor table
@@ -292,12 +293,13 @@ INSERT INTO students (student_id, studentStatus) VALUES
 (7, 'Other');
 
 -- Insert data into lessons table
-INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, payment_id, student_id, tutor_id) VALUES
-('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 1, 2, 3),
-('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE, 2, 6, 4),
-('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE, 3, 7, 5),
-('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE, 4, 2, 3),
-('Master', 180, 60, 'http://zoom.com/lesson5', FALSE, 5, 6, 5);
+INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, student_id, tutor_id) VALUES
+('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 2, 3),
+('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE, 6, 4),
+('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE, 7, 5),
+('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE, 2, 3),
+('Master', 180, 60, NULL, FALSE,  2, 5),
+('Master', 180, 60, 'http://zoom.com/lesson5', FALSE, 6, 5);
 
 -- Insert data into lesson_languages table
 INSERT INTO lesson_languages (lesson_id, language_id) VALUES
@@ -305,7 +307,8 @@ INSERT INTO lesson_languages (lesson_id, language_id) VALUES
 (2, 2),
 (3, 3),
 (4, 4),
-(5, 5);
+(5, 5),
+(6, 4);
 
 -- Insert data into subject_of_lesson table
 INSERT INTO subject_of_lesson (lesson_id, subject_id) VALUES
@@ -313,7 +316,8 @@ INSERT INTO subject_of_lesson (lesson_id, subject_id) VALUES
 (2, 2),
 (3, 3),
 (4, 4),
-(5, 5);
+(5, 5),
+(6, 4);
 
 -- Insert data into manager table
 INSERT INTO manager (manager_id) VALUES
