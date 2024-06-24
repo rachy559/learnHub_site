@@ -7,6 +7,7 @@ import { serverRequests } from './Api';
 import LogIn from './pages/Login';
 import SignUp from './pages/SignUp';
 import Lessons from './pages/Lessons';
+import Manager_homePage from './pages/Manager_homePage';
 
 
  
@@ -55,6 +56,8 @@ function App() {
                       <Route path="/login" element={<LogIn setShowHeaders={setShowHeaders} setUser={setUser}/>} />
                       <Route path="/signUp" element={<SignUp setShowHeaders={setShowHeaders} setUser={setUser}/>} />
                       <Route path="/lessons" element={<Lessons />} />
+                      <Route path="/manager_homePage" element={<Manager_homePage />} />
+
                    </Route>
                    </Routes>
              </BrowserRouter>

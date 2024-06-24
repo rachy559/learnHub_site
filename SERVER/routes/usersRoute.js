@@ -5,6 +5,9 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const cors = require('cors');
 router.use(cors());
+const jwt = require("jsonwebtoken");
+require ('../authMiddleware')
+
 
 router.get("/", async (req, res) => {
     try {
@@ -22,9 +25,5 @@ router.post("/", async (req, res) => {
         res.status(500).send(err);
     }
 })
-
-
-
-
 
 module.exports = router;
