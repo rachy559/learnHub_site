@@ -27,6 +27,8 @@ const port = 3000;
  const lessons=require('./routes/lessonsRoute');
  app.use('/lessons',lessons);
 
+//  const manager=require('./routes/managerRoute');
+//  app.use('/manager_homePage',manager);
 
 
  const filter=require('./routes/filterRoute');
