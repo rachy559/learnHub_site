@@ -62,14 +62,14 @@ const Filter = () => {
 <div className="filter">
         <h2>Filter by:</h2>
         <h3>Language:</h3>
-        <div className="allLanguages">
+        <div className="allSubjects">
           {allLanguages.map((language, key) => (
             <div
-              className={`languageDiv ${selectedLanguages.includes(language.language_name) ? 'selected' : ''}`}
+              className={`subjectDiv ${selectedLanguages.includes(language.language_name) ? 'selected' : ''}`}
               key={key}
               onClick={() => handleLanguageClick(language.language_name)}
             >
-              <label className="language">{language.language_name}</label>
+              <label className="subject">{language.language_name}</label>
             </div>
           ))}
         </div>

@@ -4,17 +4,17 @@ body {
   padding: 0;
   overflow-x: hidden;
   direction: rtl;
-  background-color: #f0f0f0; /* רקע בהיר לאתר */
+  background-color: #f6d365; /* רקע בהיר לאתר */
 }
 
 .app-header {
-  background-color: #ffffff; /* צבע רקע לבן */
+  background-color: #f6db83; /* צבע רקע לבן */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #333333; /* צבע טקסט כהה */
+  color: black; /* צבע טקסט כהה */
 }
 
 .app-logo img {
