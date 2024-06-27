@@ -6,6 +6,8 @@ import '../css/header.css';
 
 const Header = ({ setShowHeaders }) => {
   const { user, setUser } = useContext(UserContext);
+  
+  console.log(user)
   const showHeaders = useContext(ShowHeadersContext);
   const navigate = useNavigate();
   const [selectedProfile, setSelectedProfile] = useState('');
@@ -61,8 +63,8 @@ const Header = ({ setShowHeaders }) => {
             </div>
             <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}>
               <a href="" className="closebtn" onClick={toggleSidebar}>&times;</a>
-              <a href="">הצגת פרטי פרופיל</a>
-              <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders) }}>יציאה מהחשבון</a>
+              <a onClick={() => { navigate('/profile');  }}>הצגת פרטי פרופיל</a>
+              <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders);  }}>יציאה מהחשבון</a>
             </div>
           </>
         )}

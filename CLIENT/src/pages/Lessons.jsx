@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import { FilterContext } from '../App';
 import Filter from '../components/Filter';
@@ -12,6 +13,7 @@ const Lessons = () => {
   const [allLocations, setAllLocations] = useState([]);
   const [allOptions] = useState(["פרונטלי", "אונליין", "2 האפשרויות טובות לי"]);
   const [flag, setFlag] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -127,7 +129,7 @@ const Lessons = () => {
       <h3 className="found-lessons-header">שיעורים שנמצאו:</h3>
       <div className="allSubjects">
         {allLessons.map((lesson, key) => (
-          <div key={key} className="subjectDiv">
+          <div key={key} className="subjectDiv" onClick={()=>navigate('/lesson')}>
             <div className="lessonHeader">
               <div className="lessonTitle">{lesson.subject}</div>
               <div className="lessonInfo">

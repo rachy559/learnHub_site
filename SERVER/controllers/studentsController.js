@@ -13,4 +13,14 @@ async function createStudent(studentStatus,email) {
     }
 }
 
-module.exports={ createStudent };
+async function getStudent(id) {
+    try {
+        console.log(id)
+        const response =await model.getSingleStudent(id);
+        return response[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports={ createStudent,getStudent };

@@ -11,4 +11,36 @@ async function createSingleStudent(studentStatus,userId) {
     }
 }
 
-module.exports = { createSingleStudent }
+async function getSingleStudent(id) {
+    try {
+        console.log("model",id)
+        const sql=`SELECT 
+    s.student_id,
+    s.studentStatus,
+    u.firstName,
+    u.lastName,
+    u.email,
+    u.phone,
+    u.gender,
+    u.birth_date,
+    a.city,
+    a.street,
+    a.house_number
+FROM 
+     users u
+JOIN 
+    students s ON s.student_id = u.userId
+LEFT JOIN 
+    addresses a ON u.address_id = a.address_id
+WHERE 
+    u.userId = ?;
+`
+        const result = await pool.query(sql, [id]);
+        console.log(result)
+        return result[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { createSingleStudent,getSingleStudent }

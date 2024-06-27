@@ -1,0 +1,72 @@
+/* General styling for the profile container */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #4F5866; /* Dark gray from the logo */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent scrolling */
+  }
+  
+  /* Styling the profile card */
+  .profile-card {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    text-align: right; /* Right-to-left alignment for Hebrew */
+    border: 3px solid #C4D7E0; /* Light blue from the logo */
+  }
+  
+  /* Header styles */
+  .profile-header {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-header h2, .profile-header h3 {
+    color: #333;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for profile details */
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Individual detail item styling */
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .detail-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* Strong tags for labels */
+  .detail-item strong {
+    color: #555;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .profile-container {
+      padding: 10px;
+    }
+  
+    .profile-card {
+      padding: 15px;
+    }
+  }
+  
