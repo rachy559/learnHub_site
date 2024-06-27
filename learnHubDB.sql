@@ -12,13 +12,14 @@ DROP TABLE IF EXISTS manager;
 DROP TABLE IF EXISTS subject_of_tutor;
 DROP TABLE IF EXISTS subject_of_lesson;
 DROP TABLE IF EXISTS subjects;
+DROP TABLE IF EXISTS lesson_for_student;
 DROP TABLE IF EXISTS lesson_languages;
 DROP TABLE IF EXISTS lessons;
 DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS payments;
 DROP TABLE IF EXISTS tutors_languages;
 DROP TABLE IF EXISTS files_for_tutors;
 DROP TABLE IF EXISTS files;
+DROP TABLE IF EXISTS calander_work;
 DROP TABLE IF EXISTS tutors;
 DROP TABLE IF EXISTS languages;
 DROP TABLE IF EXISTS passwords;
@@ -114,17 +115,11 @@ CREATE TABLE tutors_languages (
     FOREIGN KEY (language_id) REFERENCES languages (language_id)
 );
 
-CREATE TABLE payments(
-	payment_id INT auto_increment PRIMARY KEY
-);
-
 
 CREATE TABLE students(
     student_id INT PRIMARY KEY,
     studentStatus varchar(30) NOT NULL,
---     payment_id INT,
     FOREIGN KEY (student_id) REFERENCES users (userId)
-   --  FOREIGN KEY (payment_id) REFERENCES payments (payment_id)
 );
 
 CREATE TABLE lessons(
@@ -134,11 +129,7 @@ CREATE TABLE lessons(
 	priceLesson INT NOT NULL,
 	zoomLink varchar(255),
 	accessibility bool NOT NULL,
--- 	payment_id INT,
-	student_id INT,
 	tutor_id INT,
--- 	FOREIGN KEY (payment_id) REFERENCES payments (payment_id),
-	FOREIGN KEY (student_id) REFERENCES students (student_id),
 	FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
 );
 
@@ -150,12 +141,31 @@ CREATE TABLE lesson_languages (
     FOREIGN KEY (language_id) REFERENCES languages (language_id)
 );
 
+CREATE TABLE lesson_for_student(
+    lesson_id INT,
+	student_id INT ,
+    dayLesson varchar(30),
+	timeLesson varchar(30),
+    dateLesson DATE NOT NULL,
+	PRIMARY KEY (lesson_id, student_id),
+	FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id),
+	FOREIGN KEY (student_id) REFERENCES students (student_id)
+);
+
 CREATE TABLE subject_of_lesson(
     lesson_id INT,
     subject_id INT,
     PRIMARY KEY (lesson_id, subject_id),
     FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id),
     FOREIGN KEY (subject_id) REFERENCES subjects (subject_id)
+); 
+
+CREATE TABLE calander_work(
+      clanderId INT auto_increment PRIMARY KEY,
+      tutorId INT,
+      dayLesson VARCHAR(10) NOT NULL,
+	  timesAvaliablePerDay VARCHAR(255) NOT NULL,
+	  FOREIGN KEY (tutorId) REFERENCES tutors (tutor_id)
 );
 
 CREATE TABLE manager(
@@ -256,7 +266,25 @@ INSERT INTO tutors (tutor_id, intended_for_gender) VALUES
 (8, 'זכר'),
 (5, 'זכר');
 
-
+-- Insert data into calander table
+INSERT INTO calander_work (tutorId, dayLesson, timesAvaliablePerDay) VALUES
+(3 ,'ראשון', '10,11,13,14,16,17,18,19,20'),
+(3 ,'שני', '16,17,18,19,20'),
+(3 ,'שלישי', '15,16,17,18,19,20'),
+(3 ,'רביעי', '15,16,17,18,19,20'),
+(3 ,'חמישי', '10,11,12,13,14,16,17,18,19,20'),
+(4 ,'ראשון', '9,10,12,13,14,16,17,18,19,20'),
+(4 ,'שני', '10,11,12,14,16,17,19,20,21,22'),
+(4 ,'חמישי', '10,11,12,13,14,16,17,18,19,20'),
+(8 ,'ראשון', '10,11,12,13,14,16,17,18,19,20'),
+(8 ,'שני', '10,11,12,13,14,16,17,18,19,20'),
+(8 ,'שלישי', '10,11,13,14,16,19,20,21,22'),
+(8 ,'רביעי', '10,11,12,18,19,20,21,22'),
+(5 ,'שני', '8,9,10,11,12,20,21,22'),
+(5 ,'שלישי', '10,11,12,18,19,20,21,22'),
+(5 ,'חמישי', '10,11,12,13,16,19,20,21,22'),
+(5 ,'שישי', '10,11,12')
+;
 -- Insert data into subject_of_tutor table
 INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES
 (3, 1),
@@ -278,13 +306,6 @@ INSERT INTO tutors_languages (tutor_id, language_id) VALUES
 (3, 1),
 (4, 2),
 (5, 3);
--- Insert data into payments table
-INSERT INTO payments VALUES
-(1),
-(2),
-(3),
-(4),
-(5);
 
 -- Insert data into students table
 INSERT INTO students (student_id, studentStatus) VALUES
@@ -293,13 +314,22 @@ INSERT INTO students (student_id, studentStatus) VALUES
 (7, 'Other');
 
 -- Insert data into lessons table
-INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, student_id, tutor_id) VALUES
-('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 2, 3),
-('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE, 6, 4),
-('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE, 7, 5),
-('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE, 2, 3),
-('Master', 180, 60, NULL, FALSE,  2, 5),
-('Master', 180, 60, 'http://zoom.com/lesson5', FALSE, 6, 5);
+INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id) VALUES
+('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 3),
+('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE,  4),
+('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE,  5),
+('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE,  3),
+('Master', 180, 60, NULL, FALSE, 5),
+('Master', 180, 60, 'http://zoom.com/lesson5', FALSE,  5);
+
+-- Insert data into lesson_for_student table
+INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLesson) VALUES
+(1,2,'ראשון','11','2024-01-01'),
+(1,6,'שני','19','2024-01-01'),
+(2,2,'שני','14','2024-01-01'),
+(4,7,'רביעי','16','2024-01-01'),
+(4,6,'חמישי','17','2024-01-01'),
+(6,2,'שישי','10','2024-01-01');
 
 -- Insert data into lesson_languages table
 INSERT INTO lesson_languages (lesson_id, language_id) VALUES
