@@ -7,7 +7,8 @@ const StudentProfile = () => {
   const userContext = useContext(UserContext);
   const [student, setStudent] = useState({});
   const [lesson, setLesson] = useState([]);
-
+  const currentDate = new Date();
+  const formattedDate = currentDate.toISOString().split('T')[0];
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
@@ -54,9 +55,10 @@ console.log(lesson)
       <div>
         <br/>
         <h3>השיעורים שלי:</h3>
-<br/>
+<br/>{console.log(formattedDate)}
         {lesson.map((lesson, key) => (
-         ((lesson.lesson_date > Date.now())||!lesson.lesson_date)?(<><div>אין שיעורים שאתה רשון אליהם</div></>):(  <div key={key} className="subjectDiv" >
+            
+         ((lesson.lesson_date < formattedDate)||!lesson.lesson_date)?(<><div>אין שיעורים שאתה רשון אליהם</div></>):(  <div key={key} className="subjectDiv" >
     <div className="lessonHeader">
       <div className="lessonTitle">{lesson.subject_name}</div>
       <div className="lessonInfo">
