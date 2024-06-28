@@ -17,6 +17,7 @@ async function getStudent(id) {
     try {
         console.log(id)
         const response =await model.getSingleStudent(id);
+        console.log("rr",response[0])
         return response[0];
     } catch (err) {
         throw err;
