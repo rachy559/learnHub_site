@@ -1,72 +1,133 @@
-/* General styling for the profile container */
+:root {
+  --primary-color: #a8d0e1;
+  --secondary-color: #a8dfcc;
+  --accent-color: #fbdfa5;
+  --background-color: #f5f5f5;
+  --card-background-color: #ffffff;
+  --text-color: #333333;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* body {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
 .profile-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #4F5866; /* Dark gray from the logo */
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: hidden; /* Prevent scrolling */
-  }
-  
-  /* Styling the profile card */
-  .profile-card {
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    width: 100%;
-    padding: 20px;
-    text-align: right; /* Right-to-left alignment for Hebrew */
-    border: 3px solid #C4D7E0; /* Light blue from the logo */
-  }
-  
-  /* Header styles */
-  .profile-header {
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .profile-header h2, .profile-header h3 {
-    color: #333;
-    margin: 0;
-    margin-bottom: 10px;
-  }
-  
-  /* Styling for profile details */
-  .profile-details {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  /* Individual detail item styling */
-  .detail-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .detail-item:last-child {
-    border-bottom: none;
-  }
-  
-  /* Strong tags for labels */
-  .detail-item strong {
-    color: #555;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .profile-container {
-      padding: 10px;
-    }
-  
-    .profile-card {
-      padding: 15px;
-    }
-  }
-  
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.profile-card {
+  background-color: var(--card-background-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-header {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.profile-header h2 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.profile-header h3 {
+  margin-top: 10px;
+  color: var(--secondary-color);
+}
+
+.profile-details {
+  margin-top: 20px;
+}
+
+.detail-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--card-background-color);
+}
+
+h3 {
+  margin-top: 30px;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.subjectDiv {
+  background-color: var(--card-background-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.lessonHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--secondary-color);
+  margin-bottom: 10px;
+}
+
+.lessonTitle {
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+.lessonInfo {
+  font-size: 16px;
+  color: #fbdfa5  ;
+}
+
+.lessonBody {
+  margin-top: 10px;
+}
+
+.lessonDetails p {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  color: var(--card-background-color);
+  box-shadow: var(--box-shadow);
+}
+
+.noLessonsMessage {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--card-background-color);
+  color: red;
+}
+
+.deleteIcon{
+  width: 10%;
+  margin-right: 220px;
+  margin-bottom: 5px;
+}
+
+.updateIcon{
+  width: 12%;
+  margin-top: 15px;
+  margin-right: 10px ;
+}
