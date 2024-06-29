@@ -331,7 +331,7 @@ INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLe
 (2,2,'שני','14','2024-01-01'),
 (4,7,'רביעי','16','2024-01-01'),
 (4,6,'חמישי','17','2024-01-01'),
-(6,2,'שישי','10','2024-01-01');
+(6,2,'שישי','10','2024-07-01');
 
 -- Insert data into lesson_languages table
 INSERT INTO lesson_languages (lesson_id, language_id) VALUES

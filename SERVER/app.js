@@ -30,7 +30,6 @@ const port = 3000;
 //  const manager=require('./routes/managerRoute');
 //  app.use('/manager_homePage',manager);
 
-
  const filter=require('./routes/filterRoute');
  app.use('/filter',filter);
 

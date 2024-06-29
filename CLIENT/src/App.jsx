@@ -8,8 +8,8 @@ import LogIn from './pages/Login';
 import SignUp from './pages/SignUp';
 import Lessons from './pages/Lessons';
 import Manager_homePage from './pages/Manager_homePage';
-
-
+import StudentProfile from './pages/StudentProfile';
+import Lesson from './components/Lesson';
  
 export const UserContext = createContext()
 export const ShowHeadersContext = createContext();
@@ -50,6 +50,8 @@ function App() {
 
   return (   
     <> 
+    
+    <UserContext.Provider value={{user,setUser}}>
     <FilterContext.Provider value={{
       selectedLanguages,
       setSelectedLanguages,
@@ -62,7 +64,6 @@ function App() {
       selectedLocations,
       setSelectedLocations
     }}>
-    <UserContext.Provider value={{user,setUser}}>
     <ShowHeadersContext.Provider value={showHeaders}>
     <TutorsContext.Provider value={{allTutors,setAllTutors}}>
                 <BrowserRouter basename='/'>
@@ -75,14 +76,16 @@ function App() {
                       <Route path="/signUp" element={<SignUp setShowHeaders={setShowHeaders} setUser={setUser}/>} />
                       <Route path="/lessons" element={<Lessons />} />
                       <Route path="/manager_homePage" element={<Manager_homePage />} />
-
+                      <Route path="/lesson" element={<Lesson />} />
+                      <Route path="/profile" element={<StudentProfile setUser={setUser} user={user}/>} />
                    </Route>
                    </Routes>
              </BrowserRouter>
      </TutorsContext.Provider>       
      </ShowHeadersContext.Provider>
-     </UserContext.Provider>
      </FilterContext.Provider>
+     </UserContext.Provider>
+     
     </>
   )
 }
