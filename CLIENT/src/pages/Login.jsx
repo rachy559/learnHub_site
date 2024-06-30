@@ -26,8 +26,9 @@ const Login = ({ setShowHeaders}) => {
       try {
         serverRequests('POST', 'login', formData)
         .then((user) => {
+          // const { user, token } = response.data; // חילוץ היוזר והטוקן מהתגובה
           if (user) {
-            console.log(user)
+            console.log("here",user)
             alert(`Login successful! Welcome back ${user.firstName}😎`);
             setShowHeaders(false);
             localStorage.setItem('loggedInUser', JSON.stringify(user));
