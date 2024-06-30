@@ -21,7 +21,8 @@ const port = 3000;
  const students=require('./routes/studentsRoute');
  app.use('/students',students);
 
- const upload=require('./routes/filesRoute');
+
+ const upload=require('./routes/uploadRoute');
  app.use('/upload',upload);
 
  const lessons=require('./routes/lessonsRoute');

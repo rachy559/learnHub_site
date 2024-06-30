@@ -1,41 +1,67 @@
 .allTutors {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.tutorDiv {
+  width: 300px;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.tutorDivCircle {
+  width: 300px;
+  margin: 20px;
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+}
+
+.tutorDivCircle img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.tutor {
+  display: block;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Layout */
+@media only screen and (max-width: 768px) {
   .tutorDiv {
-    width: 300px;
-    margin: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+      width: calc(50% - 40px);
   }
-  
-  .photo {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
+}
+
+@media only screen and (max-width: 576px) {
+  .tutorDiv {
+      width: calc(100% - 40px);
   }
-  
-  .tutor {
-    display: block;
-    margin-top: 5px;
-    font-weight: bold;
-  }
-  
-  button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+}

@@ -1,118 +1,141 @@
+/* signup.css */
 body {
-    font-family: 'Arial', sans-serif;
-    background: /*linear-gradient(135deg, #f6d365 0%, #fda085 100%)*/ white;
-    color: #333;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f7f9fc;
     margin: 0;
     padding: 0;
-    direction: rtl;
-    overflow-x: hidden;
+}
+
+.registerDiv {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
 }
 
 h1 {
     text-align: center;
-    font-size: 48px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    color: #2c3e50; /* Darker shade for header */
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #a8d0e1; /* Accent color for the underline */
+    margin: 10px auto 0;
+    border-radius: 2px;
 }
 
 h2 {
     text-align: center;
-    font-size: 32px;
+    color: #34495e; /* Slightly darker shade for sub-header */
+    font-size: 22px;
+    font-weight: 500;
     margin-bottom: 20px;
-    font-weight: bold;
 }
 
-form {
+.registerForm {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 400px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
 }
 
-input, select {
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-sizing: border-box;
+.registerForm div {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="password"],
+input[type="number"],
+select {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s;
+    background-color: white;
+    color: #333;
+    border-color: #a8d0e1;
+    transition: border-color 0.3s, background-color 0.3s;
 }
 
-input:focus, select:focus {
-    border-color: #fda085;
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #a8d0e1;
+    background-color: #fff;
+}
+
+input[type="file"] {
+    margin-top: 10px;
 }
 
 button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 15px 30px;
-    margin: 10px 0;
+    padding: 12px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
+    background-color: #a8d0e1; /* Green shade for button */
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    transition: background 0.3s;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-}
-
-.registerDiv {
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    margin: 40px auto;
-    max-width: 700px;
-    text-align: center;
+    background-color: #fff; /* Darker green shade on hover */
+    color:#a8d0e1;
 }
 
 .container {
-    text-align: center;
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-NavLink {
+.container button {
+    margin-top: 10px;
+}
+
+a {
     display: block;
     text-align: center;
     margin-top: 20px;
-    color: #4A90E2;
+    color: #2980b9; /* Blue shade for links */
     text-decoration: none;
     font-size: 16px;
 }
 
-NavLink:hover {
+a:hover {
     text-decoration: underline;
 }
 
-input[type="file"] {
-    border: none;
-    margin: 20px 0;
+.alert {
+    color: red;
+    text-align: center;
+    font-size: 14px;
 }
 
-input[type="file"]::-webkit-file-upload-button {
-    background: #4A90E2;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-input[type="file"]::-webkit-file-upload-button:hover {
-    background: #357ABD;
+.gender{
+    margin-bottom: 20px;
+    margin-right: 2px;
+    margin-top: -13px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
 }

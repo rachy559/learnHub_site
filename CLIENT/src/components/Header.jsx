@@ -14,8 +14,7 @@ const Header = ({ setShowHeaders }) => {
   const [styleConnect, setStyleConnect] = useState(false);
   const activeStyles = {
     fontWeight: "bold",
-    textDecoration: "underline",
-    color: "#ffd700"
+    color: "#fbdfa5"
   };
 
   const handleProfileChange = (e) => {

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import { ShowHeadersContext, UserContext } from "../App";
+import '../css/signup.css';
+
 
 
 const Login = ({ setShowHeaders}) => {
@@ -57,13 +59,12 @@ const Login = ({ setShowHeaders}) => {
 
   return (
     <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
-    <div className='loginDiv'>
-
-      <h1>Login</h1><br></br>
-      <form className='loginForm'>
+    <div className='registerDiv'>
+      <h1>שמחים שחזרת</h1><br></br>
+      <form className='registerForm'>
         <div>
           <input
-            placeholder='email'
+            placeholder='דואר אלקטרוני'
             type="text"
             name="email"
             value={formData.email}
@@ -72,7 +73,7 @@ const Login = ({ setShowHeaders}) => {
         </div><br></br>
         <div>
           <input
-            placeholder='password'
+            placeholder='סיסמא'
             type="password"
             name="password"
             value={formData.password}

@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { serverRequests } from '../Api';
-import '../css/tutors.css';
 import { TutorsContext, FilterContext } from '../App';
 import Filter from '../components/Filter';
+import '../css/tutors.css';
 
 const Tutors = () => {
     const { allTutors, setAllTutors } = useContext(TutorsContext);
@@ -28,30 +27,39 @@ const Tutors = () => {
         setAllTutors(filteredTutors);
     };
 
+    const isImageFile = (fileUrl) => {
+        if (!fileUrl) return false; // Check if fileUrl is null or undefined
+        const acceptedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        const extension = fileUrl.split('.').pop().toLowerCase();
+        return acceptedExtensions.includes(extension);
+    };
+    
     return (
-        <>
-            <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
-                <Filter />
-                <button onClick={handleSearch}>Search</button>
-                <div className='allTutors'>
-                    {allTutors.map((tutor, key) => (
-                        <div className="tutorDiv" key={key}>
-                            <img className="photo" src={tutor.fileUrls} alt={`תמונתו של ${tutor.tutorName}`} />
-                            <br />
-                            <span className="tutor"><strong>שם המרצה:</strong> {tutor.tutorName} </span>
-                            <span className="tutor"><strong>תאריך לידה:</strong> {tutor.birth_date} </span>
-                            <span className="tutor"><strong>כתובת:</strong> {tutor.tutorAddress} </span>
-                            <span className="tutor"><strong>דוא"ל:</strong> {tutor.email} </span>
-                            <span className="tutor"><strong>טלפון:</strong> {tutor.phone} </span>
-                            <span className="tutor"><strong>מגדר:</strong> {tutor.gender} </span>
-                            <span className="tutor"><strong>מגדר להוראה:</strong> {tutor.intended_for_gender} </span>
-                            <span className="tutor"><strong>שפות:</strong> {tutor.languages} </span>
-                            <span className="tutor"><strong>נושאים:</strong> {tutor.subjects} </span>
-                        </div>
-                    ))}
-                </div>
+        <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
+            <Filter />
+            <button onClick={handleSearch}>Search</button>
+            <div className='allTutors'>
+                {allTutors.map((tutor, key) => (
+                    <div className="tutorDiv" key={key}>
+                        {isImageFile(tutor.fileUrls) ? (
+                            <img className="photo" src={tutor.fileUrls} alt={tutor.tutorName} />
+                        ) : (
+                            <img className="photo" src='../pictures/user.png' alt={tutor.tutorName} />
+                        )}
+                        <br />
+                        <span className="tutor"><strong>שם המרצה:</strong> {tutor.tutorName} </span>
+                        <span className="tutor"><strong>תאריך לידה:</strong>{new Date(tutor.birth_date).toLocaleDateString()} </span>
+                        <span className="tutor"><strong>כתובת:</strong> {tutor.tutorAddress} </span>
+                        <span className="tutor"><strong>דוא"ל:</strong> {tutor.email} </span>
+                        <span className="tutor"><strong>טלפון:</strong> {tutor.phone} </span>
+                        <span className="tutor"><strong>מגדר:</strong> {tutor.gender} </span>
+                        <span className="tutor"><strong>מגדר להוראה:</strong> {tutor.intended_for_gender} </span>
+                        <span className="tutor"><strong>שפות:</strong> {tutor.languages} </span>
+                        <span className="tutor"><strong>נושאים:</strong> {tutor.subjects} </span>
+                    </div>
+                ))}
             </div>
-        </>
+        </div>
     );
 };
 

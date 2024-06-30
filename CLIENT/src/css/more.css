@@ -10,18 +10,18 @@ body {
   
   
   /* הגדרות לשורת הניווט */
-  .app-header {
+  /* .app-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     background-color: #3f454e; /* צבע רקע כהה */
-    opacity: 80%;
+    /* opacity: 80%;
     position: fixed;
     width: 100%;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+  } */ */
   
   .app-logo img {
     width: 120px;
@@ -182,7 +182,6 @@ body {
     padding: 20px;
     background-color: #f1f1f1;
     color: #161616;
-    font-weight: bold;
-    font-size: 0.8em;
+     font-size: 0.8em;
   }
   
