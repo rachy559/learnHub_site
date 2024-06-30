@@ -4,7 +4,9 @@ const app = express();
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
 // const jwt=require('jsonwebtoken');
-const port = 3000;
+require('dotenv').config();
+
+const PORTRUN = process.env.PORTRUN || 3000;
 
  const homePage=require('./routes/homePageRoute');
  app.use('/',homePage);
@@ -34,7 +36,7 @@ const port = 3000;
  app.use('/filter',filter);
 
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
+app.listen(PORTRUN, () => {
+    console.log(`App listening on port ${PORTRUN}`);
   });
 

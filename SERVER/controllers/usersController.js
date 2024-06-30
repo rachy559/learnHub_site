@@ -14,7 +14,7 @@ async function login(email, password) {
     try {
         const user = await model.getByEmail(email);
         if (!user) {
-            throw new Error('User not exist');
+            throw new Error('Authentication failed');
         } 
             const passwordUser = await model.getPassword(user.userId)
             const response = bcrypt.compare(password, passwordUser.password)
