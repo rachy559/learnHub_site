@@ -87,7 +87,7 @@ input[type="file"] {
     margin-top: 10px;
 }
 
-button {
+.btn {
     padding: 12px 20px;
     border: none;
     border-radius: 5px;

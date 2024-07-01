@@ -37,7 +37,7 @@ const Tutors = () => {
     return (
         <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
             <Filter />
-            <button onClick={handleSearch}>Search</button>
+            <button className='search' onClick={handleSearch}>Search</button>
             <div className='allTutors'>
                 {allTutors.map((tutor, key) => (
                     <div className="tutorDiv" key={key}>

@@ -10,7 +10,6 @@ router.get("/", async (req, res) => {
     try {
         const languages = await controller.getAllLanguages();
         const subjects = await controller.getAllSubjects();
-        console.log("oo",languages,subjects)
         res.setHeader('Content-Type', 'application/json');
         res.send({ languages, subjects });
     }
