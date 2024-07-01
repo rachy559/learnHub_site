@@ -20,5 +20,15 @@ router.get("/:id", async (req, res) => {
     }
 })
 
+// router.post("/", async(req, res) => {
+//     try{
+//         const response = await controller.createTime(req.body.lessonDate,req.body.lessonHour,req.body.tutor_id)
+//         console.log("response:", response);
+//         res.send(response)
+//     } catch(err){
+//         res.status(404).send('User not found');
+//     }
+// });
+
 
 module.exports = router

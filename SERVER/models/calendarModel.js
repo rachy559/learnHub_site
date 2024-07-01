@@ -20,4 +20,14 @@ async function getrescribedTimes(tutor_id) {
     }
 }
 
-module.exports = { getTimes,getrescribedTimes };
+// async function createTimeCalendar(lessonDate,lessonHour,tutor_id) {
+//     try {
+//         const sql = "INSERT INTO prescribedLessons (tutor_id, lessonDate, lessonHour) VALUES (?, ?, ?)";
+//         const [rows, fields] = await pool.query(sql, [tutor_id, lessonDate, lessonHour]);
+//         return rows.insertId;
+//     } catch (err) {
+//         throw err;
+//     }
+// }
+
+module.exports = { getTimes,getrescribedTimes};
