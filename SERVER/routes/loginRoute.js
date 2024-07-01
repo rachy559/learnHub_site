@@ -9,7 +9,7 @@ require('dotenv').config;
 const jwt=require('jsonwebtoken');
 const verify = require('../middlewares/authMiddleware')
 // const { generateAccessToken, generateRefreshToken } = require('../tokenUtils');
-// const refreshTokens = []
+const refreshTokens = []
 
 // router.post("/token", (req, res) => {
 //     const refreshToken = req.body.token;
@@ -35,28 +35,28 @@ router.post("/", async(req, res) => {
             return res.status(401).json({ message: "Authentication failed" });
         }
 
-        // const token = jwt.sign({email}, process.env.JWT_SECRET, { expiresIn: "1800s" })
-        // const refreshToken = jwt.sign(email, process.env.REFRESH_TOKEN_SECRET);
-        // refreshTokens.push(refreshToken);
-//         return res.status(200).json({
-//             user: user,
-//             token: token,
-//             refreshToken:refreshToken,
-//         });
-//     } catch (err) {
-//         console.error("Login error:", err);
-//         res.status(500).send('Login failed');
-//     }
-// });
-    
-    
-            console.log("resuser",user);
-        // const token = jwt.sign({id:user.userId, first_name:user.firstname, email:user.email}, process.env.JWT_SECRET, { expiresIn: '1h' });
-        // res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 259200000 });
-        res.status(200).send(user);
-    } catch(err){ 
+        const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1800s" })
+        const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+        refreshTokens.push(refreshToken);
+        return res.status(200).json({
+            user: user,
+            token: token,
+            refreshToken:refreshToken,
+        });
+    } catch (err) {
+        console.error("Login error:", err);
         res.status(500).send('Login failed');
-    }});
+    }
+});
+    
+    
+    //         console.log("resuser",user);
+    //     // const token = jwt.sign({id:user.userId, first_name:user.firstname, email:user.email}, process.env.JWT_SECRET, { expiresIn: '1h' });
+    //     // res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 259200000 });
+    //     res.status(200).send(user);
+    // } catch(err){ 
+    //     res.status(500).send('Login failed');
+    // }});
 
 
 

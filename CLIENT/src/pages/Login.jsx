@@ -25,8 +25,8 @@ const Login = ({ setShowHeaders}) => {
     const fetchUsers = async () => {
       try {
         serverRequests('POST', 'login', formData)
-        .then((user) => {
-          // const { user, token } = response.data; // חילוץ היוזר והטוקן מהתגובה
+        .then((response) => {
+          const { user, token } = response; // חילוץ היוזר והטוקן מהתגובה
           if (user) {
             console.log("here",user)
             alert(`Login successful! Welcome back ${user.firstName}😎`);

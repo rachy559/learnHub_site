@@ -21,6 +21,17 @@ const authenticateToken = (req, res, next) => {
 };
 
 
+const authenticateAdmin = (req, res, next)=>{
+  if(!req.user){
+     res.status(401).send('Access denied');
+  }
+  if(user.role === 'Admin'){
+    next();
+  }
+}
+
+
+
 
 // const authorizeRoll = (rolls) => {
 //   return async (req, res, next) => {
@@ -36,5 +47,5 @@ const authenticateToken = (req, res, next) => {
 // };
 
 
-module.exports = {authenticateToken};
+module.exports = {authenticateToken, authenticateAdmin};
 

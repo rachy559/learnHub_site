@@ -58,7 +58,7 @@ const StudentProfile = () => {
           <div className="noLessonsMessage">אין שיעורים שאתה רשום אליהם</div>
         ) : (
           lessons.map((lesson, key) => (
-            (!lesson || lesson.lesson_date > formattedDate) ? (
+            (!lesson || lesson.lesson_date >= formattedDate) ? (
               <div key={key} className="subjectDiv">
                 <div className="lessonHeader">
                   <div className="lessonTitle">{lesson.subject_name}</div>

@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const {authenticateToken, authenticateAdmin} = require('./middlewares/authMiddleware')
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
 // const jwt=require('jsonwebtoken');
@@ -12,7 +13,9 @@ const PORTRUN = process.env.PORTRUN || 3000;
  app.use('/',homePage);
 
  const tutors=require('./routes/tutorsRoute');
- app.use('/tutors',tutors);
+//  app.use('/tutors',authenticateToken, authenticateAdmin, tutors);
+ app.use('/tutors', tutors);
+
 
  const login=require('./routes/loginRoute');
  app.use('/login',login);
