@@ -8,6 +8,7 @@ USE learnHubDB;
 
 
 DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS prescribedLessons;
 DROP TABLE IF EXISTS manager;
 DROP TABLE IF EXISTS subject_of_tutor;
 DROP TABLE IF EXISTS subject_of_lesson;
@@ -168,6 +169,14 @@ CREATE TABLE calander_work(
 	  FOREIGN KEY (tutorId) REFERENCES tutors (tutor_id)
 );
 
+CREATE TABLE prescribedLessons(
+    prescribedLesson INT auto_increment PRIMARY KEY,
+    tutor_id INT,
+	lessonDate DATE NOT NULL,
+    lessonHour varchar(10) NOT NULL,
+    FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
+);
+
 CREATE TABLE manager(
 	manager_id INT auto_increment PRIMARY KEY,
 	FOREIGN KEY (manager_id) REFERENCES users (userId)
@@ -296,6 +305,14 @@ VALUES
     (5, 'רביעי', '10,11,12,18,19,20,21,22'), -- Assuming similar to Tuesday
     (5, 'חמישי', '10,11,12,13,16,19,20,21,22'),
     (5, 'שישי', '10,11,12');
+
+INSERT INTO prescribedLessons (tutor_id, lessonDate, lessonHour) VALUES
+(3, '2024-07-07', '10:00'),  -- ראשון, מורה 3
+(3, '2024-07-08', '16:00'),  -- שני, מורה 3
+(4, '2024-07-09', '15:00'),  -- שלישי, מורה 4
+(5, '2024-07-10', '15:00'),  -- רביעי, מורה 5
+(8, '2024-07-11', '10:00');  -- חמישי, מורה 8
+
 
 -- Insert data into subject_of_tutor table
 INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES

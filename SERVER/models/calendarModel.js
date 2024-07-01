@@ -10,5 +10,14 @@ async function getTimes(tutor_id) {
     }
 }
 
+async function getrescribedTimes(tutor_id) {
+    try {
+        const sql = "SELECT lessonDate, lessonHour FROM prescribedlessons WHERE tutor_id = ?";
+        const [rows, fields] = await pool.query(sql, [tutor_id]);
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
 
-module.exports = { getTimes };
+module.exports = { getTimes,getrescribedTimes };

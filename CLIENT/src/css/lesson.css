@@ -80,3 +80,16 @@
     color: #a8dfcc;
   }
   
+  .ff{
+    background-color: black;
+    color: black;
+  
+  }
+
+  /* סגנון כפתור לא מאופשר */
+.time-button:disabled {
+  background-color: #ddd; /* צבע רקע לכפתור לא מאופשר */
+  color: #888; /* צבע טקסט לכפתור לא מאופשר */
+  cursor: not-allowed; /* מניעת השתמשות בכפתור */
+  border: 1px solid #ccc; /* גבול לכפתור לא מאופשר */
+}

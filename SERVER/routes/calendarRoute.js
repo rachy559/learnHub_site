@@ -9,10 +9,16 @@ router.use(cors());
 router.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        res.status(201).send(await controller.getCalendar(id));
+        const response = {
+            availableTimes: await controller.getCalendar(id),
+            prescribedTimes: await controller.getPrescribedLessons(id)
+        }
+        console.log("res",response)
+        res.status(201).send(response);
     } catch (err) {
         res.status(500).send(err);
     }
 })
+
 
 module.exports = router

@@ -9,5 +9,12 @@ async function getCalendar(tutor_id){
     }
 }
 
+async function getPrescribedLessons(tutor_id){
+    try{
+        return await model.getrescribedTimes(tutor_id);
+    }catch(err){
+        throw err;
+    }
+}
 
-module.exports={ getCalendar};
+module.exports={ getCalendar,getPrescribedLessons};
