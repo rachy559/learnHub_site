@@ -8,6 +8,7 @@ USE learnHubDB;
 
 
 DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS prescribedLessons;
 DROP TABLE IF EXISTS manager;
 DROP TABLE IF EXISTS subject_of_tutor;
 DROP TABLE IF EXISTS subject_of_lesson;
@@ -164,9 +165,16 @@ CREATE TABLE calander_work(
       clanderId INT auto_increment PRIMARY KEY,
       tutorId INT,
       dayLesson VARCHAR(10) NOT NULL,
-      dateLesson DATE,
 	  timesAvaliablePerDay VARCHAR(255) NOT NULL,
 	  FOREIGN KEY (tutorId) REFERENCES tutors (tutor_id)
+);
+
+CREATE TABLE prescribedLessons(
+    prescribedLesson INT auto_increment PRIMARY KEY,
+    tutor_id INT,
+	lessonDate DATE NOT NULL,
+    lessonHour varchar(10) NOT NULL,
+    FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
 );
 
 CREATE TABLE manager(
@@ -268,25 +276,44 @@ INSERT INTO tutors (tutor_id, intended_for_gender) VALUES
 (5, 'זכר');
 
 -- Insert data into calander table
-INSERT INTO calander_work (tutorId, dayLesson, dateLesson, timesAvaliablePerDay) 
+INSERT INTO calander_work (tutorId, dayLesson, timesAvaliablePerDay) 
 VALUES 
-    (3, 'ראשון', '2024-06-30', '10,11,13,14,16,17,18,19,20'),
-    (3, 'שני', '2024-07-01', '16,17,18,19,20'),
-    (3, 'שלישי', '2024-07-02', '15,16,17,18,19,20'),
-    (3, 'רביעי', '2024-07-03', '15,16,17,18,19,20'),
-    (3, 'חמישי', '2024-07-04', '10,11,12,13,14,16,17,18,19,20'),
-    (4, 'ראשון', '2024-06-30', '9,10,12,13,14,16,17,18,19,20'),
-    (4, 'שני', '2024-07-01', '10,11,12,14,16,17,19,20,21,22'),
-    (4, 'חמישי', '2024-07-04', '10,11,12,13,14,16,17,18,19,20'),
-    (8, 'ראשון', '2024-06-30', '10,11,12,13,14,16,17,18,19,20'),
-    (8, 'שני', '2024-07-01', '10,11,12,13,14,16,17,18,19,20'),
-    (8, 'שלישי', '2024-07-02', '10,11,13,14,16,19,20,21,22'),
-    (8, 'רביעי', '2024-07-03', '10,11,12,18,19,20,21,22'),
-    (5, 'שני', '2024-07-01', '8,9,10,11,12,20,21,22'),
-    (5, 'שלישי', '2024-07-02', '10,11,12,18,19,20,21,22'),
-    (5, 'חמישי', '2024-07-04', '10,11,12,13,16,19,20,21,22'),
-    (5, 'שישי', '2024-07-05', '10,11,12');
-    
+    (3, 'ראשון',  '10,11,13,14,16,17,18,19,20'),
+    (3, 'שני',  '16,17,18,19,20'),
+    (3, 'שלישי',  '15,16,17,18,19,20'),
+    (3, 'רביעי',  '15,16,17,18,19,20'),
+    (3, 'חמישי',  '10,11,12,13,14,16,17,18,19,20'),
+    (3, 'שישי',  '8,9,10'), -- Assuming Friday hours
+
+    (4, 'ראשון',  '9,10,12,13,14,16,17,18,19,20'),
+    (4, 'שני',  '10,11,12,14,16,17,19,20,21,22'),
+    (4, 'שלישי', '10,11,12,14,16,17,19,20,21,22'), -- Assuming same as Monday
+    (4, 'רביעי', '10,11,12,14,16,17,19,20,21,22'), -- Assuming same as Monday
+    (4, 'חמישי', '10,11,12,13,14,16,17,18,19,20'),
+    (4, 'שישי',  '10,11,12,13'), -- Assuming similar to other days
+
+    (8, 'ראשון', '10,11,12,13,14,16,17,18,19,20'),
+    (8, 'שני', '10,11,12,13,14,16,17,18,19,20'),
+    (8, 'שלישי',  '10,11,13,14,16,19,20,21,22'),
+    (8, 'רביעי',  '10,11,12,18,19,20,21,22'),
+    (8, 'חמישי',  '10,11,12,13,14,16,17,18,19,20'), -- Assuming similar to Sunday/Monday
+    (8, 'שישי',  '10,11,12,13'), -- Assuming similar to other days
+
+    (5, 'ראשון', '10,11,12,18,19,20,21,22'), -- Assuming similar to other days
+    (5, 'שני',  '8,9,10,11,12,20,21,22'),
+    (5, 'שלישי', '10,11,12,18,19,20,21,22'),
+    (5, 'רביעי', '10,11,12,18,19,20,21,22'), -- Assuming similar to Tuesday
+    (5, 'חמישי', '10,11,12,13,16,19,20,21,22'),
+    (5, 'שישי', '10,11,12');
+
+INSERT INTO prescribedLessons (tutor_id, lessonDate, lessonHour) VALUES
+(3, '2024-07-07', '10'),  -- ראשון, מורה 3
+(3, '2024-07-08', '16'),  -- שני, מורה 3
+(4, '2024-07-09', '15'),  -- שלישי, מורה 4
+(5, '2024-07-10', '11'),  -- רביעי, מורה 5
+(8, '2024-07-11', '10');  -- חמישי, מורה 8
+
+
 -- Insert data into subject_of_tutor table
 INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES
 (3, 1),

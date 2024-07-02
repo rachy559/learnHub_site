@@ -26,6 +26,8 @@ const PORTRUN = process.env.PORTRUN || 3000;
  const students=require('./routes/studentsRoute');
  app.use('/students',students);
 
+ const calendar=require('./routes/calendarRoute');
+ app.use('/calendar',calendar);
 
  const upload=require('./routes/uploadRoute');
  app.use('/upload',upload);

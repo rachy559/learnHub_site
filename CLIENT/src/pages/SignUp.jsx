@@ -312,7 +312,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                         />
                     </div><br />
 
-                    <button type="button" onClick={ContinueDetails}>
+                    <button className='btn' type="button" onClick={ContinueDetails}>
                         המשך
                     </button>
                 </form>
@@ -331,7 +331,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                     <option value="תיכון">תיכון</option>
                                     <option value="על תיכוני">על תיכוני</option>
                                 </select>
-                                <button type='button' onClick={createProfileStudent}>אישור</button>
+                                <button className='btn' type='button' onClick={createProfileStudent}>אישור</button>
                             </div>
                             <br />
                         </>
@@ -373,13 +373,13 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                         value={currentLanguage}
                                         onChange={(e) => setCurrentLanguage(e.target.value)}
                                     />
-                                    <button type="button" onClick={handleAddLanguage}>+ הוסף</button>
+                                    <button className='btn' type="button" onClick={handleAddLanguage}>+ הוסף</button>
                                 </div>
-                                <button type='button' onClick={createProfileTutor}>אישור</button>
+                                <button className='btn' type='button' onClick={createProfileTutor}>אישור</button>
                             </form>
                             <div className='container'>
                                 <input type='file' onChange={handleFileChange} name="file"/>
-                               <button type='button' onClick={handleFileUpload}>העלה קבצים</button> 
+                               <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button> 
                             </div>
                         </>
 

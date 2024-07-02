@@ -4,6 +4,7 @@ async function getLessons() {
     try {
         const sql = `SELECT 
     CONCAT(u.firstName, ' ', u.lastName) AS tutor_name,
+    t.tutor_id,
     s.subjectName AS subject,
     l.language_name AS language,
     le.priceLesson AS price,
@@ -35,7 +36,6 @@ JOIN
 `;
 
         const [rows, fields] = await pool.query(sql);
-        console.log("ee",rows)
         return rows;
     } catch (err) {
         throw err;
