@@ -17,6 +17,7 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   port: process.env.PORT
 // password: 'mysql24',
+//   password: 'rySQL2024',
 }).promise();
 
 module.exports = pool;

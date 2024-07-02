@@ -8,7 +8,8 @@ router.use(express.urlencoded({ extended: true }));
 require('dotenv').config;
 const jwt=require('jsonwebtoken');
 const verify = require('../middlewares/authMiddleware')
-// const { generateAccessToken, generateRefreshToken } = require('../tokenUtils');
+const authController = require('../controllers/authController');
+const { generateAccessToken, generateRefreshToken } = require('../tokenUtils');
 const refreshTokens = []
 
 // router.post("/token", (req, res) => {
@@ -28,19 +29,20 @@ const refreshTokens = []
 //     });
 //   });
 
+// router.post("/", authController.login,async(req, res) => {
+
 router.post("/", async(req, res) => {
     try{
         const user=await controller.login(req.body.email,req.body.password);        
         if (!user) {
             return res.status(401).json({ message: "Authentication failed" });
         }
-
-        const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1800s" })
-        const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+        const accessToken = generateAccessToken(user); //האם צריך אותם אם כבר שמתי בפונ שבודקת את הלוגין?
+        const refreshToken = generateRefreshToken(user);//כנ"ל.
         refreshTokens.push(refreshToken);
         return res.status(200).json({
             user: user,
-            token: token,
+            token: accessToken,
             refreshToken:refreshToken,
         });
     } catch (err) {
@@ -50,65 +52,8 @@ router.post("/", async(req, res) => {
 });
     
     
-    //         console.log("resuser",user);
-    //     // const token = jwt.sign({id:user.userId, first_name:user.firstname, email:user.email}, process.env.JWT_SECRET, { expiresIn: '1h' });
     //     // res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 259200000 });
-    //     res.status(200).send(user);
-    // } catch(err){ 
-    //     res.status(500).send('Login failed');
-    // }});
 
-
-
-
-    // router.post("/", async(req, res) => {
-    //     try{
-            
-    //         //const user={email:req.body.email, password:req.body.password}
-    //         // const accesToken=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET) 
-    //         const user=await controller.login(req.body.email,req.body.password);
-    //         if (!user) return res.status(404).send('User not found');
-    //         const accessToken = generateAccessToken({ id: user.id, email: user.email });
-    //         const refreshToken = generateRefreshToken({ id: user.id, email: user.email });
-    //        // const accesToken= jwt.sign(user,process.env.ACCESS_TOKEN_SECRET) 
-            
-    //         console.log("resuser",user);
-    //         // const user2=await controller.getById(response.userId);
-    //         // console.log("user2",user2);
-    //         // res.json({accesToken: accesToken});
-    //         res.json({user, accessToken, refreshToken });
-    //        // res.send(user);
-    //     } 
-    //     catch(err){ 
-    //         res.status(500).send(err);
-    //     }});
-
-
-
-
-
-
-
-
-
-
-    // router.post("/", async(req, res) => {
-    //     try{
-            
-    //         // const user={email:req.body.email, password:req.body.password}
-    //         // const accesToken=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET) 
-    //         const user=await controller.login(req.body.email,req.body.password);
-    //         // const accesToken= jwt.sign(user,process.env.ACCESS_TOKEN_SECRET) 
-            
-    //         console.log("resuser",user);
-    //         // const user2=await controller.getById(response.userId);
-    //         // console.log("user2",user2);
-    //         // res.json({accesToken: accesToken});
-    //         res.send(user);
-    //     } catch(err){ 
-    //         res.status(404).send('User not found');
-    //     }});
-    
 
 
 // router.post("/",verify.authenticateToken, async(req, res) => {

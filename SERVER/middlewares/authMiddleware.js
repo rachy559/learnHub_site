@@ -21,16 +21,24 @@ const authenticateToken = (req, res, next) => {
 };
 
 
-const authenticateAdmin = (req, res, next)=>{
-  if(!req.user){
-     res.status(401).send('Access denied');
-  }
-  if(user.role === 'Admin'){
-    next();
-  }
-}
+// const authenticateAdmin = (req, res, next)=>{
+//   if(!req.user){
+//      res.status(401).send('Access denied');
+//   }
+//   if(user.role === 'Admin'){
+//     next();
+//   }
+// }
 
 
+// const requireRole = (role) => {
+//   return (req, res, next) => {
+//       if (!req.user || !req.user.roles || !req.user.roles.includes(role)) {
+//           return res.sendStatus(403);
+//       }
+//       next();
+//   };
+// };
 
 
 // const authorizeRoll = (rolls) => {
@@ -47,5 +55,5 @@ const authenticateAdmin = (req, res, next)=>{
 // };
 
 
-module.exports = {authenticateToken, authenticateAdmin};
+module.exports = {authenticateToken};
 
