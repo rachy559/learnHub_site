@@ -23,6 +23,7 @@ a:hover {
 }
 
 body {
+  overflow-x: hidden; /* Hide horizontal scrollbar */
   margin: 0;
   place-items: center;
   min-width: 320px;

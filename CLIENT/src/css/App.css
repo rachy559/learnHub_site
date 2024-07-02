@@ -1,5 +1,6 @@
 כלל הגדרות הבסיס
 body {
+  overflow-x: hidden; /* Hide horizontal scrollbar */
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
