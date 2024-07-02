@@ -1,30 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../css/lesson.css';
 import { serverRequests } from '../Api';
-import { useLocation } from 'react-router-dom';
+import { createRoutesFromChildren, useLocation } from 'react-router-dom';
+import Modal from 'react-modal';
+import { UserContext } from "../App";
+Modal.setAppElement('#root');
 
 const Lesson = () => {
   const location = useLocation();
-  const { lesson } = location.state || {}; 
+  const { user, setUser } = useContext(UserContext);
+  console.log(user)
+  const { lesson } = location.state || {};
   console.log("lesson", lesson);
-  const [formData, setFormData]=useState({
-    lessonDate:"",
-    lessonHour:"",
-    tutor_id:lesson.tutor_id
+  const [formData, setFormData] = useState({
+    lessonDate: "",
+    lessonHour: "",
+    tutor_id: ""
   })
+  // const [formDataLesson, setFormDataLesson] = useState({
+  //   student_id: user.userId,
+  //   lessonHour: "",
+  //   tutor_id: ""
+  // })
+  const [modalIsOpen, setIsOpen] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableTimes, setAvailableTimes] = useState([]);
   const [prescribedTimes, setPrescribedTimes] = useState([]);
+  const [date, setDate] = useState([]);
+  const [time, setTime] = useState([]);
+
 
   useEffect(() => {
-    serverRequests('GET', `calendar/${lesson.tutor_id}`).then((response) => {
-      console.log("response", response);
-      setAvailableTimes(response.availableTimes);
-      setPrescribedTimes(response.prescribedTimes);
-    });
+    try {
+      serverRequests('GET', `calendar/${lesson.tutor_id}`).then((response) => {
+        console.log("response", response);
+        setAvailableTimes(response.availableTimes);
+        setPrescribedTimes(response.prescribedTimes);
+      });
+    }
+    catch (err) {
+      console.log(err);
+    }
   }, [lesson]);
 
   const handleDateChange = (date) => {
@@ -42,8 +61,8 @@ const Lesson = () => {
     ? availableTimes.filter((time) => time.dayLesson === selectedDay)
     : [];
 
-  const filteredOccupiedTimes = selectedDate ? 
-  prescribedTimes.filter((time) => new Date(time.lessonDate).toDateString() === selectedDate.toDateString() /*&& time.lessonHour === lesson.tutor_id*/)
+  const filteredOccupiedTimes = selectedDate ?
+    prescribedTimes.filter((time) => new Date(time.lessonDate).toDateString() === selectedDate.toDateString() /*&& time.lessonHour === lesson.tutor_id*/)
     : [];
 
   const formatTime = (time) => {
@@ -55,7 +74,7 @@ const Lesson = () => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const formattedDate = date.toLocaleDateString('he-IL', options);
     const dayInHebrew = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'][date.getDay()];
-  
+
     return `יום ${dayInHebrew} - ${formattedDate.replace(/\./g, '/')}`;
   };
 
@@ -65,18 +84,42 @@ const Lesson = () => {
     );
   };
 
-  // const addLesson = (selectedDate, time) => {
-  //   const dateOnly = selectedDate.toISOString().split('T')[0];
-  //   setFormData({lessonDate:dateOnly,
-  //     lessonHour:time}) // YYYY-MM-DD
-  //   serverRequests('POST', `calendar`,formData).then((response) => {
-  //     console.log("response", response);
-      
-  //   });
-  //   console.log("time",dateOnly,time)
-    
-  // };
+  const addLesson = () => {
 
+    try {
+      // serverRequests('POST', `lessons`, formData).then((response) => {
+      //   console.log("re", response)
+      //   alert(`השיעור נוסף בהצלחה לרשימת השיעורים שלך`);
+      //   setIsOpen(false);
+      // })
+      serverRequests('POST', `calendar`, formData).then((response) => {
+        console.log("re", response)
+        alert(`השיעור נוסף בהצלחה לרשימת השיעורים שלך`);
+        setIsOpen(false);
+      })
+    } catch (err) {
+      alert("Failed. An error occurred.");
+      console.log(err);
+    }
+  };
+
+  const openModal = (selectedDate, time) => {
+    setIsOpen(true);
+    const dateOnly = formatDateInHebrew(selectedDate);
+    setDate(dateOnly);
+    setTime(time);
+    setFormData(
+      {
+        lessonDate: selectedDate.toISOString().split('T')[0],
+        lessonHour: time,
+        tutor_id: lesson.tutor_id
+      })
+
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
   return (
     <div className="lesson-container">
       <Calendar
@@ -84,7 +127,7 @@ const Lesson = () => {
         className='calendar'
         onChange={handleDateChange}
       />
-      
+
       {isClick && (
         <div className='available-times-container'>
           <h3 className='he'>השעות הפנויות היום:</h3>
@@ -93,10 +136,10 @@ const Lesson = () => {
             {filteredTimes.length > 0 ? (
               filteredTimes[0].timesAvaliablePerDay.split(',').map((time, index) => (
                 <button
-                  key={index} 
+                  key={index}
                   className='time-button'
                   disabled={isTimeOccupied(time)}
-                  onClick={()=>addLesson(selectedDate,time)}
+                  onClick={() => openModal(selectedDate, time)}
                 >
                   {formatTime(time)}
                 </button>
@@ -107,6 +150,43 @@ const Lesson = () => {
           </div>
         </div>
       )}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className='customStyles'
+
+      >
+
+        <span className="close" onClick={closeModal}>&times;</span>
+        <h3 className='header'>פרטי השיעור שנבחר:</h3>
+        <div className="subjectDivModal">
+          <div className="lessonHeader">
+            <div className="lessonTitle">{lesson.subject}</div>
+            <div className="lessonInfo">
+              <div className="lessonPrice">₪{lesson.price} לשעה</div>
+            </div>
+          </div>
+          <div className="lessonBody">
+            <div className="lessonDetailsModal">
+              <p><strong>שפה:</strong> {lesson.language}</p>
+              <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
+              <p><strong>זמן שיעור:</strong> {lesson.lesson_time}</p>
+              <p><strong>רמת שיעור:</strong> {lesson.level}</p>
+              <p><strong>פרונטלי/אונליין:</strong> {lesson.lesson_type}</p>
+              <p><strong>מגדר:</strong> {lesson.tutor_gender}</p>
+              {lesson.lesson_type === "פרונטלי" && (
+                <p><strong>כתובת שיעור:</strong> {lesson.city_tutor}, {lesson.street_tutor}</p>
+              )}
+            </div>
+          </div>
+        </div>
+        <br />
+        <h3 className='header'>בתאריך: {date} בשעה: {time}:00</h3>
+        <div className='buttonsModal'></div>
+        <button className='cancelButtons' onClick={closeModal}>ביטול</button>
+        <button className='confirmButtons' onClick={addLesson}>אישור</button>
+
+      </Modal>
     </div>
   );
 };

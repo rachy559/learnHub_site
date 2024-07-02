@@ -36,8 +36,8 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     });
 
     const [formDataFile, setFormDataFile] = useState({
-        file:"",
-        tutor_id:userContext.user.email
+        file: "",
+        tutor_id: userContext.user.email
     });
 
     const [currentLanguage, setCurrentLanguage] = useState("");
@@ -46,7 +46,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     const [uploadError, setUploadError] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
-    
+
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
@@ -57,10 +57,15 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     }
 
     function createProfileStudent() {
-        serverRequests('POST', 'students', formDataStudent).then((response) => {
-            userContext.setUser({ ...userContext.user, ...formDataStudent });
-        })
-        setHide(false);
+        try {
+            serverRequests('POST', 'students', formDataStudent).then((response) => {
+                userContext.setUser({ ...userContext.user, ...formDataStudent });
+            })
+            setHide(false);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     const handleChange = (e) => {
@@ -165,7 +170,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         }
 
         setIsUploading(true);
-        console.log("ff",file)
+        console.log("ff", file)
         const fileFormData = new FormData();
         fileFormData.append('file', file);
         console.log(fileFormData)
@@ -197,7 +202,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         <>
             <div style={{ paddingTop: '100px' }}></div>
             <div className="registerDiv">
-            <h1> הצטרף אלינו:</h1><br />
+                <h1> הצטרף אלינו:</h1><br />
                 <form className="registerForm">
                     <div>
                         <input
@@ -378,8 +383,8 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                 <button className='btn' type='button' onClick={createProfileTutor}>אישור</button>
                             </form>
                             <div className='container'>
-                                <input type='file' onChange={handleFileChange} name="file"/>
-                               <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button> 
+                                <input type='file' onChange={handleFileChange} name="file" />
+                                <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button>
                             </div>
                         </>
 
