@@ -19,11 +19,12 @@ const Lesson = () => {
     lessonHour: "",
     tutor_id: ""
   })
-  // const [formDataLesson, setFormDataLesson] = useState({
-  //   student_id: user.userId,
-  //   lessonHour: "",
-  //   tutor_id: ""
-  // })
+  const [formDataLesson, setFormDataLesson] = useState({
+    student_id: "",
+    dayLesson: "",
+    timeLesson: "",
+    dateLesson: ""
+  })
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -85,17 +86,19 @@ const Lesson = () => {
   };
 
   const addLesson = () => {
-
     try {
-      // serverRequests('POST', `lessons`, formData).then((response) => {
-      //   console.log("re", response)
-      //   alert(`השיעור נוסף בהצלחה לרשימת השיעורים שלך`);
-      //   setIsOpen(false);
-      // })
-      serverRequests('POST', `calendar`, formData).then((response) => {
-        console.log("re", response)
-        alert(`השיעור נוסף בהצלחה לרשימת השיעורים שלך`);
-        setIsOpen(false);
+      serverRequests('POST', `lessons`, formDataLesson).then((response) => {
+        serverRequests('POST', `calendar`, formData).then((response) => {
+          setPrescribedTimes(prevTimes => [
+            ...prevTimes,
+            {
+              lessonDate: formData.lessonDate,
+              lessonHour: formData.lessonHour
+            }
+          ]);
+          alert(`השיעור נוסף בהצלחה לרשימת השיעורים שלך`);
+          setIsOpen(false);
+        })
       })
     } catch (err) {
       alert("Failed. An error occurred.");
@@ -105,21 +108,33 @@ const Lesson = () => {
 
   const openModal = (selectedDate, time) => {
     setIsOpen(true);
+    const date = new Date(selectedDate);
+    const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+    const formattedDate = localDate.toISOString().split('T')[0];
     const dateOnly = formatDateInHebrew(selectedDate);
+    const dayInHebrew = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'][selectedDate.getDay()];
     setDate(dateOnly);
     setTime(time);
     setFormData(
       {
-        lessonDate: selectedDate.toISOString().split('T')[0],
+        lessonDate: formattedDate,
         lessonHour: time,
         tutor_id: lesson.tutor_id
       })
+    setFormDataLesson({
+      lesson_id:lesson.lesson_id,
+      student_id: user.userId,
+      dayLesson: dayInHebrew,
+      timeLesson: time,
+      dateLesson: formattedDate
+    });
 
   }
 
   function closeModal() {
     setIsOpen(false);
   }
+
   return (
     <div className="lesson-container">
       <Calendar

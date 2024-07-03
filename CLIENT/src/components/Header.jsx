@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, createRoutesFromChildren, useNavigate } from "react-router-dom";
 import { ShowHeadersContext } from "../App";
 import { UserContext } from "../App";
 import Hamburger from 'hamburger-react'
@@ -26,7 +26,6 @@ const Header = ({ setShowHeaders }) => {
     } else {
       setUser({ ...user, rollId: 2 });
     }
-
     console.log("userCon", user);
     console.log("Selected Profile:", value); // Debug log
     setSelectedProfile(value);
@@ -47,13 +46,26 @@ const Header = ({ setShowHeaders }) => {
   const toggleSidebar = () => {
     setStyleConnect(!styleConnect);
   };
+
+  const navigateToProfile=()=>{
+    // console.log(user.rollId)
+    // if(user.rollId===2)
+    //   {
+    //     navigate('/studentProfile');
+    //   }
+    // else if(user.rollId===3)
+    //   {
+    //     navigate('/tutorProfile');
+    //   }
+    navigate('/tutorProfile');
+  }
+
   console.log("userCon", user);
 
   return (
     <>
-      
       <header className="app-header">
-        <div className="menu-icon" onClick={toggleMenu}>
+      <div className="menu-icon" onClick={toggleMenu}>
       <Hamburger   toggled={isOpen} toggle={setOpen}  />
       </div>
         <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' alt="Logo" /></Link>
@@ -80,7 +92,7 @@ const Header = ({ setShowHeaders }) => {
               </div>
               <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}>
                 <a href="" className="closebtn" onClick={toggleSidebar}>&times;</a>
-                <a onClick={() => { navigate('/profile'); }}>הצגת פרטי פרופיל</a>
+                <a onClick={navigateToProfile}>הצגת פרטי פרופיל</a>
                 <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}>יציאה מהחשבון</a>
               </div>
             </>

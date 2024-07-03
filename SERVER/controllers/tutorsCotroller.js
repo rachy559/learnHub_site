@@ -14,11 +14,22 @@ async function getAllTutors(limit){
 async function createTutor(intended_for_gender,subjects,languages,email) {
     try {
         const response1=await model2.getByEmail(email);
-        const response =await model.createSingleTutor(intended_for_gender,subjects,languages,response1.userId);
+        return await model.createSingleTutor(intended_for_gender,subjects,languages,response1.userId);
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function getTutor(id) {
+    try {
+        console.log(id)
+        const response =await model.getSingleTutor(id);
+        console.log("rr",response)
         return response[0];
     } catch (err) {
         throw err;
     }
 }
 
-module.exports={ getAllTutors,createTutor};
+
+module.exports={ getAllTutors,createTutor,getTutor};

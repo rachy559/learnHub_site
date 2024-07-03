@@ -10,6 +10,7 @@ import Lessons from './pages/Lessons';
 import Manager_homePage from './pages/Manager_homePage';
 import StudentProfile from './pages/StudentProfile';
 import Lesson from './components/Lesson';
+import TutorProfile from './pages/TutorProfile';
  
 export const UserContext = createContext()
 export const ShowHeadersContext = createContext();
@@ -77,7 +78,8 @@ function App() {
                       <Route path="/lessons" element={<Lessons />} />
                       <Route path="/manager_homePage" element={<Manager_homePage />} />
                       <Route path="/lesson" element={<Lesson />} />
-                      <Route path="/profile" element={<StudentProfile setUser={setUser} user={user}/>} />
+                      <Route path="/studentProfile" element={<StudentProfile setUser={setUser} user={user}/>} />
+                      <Route path="/tutorProfile" element={<TutorProfile setUser={setUser} user={user}/>} />
                    </Route>
                    </Routes>
              </BrowserRouter>

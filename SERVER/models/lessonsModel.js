@@ -8,6 +8,7 @@ async function getLessons() {
     s.subjectName AS subject,
     l.language_name AS language,
     le.priceLesson AS price,
+    le.lesson_id,
     le.lessonTime AS lesson_time,
     CASE
         WHEN le.zoomLink IS NOT NULL THEN 'אונליין'
@@ -42,4 +43,15 @@ JOIN
     }
 }
 
-module.exports = { getLessons };
+async function createLesson(lesson_id,student_id,dayLesson,timeLesson,dateLesson) {
+    try {
+        const sql = "INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLesson) VALUES (?,?, ?, ? ,?)";
+        const result = await pool.query(sql, [lesson_id,student_id,dayLesson,timeLesson,dateLesson]);
+        console.log("lesson",result[0])
+        return result[0].insertId;
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { getLessons, createLesson };

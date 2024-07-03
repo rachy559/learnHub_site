@@ -21,6 +21,18 @@ router.post("/", async(req, res) => {
         const languages=req.body.languages.toString();
         console.log("s",subjects,languages)
         const response = await controller.createTutor(req.body.intended_for_gender,subjects,languages,req.body.email)
+        console.log("response: m", response);
+        res.status(201).send({response})
+    } catch(err){
+        res.status(404).send('User not found');
+    }
+});
+
+router.get("/:id", async(req, res) => {
+    try{
+        const id = req.params.id;
+        console.log("is",id);
+        const response = await controller.getTutor(id)
         console.log("response:", response);
         res.send(response)
     } catch(err){

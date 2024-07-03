@@ -21,4 +21,13 @@ router.get("/:type",async (req, res)=>{
 
 })
 
+router.post("/", async(req, res) => {
+    try{
+        const response = await controller.createLesson(req.body.lesson_id, req.body.student_id, req.body.dayLesson,req.body.timeLesson,req.body.dateLesson);
+        res.status(201).send({response});    
+    } catch(err){
+        res.status(404).send(' not found');
+    }
+});
+
 module.exports = router

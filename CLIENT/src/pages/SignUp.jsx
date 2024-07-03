@@ -51,8 +51,9 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     const USERS_API_URL = `users?email=${formData.email}`;
 
     function createProfileTutor() {
-        serverRequests('POST', 'tutors', formDataTutor).then((response) => {
-            userContext.setUser({ ...userContext.user, ...formDataTutor });
+        serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
+            console.log(userId)
+            userContext.setUser({ ...userContext.user, ...formDataTutor,userId:userId.response });
         })
     }
 

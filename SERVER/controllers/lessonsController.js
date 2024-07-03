@@ -8,4 +8,12 @@ async function getAllLessons(){
     }
 }
 
-module.exports={ getAllLessons};
+async function createLesson(lesson_id,student_id,dayLesson,timeLesson,dateLesson){
+    try{
+        return await model.createLesson(lesson_id,student_id,dayLesson,timeLesson,dateLesson);
+    }catch(err){
+        throw err;
+    }
+}
+
+module.exports={ getAllLessons,createLesson};

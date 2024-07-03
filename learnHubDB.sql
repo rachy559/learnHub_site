@@ -148,7 +148,7 @@ CREATE TABLE lesson_for_student(
     dayLesson varchar(30),
 	timeLesson varchar(30),
     dateLesson DATE NOT NULL,
-	PRIMARY KEY (lesson_id, student_id),
+	PRIMARY KEY (lesson_id, student_id,dateLesson,timeLesson),
 	FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id),
 	FOREIGN KEY (student_id) REFERENCES students (student_id)
 );
