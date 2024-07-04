@@ -9,8 +9,9 @@ require('dotenv').config();
 
 const PORTRUN = process.env.PORTRUN || 3000;
 
- const homePage=require('./routes/homePageRoute');
- app.use('/',homePage);
+ const comments=require('./routes/commentsRoute');
+ app.use('/',comments);
+ app.use('/comments',comments);
 
  const tutors=require('./routes/tutorsRoute');
 //  app.use('/tutors',authenticateToken, authenticateAdmin, tutors);

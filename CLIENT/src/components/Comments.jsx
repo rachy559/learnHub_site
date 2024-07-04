@@ -109,9 +109,7 @@ const Comments = () => {
                     {allComments.slice(currentIndex, currentIndex + 6).map((comment, key) => (
                         <div className="commentDiv" key={key}>
                             <label className="comment">{new Date(comment.dateComment).toLocaleDateString()}</label>
-                            <span className="comment">{comment.studentName}</span>
-                            <span className="comment">{comment.tutorName}</span>
-                            <label className="comment">{comment.nameOfSubject}</label>
+                            <span className="comment"><strong>שם: </strong>{comment.studentName}</span>
                             <label className="comment">{comment.bodyComment}</label>
                         </div>
                     ))}

@@ -7,6 +7,12 @@ const StudentProfile = () => {
   const userContext = useContext(UserContext);
   const [student, setStudent] = useState({});
   const [lessons, setLessons] = useState([]);
+  const [isClick, setIsClick] = useState(false);
+  const [formData, setFormData] = useState({
+    comment_date: "",
+    body: "",
+    student_id: "",
+  });
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString().split('T')[0];
 
@@ -33,7 +39,24 @@ const StudentProfile = () => {
     fetchStudentData();
   }, []);
 
-  console.log(lessons);
+  const handleChange = (e) => {
+    setFormData({
+      comment_date: formattedDate,
+      body: e.target.value,
+      student_id: userContext.user.userId,
+    })
+  };
+
+  const addComment = (e) => {
+    try {
+      setIsClick(false);
+      serverRequests('POST', 'comments', formData);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  };
+
 
   return (
     <div className="profile-container">
@@ -88,15 +111,31 @@ const StudentProfile = () => {
                     <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
                   </div>
                   <img className='deleteIcon' src='../pictures/delete.png'></img>
-                    <img className='updateIcon' src='../pictures/update.png'></img>
+                  <img className='updateIcon' src='../pictures/update.png'></img>
                 </div>
               </div>
             ) : (
-                <></>
+              <></>
             )
           ))
         )}
       </div>
+      <button className='comBtn' onClick={() => { setIsClick(true) }}>תן פידבק</button>
+      {isClick ? (
+        <div className="addComment">
+          <label className="comment">{formattedDate}</label>
+          <label className="comment">{student.first_name} {student.last_name}</label>
+          <textarea
+            placeholder="תוכן התגובה"
+            type="text"
+            name="body"
+            className='commentBody'
+            value={formData.body}
+            onChange={handleChange}
+          />
+          <button onClick={addComment} className='comBtn'>שלח תגובה</button>
+        </div>
+      ) : (<></>)}
     </div>
   );
 }

@@ -57,7 +57,7 @@ const Header = ({ setShowHeaders }) => {
     //   {
     //     navigate('/tutorProfile');
     //   }
-    navigate('/tutorProfile');
+    navigate('/studentProfile');
   }
 
   console.log("userCon", user);

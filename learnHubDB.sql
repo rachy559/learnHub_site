@@ -188,11 +188,7 @@ CREATE TABLE comments(
 	comment_date DATE NOT NULL,
 	body varchar(200) NOT NULL,
 	student_id INT,
-	tutor_id INT,
-	lesson_id INT,
-	FOREIGN KEY (student_id) REFERENCES students (student_id),
-	FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id),
-	FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id)
+	FOREIGN KEY (student_id) REFERENCES students (student_id)
 );
 
 -- Insert data into addresses table
@@ -385,9 +381,9 @@ INSERT INTO manager (manager_id) VALUES
 (1);
 
 -- Insert data into comments table
-INSERT INTO comments (comment_date, body, student_id, tutor_id, lesson_id) VALUES
-('2024-01-01', 'Great lesson!', 2, 3, 1),
-('2024-02-01', 'Very helpful.', 6, 5, 2),
-('2024-03-01', 'Learned a lot.', 7, 5, 3),
-('2024-04-01', 'Excellent tutor.', 2, 4, 4),
-('2024-05-01', 'Will recommend.', 6, 4, 5);
+INSERT INTO comments (comment_date, body, student_id) VALUES
+('2024-01-01', 'Great lesson!', 2),
+('2024-02-01', 'Very helpful.', 6),
+('2024-03-01', 'Learned a lot.', 7),
+('2024-04-01', 'Excellent tutor.', 2),
+('2024-05-01', 'Will recommend.', 6);

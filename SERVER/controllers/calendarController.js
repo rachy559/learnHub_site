@@ -25,4 +25,13 @@ async function createTime(lessonDate,lessonHour,tutor_id){
     }
 }
 
-module.exports={ getCalendar,getPrescribedLessons,createTime};
+async function updateTimes(tutorId,updatedTimes){
+    try{
+        console.log(tutorId,updatedTimes)
+        return await model.updateAvailableTimes(tutorId,updatedTimes);
+    }catch(err){
+        throw err;
+    }
+}
+
+module.exports={ getCalendar,getPrescribedLessons,createTime, updateTimes};

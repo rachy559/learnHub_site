@@ -13,7 +13,6 @@ router.get("/:id", async (req, res) => {
             availableTimes: await controller.getCalendar(id),
             prescribedTimes: await controller.getPrescribedLessons(id)
         }
-        console.log("res",response)
         res.status(201).send(response);
     } catch (err) {
         res.status(500).json(err);
@@ -22,12 +21,20 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async(req, res) => {
     try{
-        
         const response = await controller.createTime(req.body.lessonDate, req.body.lessonHour, req.body.tutor_id);
-        console.log("re",response)
         res.status(201).send({response});    
     } catch(err){
-        console.log("rejjj")
+        res.status(404).send(' not found');
+    }
+});
+
+router.put("/", async(req, res) => {
+    try{
+        console.log(req.body.tutorId, req.body.updatedTimes)
+        const response = await controller.updateTimes(req.body.tutorId, req.body.updatedTimes)
+        console.log("re",response)
+        res.status(201).send(response);    
+    } catch(err){
         res.status(404).send(' not found');
     }
 });
