@@ -3,6 +3,9 @@ import { Link, NavLink, createRoutesFromChildren, useNavigate } from "react-rout
 import { ShowHeadersContext } from "../App";
 import { UserContext } from "../App";
 import Hamburger from 'hamburger-react'
+import { RiLogoutCircleLine } from "react-icons/ri";
+import { FaClipboardUser } from "react-icons/fa6";
+import { Link as ScrollLink } from 'react-scroll';
 import '../css/header.css';
 
 const Header = ({ setShowHeaders }) => {
@@ -57,7 +60,7 @@ const Header = ({ setShowHeaders }) => {
     //   {
     //     navigate('/tutorProfile');
     //   }
-    navigate('/studentProfile');
+    navigate('/tutorProfile');
   }
 
   console.log("userCon", user);
@@ -70,7 +73,7 @@ const Header = ({ setShowHeaders }) => {
       </div>
         <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' alt="Logo" /></Link>
         <nav className="app-nav">
-          <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/`}>אודות</NavLink>
+          <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/homePage#about-section`}>אודות</NavLink>
           <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
           <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/tutors`}>המרצים שלנו</NavLink>
           <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/comments`}>המלצות</NavLink>
@@ -88,12 +91,13 @@ const Header = ({ setShowHeaders }) => {
           ) : (
             <>
               <div className="user-icon" onClick={toggleSidebar}>
-                <img src={user.fileUrls} alt="User" />
+                {console.log(user.fileUrls)}
+                <img src='../pictures/user.png' alt="User" />
               </div>
               <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}>
                 <a href="" className="closebtn" onClick={toggleSidebar}>&times;</a>
-                <a onClick={navigateToProfile}>הצגת פרטי פרופיל</a>
-                <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}>יציאה מהחשבון</a>
+                <a className='profile' onClick={navigateToProfile}><FaClipboardUser /> הצגת פרטי פרופיל</a>
+                <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> יציאה מהחשבון</a>
               </div>
             </>
           )}

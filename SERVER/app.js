@@ -21,6 +21,9 @@ const PORTRUN = process.env.PORTRUN || 3000;
  const login=require('./routes/loginRoute');
  app.use('/login',login);
 
+ const studentLesson=require('./routes/studentLessonRoute');
+ app.use('/studentLesson',studentLesson);
+
  const users=require('./routes/usersRoute');
  app.use('/users',users);
 

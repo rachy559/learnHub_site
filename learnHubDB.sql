@@ -165,7 +165,7 @@ CREATE TABLE calander_work(
       clanderId INT auto_increment PRIMARY KEY,
       tutorId INT,
       dayLesson VARCHAR(10) NOT NULL,
-	  timesAvaliablePerDay VARCHAR(255) NOT NULL,
+	  timesAvaliablePerDay VARCHAR(255) ,
 	  FOREIGN KEY (tutorId) REFERENCES tutors (tutor_id)
 );
 
@@ -355,7 +355,7 @@ INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLe
 (4,7,'רביעי','16','2024-01-01'),
 (4,6,'חמישי','17','2024-01-01'),
 (6,2,'שישי','10','2024-07-01'),
-(4,2,'חמישי','17','2024-07-01');
+(4,2,'חמישי','17','2024-08-15');
 
 
 -- Insert data into lesson_languages table

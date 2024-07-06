@@ -89,7 +89,7 @@ const Login = ({ setShowHeaders}) => {
       <NavLink
         to="/signUp"
       >
-        Dont have an account? Register here
+        עדין לא רשום אצלנו? הרשם
       </NavLink>
     </div>
 </div>

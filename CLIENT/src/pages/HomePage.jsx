@@ -8,7 +8,7 @@ const HomePage = () => {
             <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
                 <img className='picture_homepage' src="../pictures/backround.png" alt="" />
                 <TutorsCircles />
-                <div className="about-container">
+                <div className="about-container" id="about-section">
                     <h1>LearnHub- מורים פרטיים: מורה פרטי לכל מקצוע, שיעורים פרטיים בכל הארץ!</h1>
                     <p>
                         ברוכים הבאים לאתר לימודים פרטיים - מקום המציע פתרונות ללמידה איכותית ומותאמת אישית לכל גיל ורמה.

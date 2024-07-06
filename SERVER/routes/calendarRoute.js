@@ -30,10 +30,28 @@ router.post("/", async(req, res) => {
 
 router.put("/", async(req, res) => {
     try{
-        console.log(req.body.tutorId, req.body.updatedTimes)
         const response = await controller.updateTimes(req.body.tutorId, req.body.updatedTimes)
-        console.log("re",response)
         res.status(201).send(response);    
+    } catch(err){
+        res.status(404).send(' not found');
+    }
+});
+
+router.delete("/:id", async(req, res) => {
+    try{
+        const id = req.params.id;
+        const response = await controller.deleteTime(id,req.body.dateLesson,req.body.timeLesson)
+        res.status(201).send();    
+    } catch(err){
+        res.status(404).send(' not found');
+    }
+});
+
+router.put("/:id", async(req, res) => {
+    try{
+        const id = req.params.id;
+        const response = await controller.updateTime(id,req.body.dateLesson,req.body.timeLesson,req.body.updatedDateLesson,req.body.updatedTimeLesson)
+        res.status(201).send();    
     } catch(err){
         res.status(404).send(' not found');
     }

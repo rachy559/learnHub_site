@@ -148,3 +148,73 @@ styles for the header */
     text-align: left;
   }
 }
+
+
+.user-icon {
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  margin-left: 60px;
+}
+
+.user-icon img {
+  width: 100%;
+  height: auto;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+  margin-top: 15px;
+}
+
+.sidebar a:hover {
+  color: #A8B2C8;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  margin-bottom: 10px;
+}
+
+.sidebar.active {
+  width: 250px;
+}
+
+/* Responsive layout */
+@media screen and (max-height: 450px) {
+  .sidebar {
+      padding-top: 15px;
+  }
+  .sidebar a {
+      font-size: 18px;
+  }
+}
+
+.profile{
+  cursor: pointer;
+}

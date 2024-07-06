@@ -10,7 +10,6 @@ async function getUser(userId) {
         `;
         // `SELECT * FROM users JOIN addresses where userId=?`;
         const [rows, fields] = await pool.query(sql,[userId]);
-        console.log("r",rows)
         return rows;
     } catch (err) {
         throw err;

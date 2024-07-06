@@ -9,6 +9,7 @@ async function getLessons() {
     l.language_name AS language,
     le.priceLesson AS price,
     le.lesson_id,
+    le.zoomLink,
     le.lessonTime AS lesson_time,
     CASE
         WHEN le.zoomLink IS NOT NULL THEN 'אונליין'
@@ -43,15 +44,29 @@ JOIN
     }
 }
 
-async function createLesson(lesson_id,student_id,dayLesson,timeLesson,dateLesson) {
+async function createLesson(levelLesson, lessonTime, priceLesson, zoomLink, tutor_id,language_name,subjectName) {
     try {
-        const sql = "INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLesson) VALUES (?,?, ?, ? ,?)";
-        const result = await pool.query(sql, [lesson_id,student_id,dayLesson,timeLesson,dateLesson]);
-        console.log("lesson",result[0])
-        return result[0].insertId;
+        const sql =  `INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id) VALUES (?, ?, ?, ?, ?, ?)`;
+        const result = await pool.query(sql, [levelLesson, lessonTime, priceLesson, zoomLink,false, tutor_id]);
+        const lesson_id = result[0].insertId;
+        const sql1 =`SELECT subject_id FROM subjects WHERE subjectName = ?`;
+        const result1 = await pool.query(sql1, [subjectName]);
+        const subject_id = result1[0][0].subject_id;
+        const sql2 =`INSERT INTO subject_of_lesson (lesson_id, subject_id) VALUES (?, ?)`;
+        const result2 = await pool.query(sql2, [lesson_id, subject_id]);
+        for (const languageName of language_name) {
+        const sql3 =`SELECT language_id FROM languages WHERE language_name = ?`;
+        const result3 = await pool.query(sql3, [languageName]);
+        const language_id = result3[0][0].language_id;
+        const sql4 =`INSERT INTO lesson_languages (lesson_id, language_id) VALUES (?, ?)`;
+        const result4 = await pool.query(sql4, [lesson_id, language_id]);
+    }
+        return lesson_id;
     } catch (err) {
         throw err;
     }
 }
 
-module.exports = { getLessons, createLesson };
+
+
+module.exports = { getLessons ,createLesson};

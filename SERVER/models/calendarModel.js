@@ -24,7 +24,6 @@ async function createTimeCalendar(lessonDate, lessonHour, tutor_id) {
     try {
         const sql = "INSERT INTO prescribedLessons (tutor_id, lessonDate, lessonHour) VALUES (?, ?, ?)";
         const result = await pool.query(sql, [tutor_id, lessonDate, lessonHour]);
-        console.log("k", result[0])
         return result[0].insertId;
     } catch (err) {
         throw err;
@@ -32,12 +31,12 @@ async function createTimeCalendar(lessonDate, lessonHour, tutor_id) {
 }
 
 
+
+
 async function updateAvailableTimes(tutorId, updatedTimes) {
     try {
-        console.log("jj",updatedTimes)
         updatedTimes.forEach(day => {
             const { available_day, available_times } = day;
-            console.log("ww",day)
             const sql = `UPDATE calander_work 
                          SET timesAvaliablePerDay = ?
                          WHERE tutorId = ? AND dayLesson = ?`;
@@ -47,8 +46,26 @@ async function updateAvailableTimes(tutorId, updatedTimes) {
         });
         return updatedTimes;
     } catch (err) {
-        console.log("Kk")
         throw err;
     }
 }
-module.exports = { getTimes, getrescribedTimes, createTimeCalendar, updateAvailableTimes };
+
+async function deleteTime(id,dateLesson,timeLesson) {
+    try {
+        const sql = "DELETE FROM prescribedlessons WHERE tutor_id=? AND lessonDate=? AND lessonHour =?";
+        await pool.query(sql, [id,dateLesson, timeLesson]);
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function updateTime(id,dateLesson,timeLesson,updatedDateLesson,updatedTimeLesson) {
+    try {
+        const sql = "UPDATE prescribedlessons SET lessonDate=? , lessonHour =? WHERE tutor_id=? AND lessonDate=? AND lessonHour =?";
+        await pool.query(sql, [updatedDateLesson,updatedTimeLesson,id,dateLesson, timeLesson]);
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { getTimes, getrescribedTimes, createTimeCalendar, updateAvailableTimes, deleteTime,updateTime };

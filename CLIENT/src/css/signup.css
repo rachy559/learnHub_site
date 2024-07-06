@@ -44,8 +44,7 @@ h2 {
 }
 
 .registerForm {
-    display: flex;
-    flex-direction: column;
+    
     gap: 20px;
 }
 
@@ -139,3 +138,31 @@ a:hover {
     margin-top: -13px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
 }
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* מרווח תחתון בין השורות */
+  }
+  
+  .checkbox-container input[type="checkbox"] {
+    margin-right: 10px; /* מרווח ימני בין ה-checkbox לטקסט */
+  }
+  
+  .security {
+    margin-left: 50px;
+    margin: 0;
+    font-size: 14px;
+    color: #333; /* צבע טקסט ראשי */
+    white-space: nowrap; /* מונע מעבר לשורה חדשה */
+  }
+  
+  .check {
+    color: #007bff; /* צבע כחול לקישור */
+    text-decoration: none;
+  }
+  
+  .check:hover {
+    text-decoration: underline;
+  }
+  

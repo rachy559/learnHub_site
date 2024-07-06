@@ -7,7 +7,7 @@ const TutorsCircles = () => {
 
     return (
         <>
-            <h2>Tutors</h2>
+            <h2>המרצים שלנו</h2>
             <div className="allTutorCircles">
                 {allTutors.map((tutor, key) => {
                     let extension = '';
@@ -19,7 +19,7 @@ const TutorsCircles = () => {
                     }
 
                     return (
-                        <div className="tutorDivCircle" key={key}>
+                        <div className="tutorDivCircle" key={key} >
                             {acceptedExtensions.includes(extension) ? (
                                 <img className="photo" src={tutor.fileUrls} alt={tutor.tutorName} />
                             ) : (

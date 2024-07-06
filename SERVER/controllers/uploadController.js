@@ -23,7 +23,7 @@ const uploadFile = async (req, res) => {
 
       const { filename } = req.file;
       const fileUrl = `uploads/${filename}`;
-      const tutorId = req.body.tutorId; // Assuming tutorId is sent in the request body
+      const tutorId = req.body.tutorId; 
 
       try {
         console.log("ww",fileUrl,tutorId)

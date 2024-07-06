@@ -2,18 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../css/lesson.css';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
-import { createRoutesFromChildren, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Modal from 'react-modal';
 import { UserContext } from "../App";
 Modal.setAppElement('#root');
 
 const Lesson = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const { user, setUser } = useContext(UserContext);
   console.log(user)
-  const { lesson } = location.state || {};
-  console.log("lesson", lesson);
+  const currentDate = new Date();
+  const formattedDate = currentDate.toISOString().split('T')[0];
+  const { from, data } = location.state || {};
+  console.log("lesson", data, " ", from);
   const [formData, setFormData] = useState({
     lessonDate: "",
     lessonHour: "",
@@ -36,7 +41,7 @@ const Lesson = () => {
 
   useEffect(() => {
     try {
-      serverRequests('GET', `calendar/${lesson.tutor_id}`).then((response) => {
+      serverRequests('GET', `calendar/${data.lesson.tutor_id}`).then((response) => {
         console.log("response", response);
         setAvailableTimes(response.availableTimes);
         setPrescribedTimes(response.prescribedTimes);
@@ -45,7 +50,7 @@ const Lesson = () => {
     catch (err) {
       console.log(err);
     }
-  }, [lesson]);
+  }, [data.lesson]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -87,7 +92,7 @@ const Lesson = () => {
 
   const addLesson = () => {
     try {
-      serverRequests('POST', `lessons`, formDataLesson).then((response) => {
+      serverRequests('POST', `studentLesson`, formDataLesson).then((response) => {
         serverRequests('POST', `calendar`, formData).then((response) => {
           setPrescribedTimes(prevTimes => [
             ...prevTimes,
@@ -96,8 +101,31 @@ const Lesson = () => {
               lessonHour: formData.lessonHour
             }
           ]);
-          alert(`השיעור נוסף בהצלחה לרשימת השיעורים שלך`);
           setIsOpen(false);
+          alert(`השיעור נוסף בהצלחה לרשימת השיעורים שלך`);
+          navigate('/studentProfile')
+        })
+      })
+    } catch (err) {
+      alert("Failed. An error occurred.");
+      console.log(err);
+    }
+  };
+
+  const updateLesson = () => {
+    try {
+      const details = {
+        student_id: user.userId,
+        updatedDateLesson: formData.lessonDate,
+        updatedTimeLesson: formData.lessonHour,
+        dateLesson: data.lesson.lesson_date,
+        timeLesson: data.lesson.timeLesson
+      };
+      serverRequests('PUT', `studentLesson/${data.lesson.lesson_id}`, details).then((response) => {
+        serverRequests('PUT', `calendar/${data.lesson.tutor_id}`, details).then((response) => {
+          setIsOpen(false);
+          alert(`זמני השיעור יתעדכנו בהצלחה`);
+          navigate('/studentProfile')
         })
       })
     } catch (err) {
@@ -119,10 +147,10 @@ const Lesson = () => {
       {
         lessonDate: formattedDate,
         lessonHour: time,
-        tutor_id: lesson.tutor_id
+        tutor_id: data.lesson.tutor_id
       })
     setFormDataLesson({
-      lesson_id:lesson.lesson_id,
+      lesson_id: data.lesson.lesson_id,
       student_id: user.userId,
       dayLesson: dayInHebrew,
       timeLesson: time,
@@ -141,6 +169,7 @@ const Lesson = () => {
         calendarType='hebrew'
         className='calendar'
         onChange={handleDateChange}
+        minDate={new Date()}
       />
 
       {isClick && (
@@ -169,37 +198,82 @@ const Lesson = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         className='customStyles'
-
       >
-
         <span className="close" onClick={closeModal}>&times;</span>
-        <h3 className='header'>פרטי השיעור שנבחר:</h3>
-        <div className="subjectDivModal">
-          <div className="lessonHeader">
-            <div className="lessonTitle">{lesson.subject}</div>
-            <div className="lessonInfo">
-              <div className="lessonPrice">₪{lesson.price} לשעה</div>
+
+        {from === 'Lessons' ? (
+          <>
+            <h3 className='header'>פרטי השיעור שנבחר:</h3>
+            <div className="subjectDivModal">
+              <div className="lessonHeader">
+                <div className="lessonTitle">{data.lesson.subject}</div>
+                <div className="lessonInfo">
+                  <div className="lessonPrice">₪{data.lesson.price} לשעה</div>
+                </div>
+              </div>
+              <div className="lessonBody">
+                <div className="lessonDetailsModal">
+                  <p><strong>שפה:</strong> {data.lesson.language}</p>
+                  <p><strong>שם מרצה:</strong> {data.lesson.tutor_name}</p>
+                  <p><strong>זמן שיעור:</strong> 60 דקות</p>
+                  <p><strong>רמת שיעור:</strong> {data.lesson.level}</p>
+                  <p><strong>פרונטלי/אונליין:</strong> {data.lesson.lesson_type}</p>
+                  {data.lesson.zoomLink ? (
+                    <p><strong>קישור זום:</strong> {data.lesson.zoomLink}</p>
+                  ) : (<></>)}
+                  {data.lesson.lesson_type === "פרונטלי" && (
+                    <p><strong>כתובת שיעור:</strong> {data.lesson.city_tutor}, {data.lesson.street_tutor}</p>
+                  )}
+                  <p><strong>מגדר:</strong> {data.lesson.tutor_gender}</p>
+                </div>
+
+              </div>
             </div>
-          </div>
-          <div className="lessonBody">
-            <div className="lessonDetailsModal">
-              <p><strong>שפה:</strong> {lesson.language}</p>
-              <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
-              <p><strong>זמן שיעור:</strong> {lesson.lesson_time}</p>
-              <p><strong>רמת שיעור:</strong> {lesson.level}</p>
-              <p><strong>פרונטלי/אונליין:</strong> {lesson.lesson_type}</p>
-              <p><strong>מגדר:</strong> {lesson.tutor_gender}</p>
-              {lesson.lesson_type === "פרונטלי" && (
-                <p><strong>כתובת שיעור:</strong> {lesson.city_tutor}, {lesson.street_tutor}</p>
-              )}
+            <br />
+            <h3 className='header'>בתאריך: {date} בשעה: {time}:00</h3>
+            <div className='buttonsModal'></div>
+            <button className='cancelButtons' onClick={closeModal}>ביטול</button>
+            <button className='confirmButtons' onClick={addLesson}>אישור</button>
+
+          </>) : (<>{from === 'StudentProfile' ? (<>
+            <h3 className='header'>פרטי השיעור שהינך רוצה לעדכן:</h3>
+            <div className="subjectDivModal">
+              <div className="lessonHeader">
+                <div className="lessonTitle">{data.lesson.subject_name}</div>
+                <div className="lessonInfo">
+                  <div className="lessonPrice">₪{data.lesson.lesson_price} לשעה</div>
+                </div>
+              </div>
+              <div className="lessonBody">
+                <div className="lessonDetailsModal">
+                  <p><strong>שפה:</strong> {data.lesson.lesson_language}</p>
+                  <p><strong>שם מרצה:</strong> {data.lesson.tutor_name}</p>
+                  <p><strong>זמן שיעור:</strong> 60 דקות</p>
+                  <p><strong>רמת שיעור:</strong> {data.lesson.lesson_level}</p>
+                  {data.lesson.zoom_link ? (
+                    <>
+                      <p><strong>פרונטלי/אונליין:</strong> אונליין</p>
+                      <p><strong>קישור זום:</strong> {data.lesson.zoom_link}</p>
+                    </>
+                  ) : (
+                    <p><strong>פרונטלי/אונליין:</strong> פרונטלי</p>
+                  )}
+                  {!data.lesson.zoom_link && (
+                    <p><strong>כתובת שיעור:</strong> {data.lesson.tutor_address.city}, {data.lesson.tutor_address.street} {data.lesson.tutor_address.house_number}</p>
+                  )}
+                  <p><strong>מגדר:</strong> {data.lesson.tutor_gender}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <br />
-        <h3 className='header'>בתאריך: {date} בשעה: {time}:00</h3>
-        <div className='buttonsModal'></div>
-        <button className='cancelButtons' onClick={closeModal}>ביטול</button>
-        <button className='confirmButtons' onClick={addLesson}>אישור</button>
+
+            <br />
+            <h3 className='header'>בתאריך: {date} בשעה: {time}:00</h3>
+            <div className='buttonsModal'></div>
+            <button className='cancelButtons' onClick={closeModal}>ביטול</button>
+            <button className='confirmButtons' onClick={updateLesson}>עדכן</button>
+
+          </>) : <></>}</>)}
+
 
       </Modal>
     </div>

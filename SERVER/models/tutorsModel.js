@@ -12,7 +12,7 @@ async function getTutors(limit) {
     }
 }
 
-async function createSingleTutor(intended_for_gender, subjects, languages, userId) {
+async function createSingleTutor(intended_for_gender, subjects, languages, userId, days) {
     try {
         const languageArray = languages.split(',');
         const sql1Check = "SELECT language_name FROM languages WHERE language_name = ?";
@@ -40,13 +40,12 @@ async function createSingleTutor(intended_for_gender, subjects, languages, userI
 
         const sql2 = "INSERT INTO tutors (`tutor_id`, `intended_for_gender`) VALUES(?, ?)";
         await pool.query(sql2, [userId, intended_for_gender]);
- 
+
 
         const sql3 = "INSERT INTO subject_of_tutor (`tutor_id`, `subject_id`) VALUES(?, ?)";
         for (const subject of subjectsArray) {
             const sql5 = `SELECT * from subjects where subjectName=?`;
             const result = await pool.query(sql5, [subject]);
-            console.log("h", result[0][0])
             if (subject) {
                 await pool.query(sql3, [userId, result[0][0].subject_id]);
             }
@@ -60,10 +59,14 @@ async function createSingleTutor(intended_for_gender, subjects, languages, userI
                 await pool.query(sql4, [userId, result1[0][0].language_id]);
             }
         }
+
+        days.forEach(day => {
+            const sql = "INSERT INTO calander_work (`tutorId`,`dayLesson`,`timesAvaliablePerDay`) VALUES (?,?,?)";
+            const response = pool.query(sql, [userId, day, '']);
+        });
         return userId;
 
     } catch (err) {
-        console.log(err);
         throw err;
     }
 }
@@ -71,7 +74,6 @@ async function createSingleTutor(intended_for_gender, subjects, languages, userI
 
 async function getSingleTutor(id) {
     try {
-        console.log("e", id)
         const sql = `SELECT
     JSON_OBJECT(
         'user_id', u.userId,
@@ -86,6 +88,7 @@ async function getSingleTutor(id) {
         'house_number', a.house_number,
         'intended_for_gender', t.intended_for_gender,
         'subjects', GROUP_CONCAT(DISTINCT sub.subjectName),
+        'languages', GROUP_CONCAT(DISTINCT lan.language_name),
         'lessons', (
             SELECT JSON_ARRAYAGG(
                 JSON_OBJECT(
@@ -94,6 +97,7 @@ async function getSingleTutor(id) {
                     'lesson_time', le.lessonTime,
                     'lesson_date', lfs.dateLesson,
                     'lesson_day', lfs.dayLesson,
+                    'lesson_subject',ss.subjectName,
                     'timeLesson', lfs.timeLesson,
                     'lesson_price', le.priceLesson,
                     'zoom_link', le.zoomLink,
@@ -102,6 +106,8 @@ async function getSingleTutor(id) {
                 )
             )
             FROM lessons le
+            LEFT JOIN subject_of_lesson sol ON le.lesson_id = sol.lesson_id
+            LEFT JOIN subjects ss ON sol.subject_id = ss.subject_id
             LEFT JOIN lesson_for_student lfs ON le.lesson_id = lfs.lesson_id
             LEFT JOIN users stu ON lfs.student_id = stu.userId
             WHERE le.tutor_id = t.tutor_id
@@ -127,6 +133,10 @@ LEFT JOIN
     subject_of_tutor sot ON t.tutor_id = sot.tutor_id
 LEFT JOIN 
     subjects sub ON sot.subject_id = sub.subject_id
+LEFT JOIN 
+    tutors_languages tul ON t.tutor_id = tul.tutor_id
+LEFT JOIN 
+    languages lan ON tul.language_id = lan.language_id
 WHERE 
     t.tutor_id = ?
 GROUP BY
@@ -144,7 +154,6 @@ GROUP BY
 
     `;
         const response = await pool.query(sql, [id]);
-        console.log("ee", response[0])
         return response[0];
     } catch (err) {
         throw err;

@@ -2,7 +2,6 @@ const pool = require('../DB');
 
 async function createSingleStudent(studentStatus, userId) {
     try {
-        console.log("t", userId, studentStatus)
         const sql = "INSERT INTO students (`student_id`,`studentStatus`) VALUES(?,?)";
         await pool.query(sql, [userId, studentStatus]);
         return userId;
@@ -13,7 +12,6 @@ async function createSingleStudent(studentStatus, userId) {
 
 async function getSingleStudent(id) {
     try {
-        console.log("e", id)
         const sql = `
 SELECT
     JSON_OBJECT(
@@ -41,6 +39,7 @@ SELECT
                 'tutor_intended_gender', t.intended_for_gender,
                 'subject_name', s.subjectName,
                 'lesson_language', lang.language_name,
+                'tutor_id',  tu.userId,
                 'tutor_name', CONCAT(tu.firstName, ' ', tu.lastName),
                 'tutor_address', JSON_OBJECT(
                     'city', ta.city,
@@ -69,7 +68,6 @@ GROUP BY
     u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number;
 `;
         const result = await pool.query(sql, [id]);
-        console.log("ee", result[0])
         return result[0];
     } catch (err) {
         throw err;

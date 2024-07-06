@@ -8,12 +8,13 @@ async function getAllLessons(){
     }
 }
 
-async function createLesson(lesson_id,student_id,dayLesson,timeLesson,dateLesson){
+async function createLesson(levelLesson, lessonTime, priceLesson, zoomLink, tutor_id,language_name,subjectName){
     try{
-        return await model.createLesson(lesson_id,student_id,dayLesson,timeLesson,dateLesson);
+        return await model.createLesson(levelLesson, lessonTime, priceLesson, zoomLink, tutor_id,language_name,subjectName);
     }catch(err){
         throw err;
     }
 }
 
-module.exports={ getAllLessons,createLesson};
+
+module.exports={ getAllLessons, createLesson};
