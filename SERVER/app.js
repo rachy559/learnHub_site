@@ -32,25 +32,7 @@ const PORTRUN = process.env.PORTRUN || 3000;
  app.use('/students',students);
  app.use('/upload',upload);
  app.use('/lessons',lessons);
-
- const manager=require('./routes/managerRoute');
- app.use('/manager',manager);
-
- const filter=require('./routes/filterRoute');
-
-
- app.use('/tutors', tutors);
- app.use('/',comments);
- app.use('/comments',comments);
- app.use('/lanSub',lanSub);
- app.use('/login',login);
- app.use('/studentLesson',studentLesson);
- app.use('/users',users);
- app.use('/students',students);
- app.use('/upload',upload);
- app.use('/lessons',lessons);
  app.use('/filter',filter);
-
 
  app.use(authenticateToken);
 
