@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { serverRequests } from '../Api';
 import { FilterContext } from '../App';
 import Filter from '../components/Filter';
 import '../css/App.css';
 import '../css/lessons.css';
+
 
 const Lessons = () => {
   const { selectedLanguages, selectedSubjects, selectedGender, selectedOptions, selectedLocations, setSelectedOptions, setSelectedLocations } = useContext(FilterContext);
@@ -13,6 +14,7 @@ const Lessons = () => {
   const [allLocations, setAllLocations] = useState([]);
   const [allOptions] = useState(["פרונטלי", "אונליין", "2 האפשרויות טובות לי"]);
   const [flag, setFlag] = useState(false);
+  const [isClick, setIsClick] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -96,7 +98,11 @@ const Lessons = () => {
       <div style={{ paddingTop: '100px' }}>
         <h1>שיעורים</h1>
       </div>
-      <Filter />
+      <img className='filters' src='../pictures/image.png' onClick={()=>{setIsClick(!isClick)}}/>
+        {isClick?(
+          <>
+          <Filter />
+      
       <h3 className="options-header">אפשרויות:</h3>
       <div className="allSubjects">
         {allOptions.map((option1, key) => (
@@ -126,10 +132,11 @@ const Lessons = () => {
         </>
       )}
       <button className="search-button" onClick={handleSearch}>חפש</button>
+      </>):(<></>)}
       <h3 className="found-lessons-header">שיעורים שנמצאו:</h3>
       <div className="allSubjects">
         {allLessons.map((lesson, key) => (
-          <div key={key} className="subjectDiv" onClick={()=>navigate('/lesson',{ state: { lesson } })}>
+          <div key={key} className="subjectDiv" onClick={()=>navigate('/lesson',{ state: { from: 'Lessons', data: {lesson:lesson} } })}>
             <div className="lessonHeader">
               <div className="lessonTitle">{lesson.subject}</div>
               <div className="lessonInfo">

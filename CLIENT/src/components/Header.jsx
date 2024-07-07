@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, createRoutesFromChildren, useNavigate } from "react-router-dom";
 import { ShowHeadersContext } from "../App";
 import { UserContext } from "../App";
 import Hamburger from 'hamburger-react'
+import { RiLogoutCircleLine } from "react-icons/ri";
+import { FaClipboardUser } from "react-icons/fa6";
+import { Link as ScrollLink } from 'react-scroll';
 import '../css/header.css';
 
 const Header = ({ setShowHeaders }) => {
@@ -26,7 +29,6 @@ const Header = ({ setShowHeaders }) => {
     } else {
       setUser({ ...user, rollId: 2 });
     }
-
     console.log("userCon", user);
     console.log("Selected Profile:", value); // Debug log
     setSelectedProfile(value);
@@ -47,18 +49,31 @@ const Header = ({ setShowHeaders }) => {
   const toggleSidebar = () => {
     setStyleConnect(!styleConnect);
   };
+
+  const navigateToProfile=()=>{
+    // console.log(user.rollId)
+    // if(user.rollId===2)
+    //   {
+    //     navigate('/studentProfile');
+    //   }
+    // else if(user.rollId===3)
+    //   {
+    //     navigate('/tutorProfile');
+    //   }
+    navigate('/tutorProfile');
+  }
+
   console.log("userCon", user);
 
   return (
     <>
-      
       <header className="app-header">
-        <div className="menu-icon" onClick={toggleMenu}>
+      <div className="menu-icon" onClick={toggleMenu}>
       <Hamburger   toggled={isOpen} toggle={setOpen}  />
       </div>
         <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' alt="Logo" /></Link>
         <nav className="app-nav">
-          <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/`}>אודות</NavLink>
+          <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/homePage#about-section`}>אודות</NavLink>
           <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
           <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/tutors`}>המרצים שלנו</NavLink>
           <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/comments`}>המלצות</NavLink>
@@ -76,12 +91,13 @@ const Header = ({ setShowHeaders }) => {
           ) : (
             <>
               <div className="user-icon" onClick={toggleSidebar}>
-                <img src={user.fileUrls} alt="User" />
+                {console.log(user.fileUrls)}
+                <img src='../pictures/user.png' alt="User" />
               </div>
               <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}>
                 <a href="" className="closebtn" onClick={toggleSidebar}>&times;</a>
-                <a onClick={() => { navigate('/profile'); }}>הצגת פרטי פרופיל</a>
-                <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}>יציאה מהחשבון</a>
+                <a className='profile' onClick={navigateToProfile}><FaClipboardUser /> הצגת פרטי פרופיל</a>
+                <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> יציאה מהחשבון</a>
               </div>
             </>
           )}

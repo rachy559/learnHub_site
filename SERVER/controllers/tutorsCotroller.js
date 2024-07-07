@@ -13,12 +13,22 @@ async function getAllTutors(limit){
 
 async function createTutor(intended_for_gender,subjects,languages,email) {
     try {
+        const days=['ראשון','שני','שלישי','רביעי','חמישי','שישי'];
         const response1=await model2.getByEmail(email);
-        const response =await model.createSingleTutor(intended_for_gender,subjects,languages,response1.userId);
+        return await model.createSingleTutor(intended_for_gender,subjects,languages,response1.userId,days);
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function getTutor(id) {
+    try {
+        const response =await model.getSingleTutor(id);
         return response[0];
     } catch (err) {
         throw err;
     }
 }
 
-module.exports={ getAllTutors,createTutor};
+
+module.exports={ getAllTutors,createTutor,getTutor};

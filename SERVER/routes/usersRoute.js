@@ -8,7 +8,6 @@ router.use(cors());
 
 router.get("/", async (req, res) => {
     try {
-        console.log(req.query)
         res.status(201).send(await controller.getUsers(req.query));
     } catch (err) {
         res.status(500).send(err);

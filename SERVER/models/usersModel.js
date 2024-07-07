@@ -9,7 +9,6 @@ async function getUser(userId) {
             WHERE u.userId = ?
         `;
         const [rows, fields] = await pool.query(sql,[userId]);
-        console.log("r",rows)
         return rows;
     } catch (err) {
         throw err;

@@ -2,13 +2,18 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import '../css/signup.css';
+import Modal from 'react-modal';
+import { addYears, subYears } from 'date-fns';
+Modal.setAppElement('#root');
 
 import { ShowHeadersContext, UserContext } from "../App";
 const SignUp = ({ setShowHeaders, setUserData }) => {
     const showHeaders = useContext(ShowHeadersContext);
     const userContext = useContext(UserContext);
+    const [modalIsOpen, setIsOpen] = useState(false);
     const [hide, setHide] = useState(false);
     const navigate = useNavigate();
+    const [isChecked, setIsChecked] = useState(false);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -36,8 +41,8 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     });
 
     const [formDataFile, setFormDataFile] = useState({
-        file:"",
-        tutor_id:userContext.user.email
+        file: "",
+        tutor_id: userContext.user.email
     });
 
     const [currentLanguage, setCurrentLanguage] = useState("");
@@ -46,21 +51,31 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     const [uploadError, setUploadError] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
-    
+
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
     function createProfileTutor() {
-        serverRequests('POST', 'tutors', formDataTutor).then((response) => {
-            userContext.setUser({ ...userContext.user, ...formDataTutor });
+        serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
+            console.log(userId)
+            userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
         })
     }
 
+    function closeModal() {
+        setIsOpen(false);
+    }
+
     function createProfileStudent() {
-        serverRequests('POST', 'students', formDataStudent).then((response) => {
-            userContext.setUser({ ...userContext.user, ...formDataStudent });
-        })
-        setHide(false);
+        try {
+            serverRequests('POST', 'students', formDataStudent).then((response) => {
+                userContext.setUser({ ...userContext.user, ...formDataStudent });
+            })
+            setHide(false);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     const handleChange = (e) => {
@@ -98,6 +113,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
             subjects: [...prevFormData.subjects, currentSubject]
         }));
         setCurrentSubject("");
+    };
+
+
+    const openModal = () => {
+        setIsOpen(true);
     };
 
     const ContinueDetails = async () => {
@@ -165,7 +185,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         }
 
         setIsUploading(true);
-        console.log("ff",file)
+        console.log("ff", file)
         const fileFormData = new FormData();
         fileFormData.append('file', file);
         console.log(fileFormData)
@@ -197,7 +217,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         <>
             <div style={{ paddingTop: '100px' }}></div>
             <div className="registerDiv">
-            <h1> הצטרף אלינו:</h1><br />
+                <h1> הצטרף אלינו:</h1><br /><br />
                 <form className="registerForm">
                     <div>
                         <input
@@ -207,7 +227,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.firstName}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
@@ -217,7 +237,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.lastName}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
@@ -227,7 +247,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.email}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
@@ -237,7 +257,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.phone}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <label className='gender'>מגדר:</label>
@@ -250,17 +270,18 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             <option value="זכר">זכר</option>
                             <option value="נקבה">נקבה</option>
                         </select>
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
                             placeholder="תאריך לידה"
                             type="date"
+                            // max={subYears(new Date(),10)}
                             name="birth_date"
                             value={formData.birth_date}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
@@ -270,7 +291,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.city}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
@@ -280,17 +301,18 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.street}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
                             placeholder="מספר בית"
                             type="number"
                             name="house_number"
+                            min={`1`}
                             value={formData.house_number}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
@@ -300,7 +322,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.password}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
 
                     <div>
                         <input
@@ -310,7 +332,19 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             value={formData.confirm_password}
                             onChange={handleChange}
                         />
-                    </div><br />
+                    </div><br /><br />
+                    <div className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            id="terms-checkbox"
+                            checked={isChecked}
+                            onChange={() => setIsChecked(!isChecked)}
+                        />
+                        <label className='security'>
+                            בבחירתך להמשיך, אתה מסכים <label className='check' onClick={openModal}>לתנאי השימוש ומדיניות האבטחה</label> שלנו
+                        </label>
+
+                    </div>
 
                     <button className='btn' type="button" onClick={ContinueDetails}>
                         המשך
@@ -375,12 +409,14 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                     />
                                     <button className='btn' type="button" onClick={handleAddLanguage}>+ הוסף</button>
                                 </div>
+                                <div className='container'>
+                                    <input type='file' onChange={handleFileChange} name="file" />
+                                    <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button>
+                                </div>
+
                                 <button className='btn' type='button' onClick={createProfileTutor}>אישור</button>
                             </form>
-                            <div className='container'>
-                                <input type='file' onChange={handleFileChange} name="file"/>
-                               <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button> 
-                            </div>
+
                         </>
 
                     )) : (<></>)}
@@ -388,9 +424,38 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 <NavLink
                     to="/login"
                 >
-                    Do you have an account already? Login here
+                    אתה כבר רשום אצלנו? התחבר
                 </NavLink>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    className='customStyles'
 
+
+                >
+                    <span className="close" onClick={closeModal}>&times;</span>
+                    <p><strong>תנאי שימוש לאתר:</strong><br />
+ברוכים הבאים לאתר שלנו לקביעת שיעורים פרטיים. השימוש באתר מותנה בקבלת התנאים וההתניות הבאים. אם אינך מסכים לתנאים הללו, אנא הימנע משימוש באתר.<br />
+שירותים האתר מספק פלטפורמה למשתמשים לקבוע שיעורים פרטיים עם מורים. כל העסקאות וההתקשרות נעשות ישירות בין המשתמש למורה.<br />
+שימוש באתר אתה מתחייב להשתמש באתר בהתאם לחוקים והתקנות החלים, ולא להשתמש באתר לכל מטרה בלתי חוקית או מזיקה.<br />
+רישום משתמש לשם קביעת שיעורים, ייתכן שתידרש להירשם ולספק פרטים אישיים. אתה אחראי לשמור על סודיות פרטי החשבון והסיסמה שלך.<br />
+קניין רוחני כל התכנים, העיצובים, התמונות והחומרים באתר הם רכושנו הבלעדי או רכוש צדדים שלישיים, ואין להעתיקם או להשתמש בהם ללא אישור בכתב.<br />
+הגבלת אחריות אנו לא אחראים לכל נזק ישיר או עקיף הנגרם משימוש באתר או מהתכנים והמידע המופיעים בו. השירותים ניתנים "כפי שהם" וללא אחריות מכל סוג.<br />
+שינויים באתר אנו שומרים לעצמנו את הזכות לשנות או להפסיק את השירותים באתר בכל עת וללא הודעה מוקדמת.<br />
+חוק וסמכות שיפוט תנאים אלה כפופים לחוקי מדינת ישראל, וכל סכסוך יובא להכרעה בבתי המשפט המוסמכים במדינת ישראל.<br />
+</p>
+
+<p><strong>מדיניות אבטחה</strong><br />
+אבטחת המידע שלך חשובה לנו, ולכן אנו נוקטים באמצעים רבים על מנת להגן על המידע האישי שלך.<br />
+איסוף מידע אנו אוספים מידע אישי, כגון שם, כתובת דוא"ל ומספר טלפון, לצורך מתן השירותים באתר.<br />
+שימוש במידע אנו משתמשים במידע שנאסף לצורך ניהול חשבונך, קביעת שיעורים והתאמת השירותים לצרכים שלך.<br />
+שיתוף מידע אנו לא משתפים מידע אישי עם צדדים שלישיים אלא אם כן נדרש לעשות כן על פי חוק או לצורך מתן השירותים.<br />
+אבטחת מידע אנו משתמשים בטכנולוגיות הצפנה ובאמצעים פיזיים, אלקטרוניים ונהלים כדי להגן על המידע האישי שלך מפני גישה לא מורשית.<br />
+גישה למידע יש לך זכות לגשת למידע האישי שלך, לעדכן אותו או למחוק אותו. לשם כך, פנה אלינו באמצעות פרטי הקשר המופיעים באתר.<br />
+שינויים במדיניות אנו שומרים לעצמנו את הזכות לעדכן את מדיניות האבטחה בכל עת. עדכונים אלו יפורסמו באתר, ואנו נודיע לך במידת הצורך.<br />
+</p>
+
+                </Modal>
             </div>
         </>
     );

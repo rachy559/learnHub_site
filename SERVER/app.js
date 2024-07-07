@@ -10,37 +10,52 @@ app.use(cors());
 
 const PORTRUN = process.env.PORTRUN || 3000;
 
- const homePage=require('./routes/homePageRoute');
+ const comments=require('./routes/commentsRoute');
  const tutors=require('./routes/tutorsRoute');
+ const lanSub=require('./routes/lanSubRoute');
  const login=require('./routes/loginRoute');
+ const studentLesson=require('./routes/studentLessonRoute');
  const users=require('./routes/usersRoute');
  const students=require('./routes/studentsRoute');
  const upload=require('./routes/uploadRoute');
  const lessons=require('./routes/lessonsRoute');
  const filter=require('./routes/filterRoute');
 
- app.use('/',homePage);
+
  app.use('/tutors', tutors);
+ app.use('/',comments);
+ app.use('/comments',comments);
+ app.use('/lanSub',lanSub);
  app.use('/login',login);
+ app.use('/studentLesson',studentLesson);
  app.use('/users',users);
- app.use('/students', students);
+ app.use('/students',students);
  app.use('/upload',upload);
  app.use('/lessons',lessons);
  app.use('/filter',filter);
 
-app.use(authenticateToken);
 
-//  const manager=require('./routes/managerRoute');
+ app.use(authenticateToken);
+
  const calendar=require('./routes/calendarRoute');
+ const manager=require('./routes/managerRoute');
+
+ app.use('/manager',authorizeRoll(['MANAGER']),manager);
  app.use('/calendar',authorizeRoll(['STUDENT']),calendar);
-//  app.use('/manager_homePage',manager);
+
+
+ app.listen(PORTRUN, () => {
+  console.log(`App listening on port ${PORTRUN}`);
+});
+
+ 
+
+ 
 
 
 
 
-app.listen(PORTRUN, () => {
-    console.log(`App listening on port ${PORTRUN}`);
-  });
+
 
 
 

@@ -149,7 +149,7 @@ CREATE TABLE lesson_for_student(
     dayLesson varchar(30),
 	timeLesson varchar(30),
     dateLesson DATE NOT NULL,
-	PRIMARY KEY (lesson_id, student_id),
+	PRIMARY KEY (lesson_id, student_id,dateLesson,timeLesson),
 	FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id),
 	FOREIGN KEY (student_id) REFERENCES students (student_id)
 );
@@ -166,7 +166,7 @@ CREATE TABLE calander_work(
       clanderId INT auto_increment PRIMARY KEY,
       tutorId INT,
       dayLesson VARCHAR(10) NOT NULL,
-	  timesAvaliablePerDay VARCHAR(255) NOT NULL,
+	  timesAvaliablePerDay VARCHAR(255) ,
 	  FOREIGN KEY (tutorId) REFERENCES tutors (tutor_id)
 );
 
@@ -194,11 +194,7 @@ CREATE TABLE comments(
 	comment_date DATE NOT NULL,
 	body varchar(200) NOT NULL,
 	student_id INT,
-	tutor_id INT,
-	lesson_id INT,
-	FOREIGN KEY (student_id) REFERENCES students (student_id),
-	FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id),
-	FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id)
+	FOREIGN KEY (student_id) REFERENCES students (student_id)
 );
 
 -- Insert data into addresses table
@@ -370,7 +366,7 @@ INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLe
 (4,7,'רביעי','16','2024-01-01'),
 (4,6,'חמישי','17','2024-01-01'),
 (6,2,'שישי','10','2024-07-01'),
-(4,2,'חמישי','17','2024-07-01');
+(4,2,'חמישי','17','2024-08-15');
 
 
 -- Insert data into lesson_languages table
@@ -396,9 +392,9 @@ INSERT INTO manager (manager_id,numAccount,numBranch,nameBank,numBank, beneficia
 (1, '12346','128','הפועלים','12','');
 
 -- Insert data into comments table
-INSERT INTO comments (comment_date, body, student_id, tutor_id, lesson_id) VALUES
-('2024-01-01', 'Great lesson!', 2, 3, 1),
-('2024-02-01', 'Very helpful.', 6, 5, 2),
-('2024-03-01', 'Learned a lot.', 7, 5, 3),
-('2024-04-01', 'Excellent tutor.', 2, 4, 4),
-('2024-05-01', 'Will recommend.', 6, 4, 5);
+INSERT INTO comments (comment_date, body, student_id) VALUES
+('2024-01-01', 'Great lesson!', 2),
+('2024-02-01', 'Very helpful.', 6),
+('2024-03-01', 'Learned a lot.', 7),
+('2024-04-01', 'Excellent tutor.', 2),
+('2024-05-01', 'Will recommend.', 6);

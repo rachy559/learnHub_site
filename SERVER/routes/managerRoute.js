@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const controller = require('../controllers/managerController')
+const controller = require('../controllers/usersController')
 const cors = require('cors'); 
 router.use(cors());
 const jwt=require('jsonwebtoken');

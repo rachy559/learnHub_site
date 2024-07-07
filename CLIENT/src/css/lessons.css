@@ -107,3 +107,7 @@ h1 {
 .lessonDetails p {
   margin: 5px 0;
 }
+
+.filters{
+  width: 5%;
+}

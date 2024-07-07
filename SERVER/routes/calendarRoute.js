@@ -13,22 +13,49 @@ router.get("/:id", async (req, res) => {
             availableTimes: await controller.getCalendar(id),
             prescribedTimes: await controller.getPrescribedLessons(id)
         }
-        console.log("res",response)
         res.status(201).send(response);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).json(err);
     }
 })
 
-// router.post("/", async(req, res) => {
-//     try{
-//         const response = await controller.createTime(req.body.lessonDate,req.body.lessonHour,req.body.tutor_id)
-//         console.log("response:", response);
-//         res.send(response)
-//     } catch(err){
-//         res.status(404).send('User not found');
-//     }
-// });
+router.post("/", async(req, res) => {
+    try{
+        const response = await controller.createTime(req.body.lessonDate, req.body.lessonHour, req.body.tutor_id);
+        res.status(201).send({response});    
+    } catch(err){
+        res.status(404).send(' not found');
+    }
+});
+
+router.put("/", async(req, res) => {
+    try{
+        const response = await controller.updateTimes(req.body.tutorId, req.body.updatedTimes)
+        res.status(201).send(response);    
+    } catch(err){
+        res.status(404).send(' not found');
+    }
+});
+
+router.delete("/:id", async(req, res) => {
+    try{
+        const id = req.params.id;
+        const response = await controller.deleteTime(id,req.body.dateLesson,req.body.timeLesson)
+        res.status(201).send();    
+    } catch(err){
+        res.status(404).send(' not found');
+    }
+});
+
+router.put("/:id", async(req, res) => {
+    try{
+        const id = req.params.id;
+        const response = await controller.updateTime(id,req.body.dateLesson,req.body.timeLesson,req.body.updatedDateLesson,req.body.updatedTimeLesson)
+        res.status(201).send();    
+    } catch(err){
+        res.status(404).send(' not found');
+    }
+});
 
 
 module.exports = router

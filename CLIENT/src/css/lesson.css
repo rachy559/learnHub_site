@@ -87,3 +87,111 @@
    cursor: not-allowed; 
    border: 1px solid #ccc; 
  } 
+
+ .customStyles {
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  background-color: #a8d0e1;
+  padding: 20px;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  max-height: 65vh;
+  overflow-y: auto;
+  border-radius: 3%;
+  width: 40%;
+}
+
+.customStyles-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.animate {
+  animation: animatezoom 0.6s;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  border: 1px solid #888;
+  width: 40%;
+  padding: 1%;
+
+}
+
+form {
+  display: block;
+  margin-top: 0em;
+}
+
+.container {
+  padding: 16px;
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
+
+div {
+  display: block;
+}
+
+/* The Modal (background) */
+.modal {
+  position: fixed;
+  /* Stay in place */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+.close{
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+.close:hover,
+.close:focus {
+  color: rgb(248, 4, 4);
+  cursor: pointer;
+}
+
+.lessonDetailsModal{
+  color: black;
+}
+
+.subjectDivModal{
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  width: 300px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.header{
+  color: black;
+  margin-top: -3%;
+  right: 0px;
+}
+
+.cancelButtons{
+color: red;  
+margin-right: 60%;
+margin-bottom: 30px;
+background-color: white;
+
+}
+
+.confirmButtons{
+  color: #a8dfcc;
+  margin-right: 2%;
+  margin-bottom: 30px;
+  background-color: white;
+}
