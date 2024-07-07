@@ -58,7 +58,7 @@ CREATE TABLE users(
 CREATE TABLE roll_for_user(
 	  userId INT,
 	  rollId INT,
-	  PRIMARY KEY (userId, rollId),
+      primary key (userId,rollId),
 	  FOREIGN KEY (userId) REFERENCES users (userId),
 	  FOREIGN KEY (rollId) REFERENCES rolls (rollId)
 );
@@ -204,7 +204,8 @@ INSERT INTO addresses (city, street, house_number) VALUES
 INSERT INTO rolls (rollName) VALUES
 ('MANAGER'),
 ('STUDENT'),
-('TUTOR');
+('TUTOR'),
+('HOLDING');
 
 -- Insert data into users table
 INSERT INTO users (firstName, lastName, email, phone, gender, birth_date, address_id) VALUES

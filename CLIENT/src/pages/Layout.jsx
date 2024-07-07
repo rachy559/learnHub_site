@@ -12,6 +12,7 @@ const Layout = () => {
   const user = useContext(UserContext);
   return (
     <div>
+      
       <Header />
         <Outlet />
       <Footer />

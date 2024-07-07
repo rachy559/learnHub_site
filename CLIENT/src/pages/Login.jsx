@@ -20,8 +20,6 @@ const Login = ({ setShowHeaders}) => {
   
   function handleLogin() {
     
-    // const USERS_API_URL = `users?email=${formData.username}&password=${formData.password}`;
-
     const fetchUsers = async () => {
       try {
         serverRequests('POST', 'login', formData)
@@ -34,7 +32,14 @@ const Login = ({ setShowHeaders}) => {
             localStorage.setItem('loggedInUser', JSON.stringify(user));
             console.log('Stored user data:', user,userContext.user ); 
             userContext.setUser({ ...userContext.user, ...user })
-            navigate(`/homePage`);
+            if(user.userId===1)
+            {
+              navigate(`/manager_homePage`);
+            }
+            else{
+              navigate(`/homePage`);
+            }
+            
           } else {
             alert("Login failed. Invalid username or password.");
           }

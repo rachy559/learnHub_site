@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import { FilterContext } from '../App';
 import Filter from '../components/Filter';
 import '../css/App.css';
 import '../css/lessons.css';
-
+import Alert from '@mui/material/Alert';
+import { UserContext } from "../App";
 
 const Lessons = () => {
+  const { user, setUser } = useContext(UserContext);
   const { selectedLanguages, selectedSubjects, selectedGender, selectedOptions, selectedLocations, setSelectedOptions, setSelectedLocations } = useContext(FilterContext);
   const [allLessons, setAllLessons] = useState([]);
   const [initialLessons, setInitialLessons] = useState([]);
@@ -15,6 +17,7 @@ const Lessons = () => {
   const [allOptions] = useState(["פרונטלי", "אונליין", "2 האפשרויות טובות לי"]);
   const [flag, setFlag] = useState(false);
   const [isClick, setIsClick] = useState(false);
+  const [isWarn, setIsWarn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,6 +73,18 @@ const Lessons = () => {
     );
   };
 
+  const changePage = (lesson) => {
+    console.log(user)
+    if (Object.keys(user).length === 0) {
+      setIsWarn(true)
+    }
+    else {
+      navigate('/lesson', { state: { from: 'Lessons', data: { lesson: lesson } } })
+    }
+
+  };
+
+
   const handleSearch = () => {
     const filteredLessons = initialLessons.filter(lesson => {
       const matchLanguages = selectedLanguages.length === 0 || selectedLanguages.includes(lesson.language);
@@ -97,46 +112,48 @@ const Lessons = () => {
     <>
       <div style={{ paddingTop: '100px' }}>
         <h1>שיעורים</h1>
-      </div>
-      <img className='filters' src='../pictures/image.png' onClick={()=>{setIsClick(!isClick)}}/>
-        {isClick?(
-          <>
-          <Filter />
-      
-      <h3 className="options-header">אפשרויות:</h3>
-      <div className="allSubjects">
-        {allOptions.map((option1, key) => (
-          <div
-            key={key}
-            className={`subjectDiv ${selectedOptions.includes(option1) ? 'selected' : ''}`}
-            onClick={() => handleOptionClick(option1)}
-          >
-            <label className="subject">{option1}</label>
-          </div>
-        ))}
-      </div>
-      {flag && (
+      </div>{isWarn ? (<>
+        <Alert severity="warning"> הנך נדרש <text className='link' onClick={() => navigate('/login')}>להתחבר</text> או <text className='link' onClick={() => navigate('/signup')} >להרשם</text> על מנת לבצע פעולה זו</Alert>
+      </>) : (<></>)}
+      <img className='filters' src='../pictures/image.png' onClick={() => { setIsClick(!isClick) }} />
+      {isClick ? (
         <>
-          <h3 className="locations-header">מיקומים:</h3>
+          <Filter />
+
+          <h3 className="options-header">אפשרויות:</h3>
           <div className="allSubjects">
-            {allLocations.map((location, key) => (
+            {allOptions.map((option1, key) => (
               <div
                 key={key}
-                className={`subjectDiv ${selectedLocations.includes(location.city) ? 'selected' : ''}`}
-                onClick={() => handleLocationsClick(location.city)}
+                className={`subjectDiv ${selectedOptions.includes(option1) ? 'selected' : ''}`}
+                onClick={() => handleOptionClick(option1)}
               >
-                <label className="subject">{location.city}</label>
+                <label className="subject">{option1}</label>
               </div>
             ))}
           </div>
-        </>
-      )}
-      <button className="search-button" onClick={handleSearch}>חפש</button>
-      </>):(<></>)}
+          {flag && (
+            <>
+              <h3 className="locations-header">מיקומים:</h3>
+              <div className="allSubjects">
+                {allLocations.map((location, key) => (
+                  <div
+                    key={key}
+                    className={`subjectDiv ${selectedLocations.includes(location.city) ? 'selected' : ''}`}
+                    onClick={() => handleLocationsClick(location.city)}
+                  >
+                    <label className="subject">{location.city}</label>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          <button className="search-button" onClick={handleSearch}>חפש</button>
+        </>) : (<></>)}
       <h3 className="found-lessons-header">שיעורים שנמצאו:</h3>
       <div className="allSubjects">
         {allLessons.map((lesson, key) => (
-          <div key={key} className="subjectDiv" onClick={()=>navigate('/lesson',{ state: { from: 'Lessons', data: {lesson:lesson} } })}>
+          <div key={key} className="subjectDiv" onClick={() => changePage(lesson)}>
             <div className="lessonHeader">
               <div className="lessonTitle">{lesson.subject}</div>
               <div className="lessonInfo">
@@ -159,6 +176,7 @@ const Lessons = () => {
           </div>
         ))}
       </div>
+
     </>
   );
 };

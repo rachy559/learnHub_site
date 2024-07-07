@@ -41,8 +41,8 @@ const PORTRUN = process.env.PORTRUN || 3000;
  const lessons=require('./routes/lessonsRoute');
  app.use('/lessons',lessons);
 
-//  const manager=require('./routes/managerRoute');
-//  app.use('/manager_homePage',manager);
+ const manager=require('./routes/managerRoute');
+ app.use('/manager',manager);
 
  const filter=require('./routes/filterRoute');
  app.use('/filter',filter);

@@ -3,6 +3,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import '../css/signup.css';
 import Modal from 'react-modal';
+import Alert from '@mui/material/Alert';
 import { addYears, subYears } from 'date-fns';
 Modal.setAppElement('#root');
 
@@ -11,6 +12,8 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     const showHeaders = useContext(ShowHeadersContext);
     const userContext = useContext(UserContext);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [isConfirm, setIsConfirm] = useState(false);
     const [hide, setHide] = useState(false);
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
@@ -57,8 +60,13 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
     function createProfileTutor() {
         serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
-            console.log(userId)
             userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
+            setIsConfirm(true)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => {
+                navigate('/homePage');
+              }, 5000); 
+            // navigate('/tutorProfile')
         })
     }
 
@@ -122,7 +130,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
     const ContinueDetails = async () => {
         console.log(formData);
-        if (formData.lastName && formData.password && formData.confirm_password) {
+        if (formData.lastName && formData.password && formData.confirm_password && isChecked) {
             try {
                 serverRequests('GET', USERS_API_URL, null).then((usersArr) => {
                     if (formData.confirm_password === formData.password) {
@@ -160,7 +168,9 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 console.error(error.message);
             }
         } else {
-            alert('You didnt fill all fields.');
+            // alert('You didnt fill all fields.');
+            setIsError(true)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
@@ -216,8 +226,10 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     return (
         <>
             <div style={{ paddingTop: '100px' }}></div>
+            {isConfirm&&<Alert style={{marginTop:'20px'}} severity="success">בקשתך נקלטה במערכת, חכה לאישור במייל ממנהל האתר</Alert>}
             <div className="registerDiv">
                 <h1> הצטרף אלינו:</h1><br /><br />
+                {isError&&<Alert style={{marginBottom:'20px'}} severity="error">לא מלאת את כל הפרטים הנדרשים</Alert>}
                 <form className="registerForm">
                     <div>
                         <input
@@ -339,6 +351,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             id="terms-checkbox"
                             checked={isChecked}
                             onChange={() => setIsChecked(!isChecked)}
+                            required
                         />
                         <label className='security'>
                             בבחירתך להמשיך, אתה מסכים <label className='check' onClick={openModal}>לתנאי השימוש ומדיניות האבטחה</label> שלנו

@@ -49,6 +49,15 @@ async function create(firstName,lastName,email,phone,gender,birth_date,rollId,pa
     }
 }
 
+async function getAllNotConfirmTutors() {
+    try {
+        const response =await model.getAllNotConfirmTutors();
+        return response;
+    } catch (err) {
+        throw err;
+    }
+}
 
 
-module.exports = { getById, login, getUsers, create };
+
+module.exports = { getById, login, getUsers, create, getAllNotConfirmTutors };

@@ -106,7 +106,7 @@ const TutorProfile = () => {
 
     const handleAdd = (dayIndex) => {
         const updatedInputValues = [...inputValues];
-        updatedInputValues[dayIndex].push("10"); // Default value for new time
+        updatedInputValues[dayIndex].push("10"); 
         setInputValues(updatedInputValues);
     };
 
@@ -371,44 +371,39 @@ const TutorProfile = () => {
                     </form>
                 </div>) :
                 (<></>)}
-            <button className='lessonBtn' onClick={() => setIsClickAddSubject(!isClickAddSubject)}>הוסף מקצוע</button>
+             <button className='lessonBtn' onClick={() => setIsClickAddSubject(!isClickAddSubject)}>הוסף מקצוע</button>
             {isClickAddSubject ? (
-                <>
-                    <div>
-                        <input
-                            placeholder="מקצוע"
-                            type="text"
-                            name="subjects"
-                            value={currentSubject}
-                            onChange={(e) => setCurrentSubject(e.target.value)}
-                        />
-                        <button type="button" onClick={handleChangeSub}>+ הוסף</button>
-                        <button type="button" onClick={handleAddSubject}>סיים</button>
-                    </div>
-                </>
-            ) :
-                (<></>)
+                <div className='newSubject'>
+                    <input
+                        placeholder="מקצוע"
+                        type="text"
+                        name="subjects"
+                        value={currentSubject}
+                        onChange={(e) => setCurrentSubject(e.target.value)}
+                    />
+                    <button type="button" className='addBtn' onClick={handleChangeSub}>הוסף +</button>
+                    <button type="button" className='finishBtn' onClick={handleAddSubject}>סיים</button>
+                </div>
+            ) : (
+                <></>
+            )}
 
-            }
             <button className='lessonBtn' onClick={() => setIsClickAddLanguage(!isClickAddLanguage)}>הוסף שפה</button>
             {isClickAddLanguage ? (
-                <>
-                    <div>
-                        <input
-                            placeholder="שפה"
-                            type="text"
-                            name="languages"
-                            value={currentLanguage}
-                            onChange={(e) => setCurrentLanguage(e.target.value)}
-                        />
-                        <button type="button" onClick={handleChangeLan}>+ הוסף</button>
-                        <button type="button" onClick={handleAddLanguage}>סיים</button>
-                    </div>
-                </>
-            ) :
-                (<></>)
-
-            }
+                <div className='newLanguage'>
+                    <input
+                        placeholder="שפה"
+                        type="text"
+                        name="languages"
+                        value={currentLanguage}
+                        onChange={(e) => setCurrentLanguage(e.target.value)}
+                    />
+                    <button type="button" className='addBtn' onClick={handleChangeLan}>הוסף +</button>
+                    <button type="button" className='finishBtn' onClick={handleAddLanguage}>סיים</button>
+                </div>
+            ) : (
+                <></>
+            )}
 
         </>
     );
