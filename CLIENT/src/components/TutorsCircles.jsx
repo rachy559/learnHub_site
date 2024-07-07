@@ -7,7 +7,7 @@ const TutorsCircles = () => {
 
     return (
         <>
-            <h2>Tutors</h2>
+            <h1>Tutors</h1>
             <div className="allTutorCircles">
                 {allTutors.map((tutor, key) => {
                     let extension = '';

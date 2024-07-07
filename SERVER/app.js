@@ -1,48 +1,51 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const {authenticateToken, authenticateAdmin} = require('./middlewares/authMiddleware')
+const {authenticateToken, authorizeRoll} = require('./middlewares/authMiddleware')
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
-// const jwt=require('jsonwebtoken');
 require('dotenv').config();
+const cors = require('cors');
+app.use(cors());
 
 const PORTRUN = process.env.PORTRUN || 3000;
 
  const homePage=require('./routes/homePageRoute');
- app.use('/',homePage);
-
  const tutors=require('./routes/tutorsRoute');
-//  app.use('/tutors',authenticateToken, authenticateAdmin, tutors);
- app.use('/tutors', tutors);
-
-
  const login=require('./routes/loginRoute');
- app.use('/login',login);
-
  const users=require('./routes/usersRoute');
- app.use('/users',users);
-
  const students=require('./routes/studentsRoute');
- app.use('/students',students);
-
- const calendar=require('./routes/calendarRoute');
- app.use('/calendar',calendar);
-
  const upload=require('./routes/uploadRoute');
- app.use('/upload',upload);
-
  const lessons=require('./routes/lessonsRoute');
+ const filter=require('./routes/filterRoute');
+
+ app.use('/',homePage);
+ app.use('/tutors', tutors);
+ app.use('/login',login);
+ app.use('/users',users);
+ app.use('/students', students);
+ app.use('/upload',upload);
  app.use('/lessons',lessons);
+ app.use('/filter',filter);
+
+app.use(authenticateToken);
 
 //  const manager=require('./routes/managerRoute');
+ const calendar=require('./routes/calendarRoute');
+ app.use('/calendar',authorizeRoll(['STUDENT']),calendar);
 //  app.use('/manager_homePage',manager);
 
- const filter=require('./routes/filterRoute');
- app.use('/filter',filter);
+
 
 
 app.listen(PORTRUN, () => {
     console.log(`App listening on port ${PORTRUN}`);
   });
 
+
+
+
+// const cookieParser = require('cookie-parser');
+// app.use(cookieParser());
+//  const refreshRoute = require('./routes/rereshTokenRoute');
+// app.use('/refresh', refreshRoute);
