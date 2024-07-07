@@ -40,7 +40,7 @@ const PORTRUN = process.env.PORTRUN || 3000;
  const calendar=require('./routes/calendarRoute');
  const manager=require('./routes/managerRoute');
 
- app.use('/manager',authorizeRoll(['MANAGER']),manager);
+//  app.use('/manager',authorizeRoll(['MANAGER']),manager);
  app.use('/calendar',authorizeRoll(['STUDENT']),calendar);
 
 
