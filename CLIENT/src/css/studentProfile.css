@@ -118,6 +118,7 @@ h3 {
   box-shadow: var(--box-shadow);
   color: var(--card-background-color);
   color: red;
+  margin-bottom: 20px;
 }
 
 .deleteIcon {
@@ -312,4 +313,46 @@ div[style*="display: 'flex'"] {
   width: 20%;
   margin-right: 38%;
   margin-bottom: 10px;
+}
+
+
+ .newSubject, .newLanguage {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  width: 50%;
+  margin-right: 23%;
+}
+
+.newSubject label, .newLanguage label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.newSubject input, .newLanguage input {
+  width: 50%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.addBtn, .finishBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.addBtn {
+  background-color: #a8dfcc;
+}
+
+.finishBtn {
+  background-color: #a8d0e1;
 }

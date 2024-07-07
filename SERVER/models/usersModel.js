@@ -98,6 +98,20 @@ async function createUser(firstName,lastName,email,phone,gender,birth_date,rollI
 }
 
 
+async function getAllNotConfirmTutors() {
+    try {
+        const sql = `SELECT users.*
+        FROM users
+        JOIN roll_for_user ON users.userId = roll_for_user.userId
+        WHERE roll_for_user.rollId = 4;`
+        const [rows, fields] = await pool.query(sql);
+        console.log(rows)
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
 
 
-module.exports = { getPassword, getByEmail, getUsers, createUser, getUser}
+
+module.exports = { getPassword, getByEmail, getUsers, createUser, getUser, getAllNotConfirmTutors}

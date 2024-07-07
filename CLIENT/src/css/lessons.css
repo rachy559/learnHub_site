@@ -111,3 +111,9 @@ h1 {
 .filters{
   width: 5%;
 }
+
+.link{
+  color: #0056b3;
+  text-decoration: underline;
+  cursor: pointer;
+}

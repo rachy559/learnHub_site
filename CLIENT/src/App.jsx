@@ -13,6 +13,8 @@ import Manager_homePage from './pages/Manager_homePage';
 import StudentProfile from './pages/StudentProfile';
 import Lesson from './components/CalendarWork';
 import TutorProfile from './pages/TutorProfile';
+import AdminProfile from './pages/AdminProfile';
+import ConfirmTutors from './pages/ConfirmTutors';
  
 export const UserContext = createContext()
 export const ShowHeadersContext = createContext();
@@ -43,7 +45,7 @@ function App() {
             try {
                 await serverRequests('GET', `tutors?_limit=${limit}`, null).then((foundTutors) => {
                     setAllTutors(foundTutors);
-                })
+                 })
             } catch (error) {
                 console.error('Error fetching tutors:', error);
             }
@@ -82,6 +84,8 @@ function App() {
                       <Route path="/lesson" element={<Lesson />} />
                       <Route path="/studentProfile" element={<StudentProfile setUser={setUser} user={user}/>} />
                       <Route path="/tutorProfile" element={<TutorProfile setUser={setUser} user={user}/>} />
+                      <Route path="/adminProfile" element={<AdminProfile setUser={setUser} user={user}/>} />
+                      <Route path="/confirmTutors" element={<ConfirmTutors setUser={setUser} user={user}/>} />
                    </Route>
                    </Routes>
              </BrowserRouter>

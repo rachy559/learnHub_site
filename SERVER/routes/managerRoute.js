@@ -10,12 +10,12 @@ require('dotenv').config;
 
 router.get('/',async(req,res)=>{
     try{
-    const tutors=await controller.getAllTutors();
+    const tutors=await controller.getAllNotConfirmTutors();
     res.send(tutors);
     }catch(err){
         res.status(500).send(err)
     }
-
-
-
 })
+
+
+module.exports = router;
