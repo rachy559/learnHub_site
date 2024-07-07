@@ -1,54 +1,83 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const {authenticateToken, authenticateAdmin} = require('./middlewares/authMiddleware')
+const {authenticateToken, authorizeRoll} = require('./middlewares/authMiddleware')
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
-// const jwt=require('jsonwebtoken');
 require('dotenv').config();
+const cors = require('cors');
+app.use(cors());
 
 const PORTRUN = process.env.PORTRUN || 3000;
 
  const comments=require('./routes/commentsRoute');
+ const tutors=require('./routes/tutorsRoute');
+ const lanSub=require('./routes/lanSubRoute');
+ const login=require('./routes/loginRoute');
+ const studentLesson=require('./routes/studentLessonRoute');
+ const users=require('./routes/usersRoute');
+ const students=require('./routes/studentsRoute');
+ const upload=require('./routes/uploadRoute');
+ const lessons=require('./routes/lessonsRoute');
+ const filter=require('./routes/filterRoute');
+
+
+ app.use('/tutors', tutors);
  app.use('/',comments);
  app.use('/comments',comments);
-
- const tutors=require('./routes/tutorsRoute');
-//  app.use('/tutors',authenticateToken, authenticateAdmin, tutors);
- app.use('/tutors', tutors);
-
- const lanSub=require('./routes/lanSubRoute');
  app.use('/lanSub',lanSub);
-
- const login=require('./routes/loginRoute');
  app.use('/login',login);
-
- const studentLesson=require('./routes/studentLessonRoute');
  app.use('/studentLesson',studentLesson);
-
- const users=require('./routes/usersRoute');
  app.use('/users',users);
-
- const students=require('./routes/studentsRoute');
  app.use('/students',students);
-
- const calendar=require('./routes/calendarRoute');
- app.use('/calendar',calendar);
-
- const upload=require('./routes/uploadRoute');
  app.use('/upload',upload);
-
- const lessons=require('./routes/lessonsRoute');
  app.use('/lessons',lessons);
 
  const manager=require('./routes/managerRoute');
  app.use('/manager',manager);
 
  const filter=require('./routes/filterRoute');
+
+
+ app.use('/tutors', tutors);
+ app.use('/',comments);
+ app.use('/comments',comments);
+ app.use('/lanSub',lanSub);
+ app.use('/login',login);
+ app.use('/studentLesson',studentLesson);
+ app.use('/users',users);
+ app.use('/students',students);
+ app.use('/upload',upload);
+ app.use('/lessons',lessons);
  app.use('/filter',filter);
 
 
-app.listen(PORTRUN, () => {
-    console.log(`App listening on port ${PORTRUN}`);
-  });
+ app.use(authenticateToken);
 
+ const calendar=require('./routes/calendarRoute');
+ const manager=require('./routes/managerRoute');
+
+ app.use('/manager',authorizeRoll(['MANAGER']),manager);
+ app.use('/calendar',authorizeRoll(['STUDENT']),calendar);
+
+
+ app.listen(PORTRUN, () => {
+  console.log(`App listening on port ${PORTRUN}`);
+});
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+// const cookieParser = require('cookie-parser');
+// app.use(cookieParser());
+//  const refreshRoute = require('./routes/rereshTokenRoute');
+// app.use('/refresh', refreshRoute);

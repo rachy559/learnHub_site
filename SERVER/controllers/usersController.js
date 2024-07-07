@@ -10,27 +10,6 @@ async function getUsers(query){
     }
 }
 
-async function login(email, password) {
-    try {
-        const user = await model.getByEmail(email);
-        if (!user) {
-            throw new Error('Authentication failed');
-        } 
-            const passwordUser = await model.getPassword(user.userId)
-            const response = bcrypt.compare(password, passwordUser.password)
-            if (response) {
-                return user;
-            }
-        else {
-            throw new Error('Passwords are not matching');
-        }
-    
-    } catch (err) {
-    throw err;
-}
-
-}
-
 async function getById(id) {
     try {
         return await model.getUser(id);
@@ -60,4 +39,4 @@ async function getAllNotConfirmTutors() {
 
 
 
-module.exports = { getById, login, getUsers, create, getAllNotConfirmTutors };
+module.exports = { getById, getUsers, create, getAllNotConfirmTutors };

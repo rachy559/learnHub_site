@@ -1,13 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { ACCESS_TOKEN_SECRET } = process.env;
+const Roll = require('../models/authModel');
 
 const authenticateToken = (req, res, next) => {
   console.log("start authenticateToken");
-  const authHeader = req.headers['authorization'];
-  //Extracting token from authorization header
-  const token = authHeader && authHeader.split(" ")[1];//[0]
+  const token = req.headers['authorization'].replace('Barear=', '');
   if (!token) {
-        return res.status(401).send('Access denied');
+    return res.status(401).send('Access denied');
   }
   jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
@@ -21,39 +20,31 @@ const authenticateToken = (req, res, next) => {
 };
 
 
-// const authenticateAdmin = (req, res, next)=>{
-//   if(!req.user){
-//      res.status(401).send('Access denied');
-//   }
-//   if(user.role === 'Admin'){
-//     next();
-//   }
-// }
+const authorizeRoll = (rolls) => {
+  return async (req, res, next) => {
+    try {
+      if (!req.user) {
+        res.status(401).send('Access denied');
+      }
+      console.log(req.user);
+      const userId = req.user.userId;
+      const userRollNames = await Roll.getRolls(userId);
+      if (!rolls.some(roll => userRollNames.includes(roll))) {//אם לפחות אחד מהאלמנטים במערך עומד בתנאי
+        return res.status(403).json({ message: 'Unauthorized' });
+      }
+      next();
+    } catch (error) {
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+};
+
+module.exports = { authenticateToken, authorizeRoll };
 
 
-// const requireRole = (role) => {
-//   return (req, res, next) => {
-//       if (!req.user || !req.user.roles || !req.user.roles.includes(role)) {
-//           return res.sendStatus(403);
-//       }
-//       next();
-//   };
-// };
 
 
-// const authorizeRoll = (rolls) => {
-//   return async (req, res, next) => {
-//       const userRoles = await Roll.findAll({
-//           where: { UserId: req.user.id },
-//       }).map(roll => roll.rollName);
 
-//       if (!rolls.some(roll => userRoles.includes(roll))) {
-//           return res.status(403).json({ message: 'Unauthorized' });
-//       }
-//       next();
-//   };
-// };
-
-
-module.exports = {authenticateToken};
-
+ // const authHeader = req.headers['authorization'];
+  //Extracting token from authorization header
+  // const token = authHeader && authHeader.split(" ")[0];//[0]

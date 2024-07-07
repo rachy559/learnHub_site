@@ -29,6 +29,7 @@ DROP TABLE IF EXISTS rolls;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS addresses;
 
+
 /* Create the tables */
 
 CREATE TABLE addresses(
@@ -179,6 +180,11 @@ CREATE TABLE prescribedLessons(
 
 CREATE TABLE manager(
 	manager_id INT auto_increment PRIMARY KEY,
+    numAccount varchar(20),
+    numBranch varchar(20),
+    nameBank varchar(20),
+    numBank varchar(20),
+    beneficiaryName varchar(30), 
 	FOREIGN KEY (manager_id) REFERENCES users (userId)
 );
 
@@ -198,7 +204,8 @@ INSERT INTO addresses (city, street, house_number) VALUES
 ('Los Angeles', 'Sunset Blvd', 456),
 ('Chicago', 'Wacker Dr', 789),
 ('Houston', 'Main St', 101),
-('Phoenix', 'Central Ave', 202);
+('Phoenix', 'Central Ave', 202),
+('ירושלים','הבנים',5);
 
 -- Insert data into rolls table
 INSERT INTO rolls (rollName) VALUES
@@ -209,14 +216,15 @@ INSERT INTO rolls (rollName) VALUES
 
 -- Insert data into users table
 INSERT INTO users (firstName, lastName, email, phone, gender, birth_date, address_id) VALUES
-('John', 'Doe', 'john.doe@example.com', '1234567890', 'זכר', '1980-01-01', 1),
+('Learn', 'Hub', 'learnhubproj@gmail.com', '0527548858', 'זכר', '1980-01-01', 1),
 ('Jane', 'Smith', 'jane.smith@example.com', '0987654321', 'נקבה', '1990-02-02', 2),
 ('Alice', 'Johnson', 'alice.johnson@example.com', '2345678901', 'נקבה', '2000-03-03', 3),
 ('Bob', 'Brown', 'bob.brown@example.com', '3456789012', 'זכר', '1985-04-04', 4),
 ('Charlie', 'Davis', 'charlie.davis@example.com', '4567890123', 'זכר', '1975-05-05', 5),
 ('Rachel', 'Avraham', 'rachel.avraham@example.com', '0531234567', 'נקבה', '2000-10-25', 4),
 ('Moshe', 'Israel', 'moshe.israel@example.com', '0554567890', 'זכר', '1970-12-31', 5),
-('שלמה', 'קיפניס', 'kipnis@example.com', '0556373893', 'זכר', '1970-12-31', 5);
+('שלמה', 'קיפניס', 'kipnis@example.com', '0556373893', 'זכר', '1970-12-31', 5),
+('keli','ran','kr@gmail.com','0543423455','נקבה','1970-12-31',6);
 
 
 -- Insert data into roll_for_user table
@@ -227,7 +235,8 @@ INSERT INTO roll_for_user (userId, rollId) VALUES
 (4, 3),
 (5, 3),
 (6, 2),
-(7, 2);
+(7, 2),
+(9,2);
 
 -- Insert data into passwords table
 INSERT INTO passwords (userId, password) VALUES
@@ -238,7 +247,8 @@ INSERT INTO passwords (userId, password) VALUES
 (5, 'password5'),
 (6, 'password6'),
 (7, 'password7'),
-(8, 'sh');
+(8, 'sh'),
+(9,'$2b$10$fmU0l0lpj7dXyDjhgW70R.870/1WWwy3vQ1XTKFM.h4rxzPlQNuim');
 
 -- Insert data into languages table
 INSERT INTO languages (language_name) VALUES
@@ -337,7 +347,8 @@ INSERT INTO tutors_languages (tutor_id, language_id) VALUES
 INSERT INTO students (student_id, studentStatus) VALUES
 (2, 'Primary'),
 (6, 'High-School'),
-(7, 'Other');
+(7, 'Other'),
+(9,'Primary');
 
 -- Insert data into lessons table
 INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id) VALUES
@@ -378,8 +389,8 @@ INSERT INTO subject_of_lesson (lesson_id, subject_id) VALUES
 (6, 4);
 
 -- Insert data into manager table
-INSERT INTO manager (manager_id) VALUES
-(1);
+INSERT INTO manager (manager_id,numAccount,numBranch,nameBank,numBank, beneficiaryName) VALUES
+(1, '12346','128','הפועלים','12','');
 
 -- Insert data into comments table
 INSERT INTO comments (comment_date, body, student_id) VALUES

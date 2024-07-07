@@ -8,14 +8,12 @@ async function getUser(userId) {
             INNER JOIN addresses a ON u.address_id = a.id
             WHERE u.userId = ?
         `;
-        // `SELECT * FROM users JOIN addresses where userId=?`;
         const [rows, fields] = await pool.query(sql,[userId]);
         return rows;
     } catch (err) {
         throw err;
     }
 }
-
 
 async function getUsers(query) {
     try {
@@ -31,8 +29,31 @@ async function getUsers(query) {
 
 async function getByEmail(email) {
     try {
-        const sql = 'SELECT * FROM users natural join addresses where email=? ';
+        console.log("e",email);
+        const sql = `
+            SELECT 
+                u.userId,
+                u.firstName,
+                u.lastName,
+                u.email,
+                u.phone,
+                u.gender,
+                u.birth_date,
+                a.city, 
+                a.street,
+                a.house_number,
+                GROUP_CONCAT(r.rollName SEPARATOR ', ') AS roles
+            FROM users u
+            LEFT JOIN addresses a ON u.address_id = a.address_id
+            LEFT JOIN roll_for_user rf ON u.userId = rf.userId
+            LEFT JOIN rolls r ON rf.rollId = r.rollId
+            WHERE u.email = ?
+            GROUP BY u.userId
+        `;
         const result = await pool.query(sql, [email]);
+        console.log('resolt',result);
+        console.log('resolt0',result[0]);
+        console.log('resolt00',result[0][0]);
         return result[0][0];
     } catch (err) {
         console.log(err);

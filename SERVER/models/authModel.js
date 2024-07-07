@@ -1,7 +1,9 @@
+// const pool = require('../DB');
+
 async function getUser(email, password) {
     try {
-        const sql = (`SELECT * FROM users WHERE email = ?`, [email]);
-        const [rows, fields] = await pool.query(sql);
+        const sql = `SELECT * FROM users WHERE email = ?`;
+        const [rows, fields] = await pool.query(sql,[email]);
         return rows;
     }
     catch (err) {
@@ -9,15 +11,14 @@ async function getUser(email, password) {
     }
 }
 
-
-async function getRole(user) {
+async function getRolls(userId) {   //מחזירה את כל התפקידים הקיימים עבור המשתמש המסוים
     try {
-        const sql = (`SELECT rollName FROM rolls r JOIN roll_for_user ru ON r.rollId = ru.rollId WHERE ru.userId = ?`[user.userId]);
-        const [rows, fields] = await pool.query(sql);
-        return rows;
+        const sql = `SELECT rollName FROM rolls r JOIN roll_for_user ru ON r.rollId = ru.rollId WHERE ru.userId = ?`;
+        const [userRolls] = await db.query(sql, [userId]);
+        return userRolls.map(roll => roll.rollName);
     } catch (err) {
         throw err;
     }
 }
 
-module.exports = { getUser, getRole }
+module.exports = { getUser, getRolls }

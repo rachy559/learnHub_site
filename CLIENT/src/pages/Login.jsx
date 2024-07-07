@@ -6,7 +6,7 @@ import '../css/signup.css';
 
 
 
-const Login = ({ setShowHeaders}) => {
+const Login = ({ setShowHeaders }) => {
   const showHeaders = useContext(ShowHeadersContext);
   const userContext = useContext(UserContext);
   console.log(userContext)
@@ -17,7 +17,6 @@ const Login = ({ setShowHeaders}) => {
 
   const navigate = useNavigate();
 
-  
   function handleLogin() {
     
     const fetchUsers = async () => {
@@ -49,11 +48,10 @@ const Login = ({ setShowHeaders}) => {
         alert("Login failed. An error occurred.");
         console.log(err);
       }
-    }; 
-
+    };
     fetchUsers();
   }
-  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,40 +63,40 @@ const Login = ({ setShowHeaders}) => {
 
   return (
     <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
-    <div className='registerDiv'>
-      <h1>שמחים שחזרת</h1><br></br>
-      <form className='registerForm'>
-        <div>
-          <input
-            placeholder='דואר אלקטרוני'
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div><br></br>
-        <div>
-          <input
-            placeholder='סיסמא'
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div><br></br>
-        <button type="button" onClick={() => handleLogin()}>
-          Login
-        </button>
+      <div className='registerDiv'>
+        <h1>שמחים שחזרת</h1><br></br>
+        <form className='registerForm'>
+          <div>
+            <input
+              placeholder='דואר אלקטרוני'
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div><br></br>
+          <div>
+            <input
+              placeholder='סיסמא'
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div><br></br>
+          <button type="button" onClick={() => handleLogin()}>
+            Login
+          </button>
 
-      </form>
-      <NavLink
-        to="/signUp"
-      >
-        עדין לא רשום אצלנו? הרשם
-      </NavLink>
-    </div>
-</div>
-  );
+        </form>
+        </div>
+        <NavLink
+          to="/signUp"
+        >
+          עדין לא רשום אצלנו? הרשם
+        </NavLink>
+      </div>
+      );
 };
 
-export default Login;
+      export default Login;

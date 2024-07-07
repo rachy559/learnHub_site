@@ -1,9 +1,11 @@
 import React, { useState, createContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+
+import { serverRequests } from './Api';
+
 import Layout from './pages/Layout';
 import HomePage from './pages/HomePage';
 import Tutors from './pages/Tutors';
-import { serverRequests } from './Api';
 import LogIn from './pages/Login';
 import SignUp from './pages/SignUp';
 import Lessons from './pages/Lessons';
@@ -30,13 +32,13 @@ function App() {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [showHeaders, setShowHeaders] = useState(true);
   const [user, setUser] = useState({});
-      useEffect(() => {
-         const userInLocalStorage = localStorage.getItem('user');
-         if (userInLocalStorage) {
-           const parsedUser = JSON.parse(userInLocalStorage);
-           setUser(parsedUser);
-         }
-       }, []);
+      // useEffect(() => {
+      //    const userInLocalStorage = localStorage.getItem('user');
+      //    if (userInLocalStorage) {
+      //      const parsedUser = JSON.parse(userInLocalStorage);
+      //      setUser(parsedUser);
+      //    }
+      //  }, []);
 
        useEffect(() => {
         const fetchDataOfAllTutors = async () => {
