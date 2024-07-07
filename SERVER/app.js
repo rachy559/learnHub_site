@@ -17,6 +17,8 @@ const PORTRUN = process.env.PORTRUN || 3000;
 //  app.use('/tutors',authenticateToken, authenticateAdmin, tutors);
  app.use('/tutors', tutors);
 
+ const lanSub=require('./routes/lanSubRoute');
+ app.use('/lanSub',lanSub);
 
  const login=require('./routes/loginRoute');
  app.use('/login',login);

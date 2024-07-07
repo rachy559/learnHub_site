@@ -16,5 +16,20 @@ async function createLesson(levelLesson, lessonTime, priceLesson, zoomLink, tuto
     }
 }
 
+async function createSubject(tutor_id,subjects){
+    try{
+        return await model.createSubject(tutor_id,subjects);
+    }catch(err){
+        throw err;
+    }
+}
 
-module.exports={ getAllLessons, createLesson};
+async function createLanguage(tutor_id,languages){
+    try{
+        return await model.createLanguage(tutor_id,languages);
+    }catch(err){
+        throw err;
+    }
+}
+
+module.exports={ getAllLessons, createLesson, createSubject, createLanguage};

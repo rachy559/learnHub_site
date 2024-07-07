@@ -9,7 +9,7 @@ import SignUp from './pages/SignUp';
 import Lessons from './pages/Lessons';
 import Manager_homePage from './pages/Manager_homePage';
 import StudentProfile from './pages/StudentProfile';
-import Lesson from './components/Lesson';
+import Lesson from './components/CalendarWork';
 import TutorProfile from './pages/TutorProfile';
  
 export const UserContext = createContext()

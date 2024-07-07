@@ -80,7 +80,7 @@ const StudentProfile = () => {
   };
 
   const updateLesson = (lesson) => {
-    navigate('/lesson',{ state: { from: 'StudentProfile', data: {route:route,lesson:lesson }}});
+    navigate('/lesson',{ state: { from: 'StudentProfile', data: {lesson:lesson }}});
   };
 
 

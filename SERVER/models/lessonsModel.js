@@ -12,8 +12,8 @@ async function getLessons() {
     le.zoomLink,
     le.lessonTime AS lesson_time,
     CASE
-        WHEN le.zoomLink IS NOT NULL THEN 'אונליין'
-        ELSE 'פרונטלי'
+        WHEN COALESCE(le.zoomLink, '') = '' THEN 'פרונטלי'
+        ELSE 'אונליין'
     END AS lesson_type,
     le.levelLesson AS level,
     CONCAT(a.street, ' ', a.house_number) AS street_tutor,
@@ -44,29 +44,70 @@ JOIN
     }
 }
 
-async function createLesson(levelLesson, lessonTime, priceLesson, zoomLink, tutor_id,language_name,subjectName) {
+async function createLesson(levelLesson, lessonTime, priceLesson, zoomLink, tutor_id, language_name, subjectName) {
     try {
-        const sql =  `INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id) VALUES (?, ?, ?, ?, ?, ?)`;
-        const result = await pool.query(sql, [levelLesson, lessonTime, priceLesson, zoomLink,false, tutor_id]);
+        const sql = `INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id) VALUES (?, ?, ?, ?, ?, ?)`;
+        const result = await pool.query(sql, [levelLesson, lessonTime, priceLesson, zoomLink, false, tutor_id]);
         const lesson_id = result[0].insertId;
-        const sql1 =`SELECT subject_id FROM subjects WHERE subjectName = ?`;
+        const sql1 = `SELECT subject_id FROM subjects WHERE subjectName = ?`;
         const result1 = await pool.query(sql1, [subjectName]);
         const subject_id = result1[0][0].subject_id;
-        const sql2 =`INSERT INTO subject_of_lesson (lesson_id, subject_id) VALUES (?, ?)`;
+        const sql2 = `INSERT INTO subject_of_lesson (lesson_id, subject_id) VALUES (?, ?)`;
         const result2 = await pool.query(sql2, [lesson_id, subject_id]);
         for (const languageName of language_name) {
-        const sql3 =`SELECT language_id FROM languages WHERE language_name = ?`;
-        const result3 = await pool.query(sql3, [languageName]);
-        const language_id = result3[0][0].language_id;
-        const sql4 =`INSERT INTO lesson_languages (lesson_id, language_id) VALUES (?, ?)`;
-        const result4 = await pool.query(sql4, [lesson_id, language_id]);
-    }
+            const sql3 = `SELECT language_id FROM languages WHERE language_name = ?`;
+            const result3 = await pool.query(sql3, [languageName]);
+            const language_id = result3[0][0].language_id;
+            const sql4 = `INSERT INTO lesson_languages (lesson_id, language_id) VALUES (?, ?)`;
+            const result4 = await pool.query(sql4, [lesson_id, language_id]);
+        }
         return lesson_id;
     } catch (err) {
         throw err;
     }
 }
 
+async function createSubject(tutor_id, subjects) {
+    try {
+        const sql2Check = "SELECT subjectName FROM subjects WHERE subjectName = ?";
+        const sql = "INSERT INTO subjects (`subjectName`) VALUES(?)";
+        const sql2 = `INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES (?, ?)`;
+        for (const subjectName of subjects) {
+            if (subjectName) {
+                const [rows] = await pool.query(sql2Check, [subjectName]);
+                if (rows.length === 0) {
+                    const result1 = await pool.query(sql, [subjectName]);
+                    const subject_id = result1[0].insertId;
+                    await pool.query(sql2, [tutor_id, subject_id]);
+                }
+            }
+        }
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+async function createLanguage(tutor_id, languages) {
+    try {
+        const sql2Check = "SELECT language_name FROM languages WHERE language_name = ?";
+        const sql = "INSERT INTO languages (`language_name`) VALUES(?)";
+        const sql2 = `INSERT INTO tutors_languages (tutor_id, language_id) VALUES (?, ?)`;
+        for (const language_name of languages) {
+            if (language_name) {
+                const [rows] = await pool.query(sql2Check, [language_name]);
+                if (rows.length === 0) {
+                    const result1 = await pool.query(sql, [language_name]);
+                    const language_id = result1[0].insertId;
+                    await pool.query(sql2, [tutor_id, language_id]);
+                }
+            }
+        }
+    }
+    catch (err) {
+        throw err;
+    }
+}
 
 
-module.exports = { getLessons ,createLesson};
+module.exports = { getLessons, createLesson, createSubject, createLanguage };

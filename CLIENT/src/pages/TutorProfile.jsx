@@ -12,6 +12,16 @@ const TutorProfile = () => {
     const [lessons, setLessons] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
+    const [currentSubject, setCurrentSubject] = useState("");
+    const [formDataSubjects, setFormDataSubjects] = useState({
+        tutor_id: userContext.user.userId,
+        subjects: []
+    })
+    const [currentLanguage, setCurrentLanguage] = useState("");
+    const [formDataLanguages, setFormDataLanguages] = useState({
+        tutor_id: userContext.user.userId,
+        languages: []
+    })
     const [inputValues, setInputValues] = useState([]);
     const [formDataLesson, setFormDataLesson] = useState({
         levelLesson: "",
@@ -28,7 +38,10 @@ const TutorProfile = () => {
     });
     const [subjects, setSubjects] = useState([]);
     const [languages, setLanguages] = useState([]);
-    const [isClick, setIsClick] = useState(false);
+    const [isClickAddLesson, setIsClickAddLesson] = useState(false);
+    const [isClickAddLanguage, setIsClickAddLanguage] = useState(false);
+    const [isClickAddSubject, setIsClickAddSubject] = useState(false);
+
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split('T')[0];
     useEffect(() => {
@@ -101,6 +114,7 @@ const TutorProfile = () => {
         try {
             serverRequests('POST', 'lessons', formDataLesson).then(() => {
                 alert('השיעור התווסף בהצלחה')
+                setIsClickAddLesson(false);
             })
         } catch (err) {
             console.log(err);
@@ -120,6 +134,11 @@ const TutorProfile = () => {
                 ...formDataLesson,
                 [name]: selectedOptions
             });
+        } else if (name === "zoomLink") {
+            setFormDataLesson({
+                ...formDataLesson,
+                [name]: value || NULL
+            });
         } else {
             setFormDataLesson({
                 ...formDataLesson,
@@ -127,6 +146,55 @@ const TutorProfile = () => {
             });
         }
     }
+
+    const handleAddSubject = () => {
+        try {
+            console.log(formDataSubjects)
+            serverRequests('POST', `lanSub/sub`, formDataSubjects).then(() => {
+                setFormDataSubjects((prevFormData) => ({
+                    ...prevFormData,
+                    subjects: []
+                }));
+                setIsClickAddSubject(false)
+            })
+        }
+        catch (err) {
+            console.log("err", err);
+        }
+    }
+
+    const handleChangeSub = (e) => {
+        setFormDataSubjects((prevFormData) => ({
+            ...prevFormData,
+            subjects: [...prevFormData.subjects, currentSubject]
+        }));
+        setCurrentSubject("");
+    }
+
+    const handleAddLanguage = () => {
+        try {
+            console.log(formDataLanguages)
+            serverRequests('POST', `lanSub/lan`, formDataLanguages).then(() => {
+                setFormDataLanguages((prevFormData) => ({
+                    ...prevFormData,
+                    lsnguages: []
+                }));
+                setIsClickAddLanguage(false)
+            })
+        }
+        catch (err) {
+            console.log("err", err);
+        }
+    }
+
+    const handleChangeLan = (e) => {
+        setFormDataLanguages((prevFormData) => ({
+            ...prevFormData,
+            languages: [...prevFormData.languages, currentLanguage]
+        }));
+        setCurrentLanguage("");
+    }
+
 
     return (
         <>
@@ -250,8 +318,8 @@ const TutorProfile = () => {
                     ))
                 )}
             </div>
-            <button className='lessonBtn' onClick={() => setIsClick(!isClick)}>הוסף שיעור</button>
-            {isClick ? (
+            <button className='lessonBtn' onClick={() => setIsClickAddLesson(!isClickAddLesson)}>הוסף שיעור</button>
+            {isClickAddLesson ? (
                 <div className='newLesson'>
                     <form className='formLesson'>
                         <label htmlFor="levelLesson">רמת השיעור:</label>
@@ -282,6 +350,7 @@ const TutorProfile = () => {
 
                         <label htmlFor="subject">מקצוע השיעור:</label>
                         <select id="subject" name="subjectName" value={formDataLesson.subjectName} onChange={handleChangeInputs} required>
+                            <option value="" disabled>בחר מקצוע</option>
                             {subjects.map((subject, index) => (
                                 <option key={index} value={subject}>
                                     {subject}
@@ -302,6 +371,45 @@ const TutorProfile = () => {
                     </form>
                 </div>) :
                 (<></>)}
+            <button className='lessonBtn' onClick={() => setIsClickAddSubject(!isClickAddSubject)}>הוסף מקצוע</button>
+            {isClickAddSubject ? (
+                <>
+                    <div>
+                        <input
+                            placeholder="מקצוע"
+                            type="text"
+                            name="subjects"
+                            value={currentSubject}
+                            onChange={(e) => setCurrentSubject(e.target.value)}
+                        />
+                        <button type="button" onClick={handleChangeSub}>+ הוסף</button>
+                        <button type="button" onClick={handleAddSubject}>סיים</button>
+                    </div>
+                </>
+            ) :
+                (<></>)
+
+            }
+            <button className='lessonBtn' onClick={() => setIsClickAddLanguage(!isClickAddLanguage)}>הוסף שפה</button>
+            {isClickAddLanguage ? (
+                <>
+                    <div>
+                        <input
+                            placeholder="שפה"
+                            type="text"
+                            name="languages"
+                            value={currentLanguage}
+                            onChange={(e) => setCurrentLanguage(e.target.value)}
+                        />
+                        <button type="button" onClick={handleChangeLan}>+ הוסף</button>
+                        <button type="button" onClick={handleAddLanguage}>סיים</button>
+                    </div>
+                </>
+            ) :
+                (<></>)
+
+            }
+
         </>
     );
 };
