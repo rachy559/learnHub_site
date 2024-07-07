@@ -53,16 +53,15 @@ const Header = ({ setShowHeaders }) => {
   };
 
   const navigateToProfile=()=>{
-    // console.log(user.rollId)
-    // if(user.rollId===2)
-    //   {
-    //     navigate('/studentProfile');
-    //   }
-    // else if(user.rollId===3)
-    //   {
-    //     navigate('/tutorProfile');
-    //   }adminProfile
-    navigate('/adminProfile');
+    console.log(user.rollId)
+    if(user.roles==='STUDENT'||user.rollId===2)
+      {
+        navigate('/studentProfile');
+      }
+    else if(user.roles==='TUTOR'||user.rollId===3)
+      {
+        navigate('/tutorProfile');
+      }
   }
 
   console.log("userCon", user);

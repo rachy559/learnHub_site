@@ -240,7 +240,7 @@ INSERT INTO roll_for_user (userId, rollId) VALUES
 
 -- Insert data into passwords table
 INSERT INTO passwords (userId, password) VALUES
-(1, 'password1'),
+(1, '$2b$10$fmU0l0lpj7dXyDjhgW70R.870/1WWwy3vQ1XTKFM.h4rxzPlQNuim'),
 (2, 'password2'),
 (3, 'password3'),
 (4, 'password4'),

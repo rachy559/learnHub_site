@@ -6,7 +6,7 @@ async function createStudent(studentStatus,email) {
     try {
         const response1=await model2.getByEmail(email);
         const response =await model.createSingleStudent(studentStatus,response1.userId);
-        return response[0];
+        return response1;
     } catch (err) {
         throw err;
     }

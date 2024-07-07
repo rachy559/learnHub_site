@@ -9,10 +9,10 @@ import Tutors from './Tutors';
 
 
 const Layout = () => {
-  const user = useContext(UserContext);
+  const {user,setUser} = useContext(UserContext);
   return (
     <div>
-      
+      {/* {user.roles==='MANAGER'?(<h)} */}
       <Header />
         <Outlet />
       <Footer />

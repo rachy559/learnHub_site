@@ -83,7 +83,7 @@ const StudentProfile = () => {
     navigate('/lesson',{ state: { from: 'StudentProfile', data: {lesson:lesson }}});
   };
 
-
+console.log(userContext.user)
   return (
     <>
       <div className="profile-container">

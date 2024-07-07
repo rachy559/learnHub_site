@@ -59,15 +59,16 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     const USERS_API_URL = `users?email=${formData.email}`;
 
     function createProfileTutor() {
-        serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
-            userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
-            setIsConfirm(true)
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(() => {
-                navigate('/homePage');
-              }, 5000); 
-            // navigate('/tutorProfile')
-        })
+        // serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
+        //     userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
+           
+        //     // navigate('/tutorProfile')
+        // })
+        setIsConfirm(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+            navigate('/homePage');
+          }, 5000); 
     }
 
     function closeModal() {
@@ -77,9 +78,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     function createProfileStudent() {
         try {
             serverRequests('POST', 'students', formDataStudent).then((response) => {
-                userContext.setUser({ ...userContext.user, ...formDataStudent });
+                userContext.setUser({ ...userContext.user, ...response });
             })
             setHide(false);
+            setShowHeaders(!showHeaders);
+            navigate('/homePage')
         }
         catch (err) {
             console.log(err);
@@ -157,7 +160,6 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
                             });
                             alert(`You can continue filling in your details ${user.firstName}! 😀`);
-                            setShowHeaders(!showHeaders);
                             setHide(true);
                         }
                     } else {

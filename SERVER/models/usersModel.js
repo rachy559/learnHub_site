@@ -88,6 +88,7 @@ async function createUser(firstName,lastName,email,phone,gender,birth_date,rollI
         await pool.query(sql2, [userId, password]);
         
         const sql3 = "INSERT INTO roll_for_user (`userId`, `rollId`) VALUES(?, ?)";
+        console.log("role",rollId)
         await pool.query(sql3, [userId, rollId]);
         return userId; 
 

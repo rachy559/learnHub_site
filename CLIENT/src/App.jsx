@@ -32,13 +32,6 @@ function App() {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [showHeaders, setShowHeaders] = useState(true);
   const [user, setUser] = useState({});
-      // useEffect(() => {
-      //    const userInLocalStorage = localStorage.getItem('user');
-      //    if (userInLocalStorage) {
-      //      const parsedUser = JSON.parse(userInLocalStorage);
-      //      setUser(parsedUser);
-      //    }
-      //  }, []);
 
        useEffect(() => {
         const fetchDataOfAllTutors = async () => {
