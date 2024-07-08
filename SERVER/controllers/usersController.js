@@ -18,10 +18,10 @@ async function getById(id) {
     }
 }
 
-async function create(firstName,lastName,email,phone,gender,birth_date,rollId,password,city,street,house_number) {
+async function create(firstName,lastName,email,phone,gender,birth_date,rollId,password,city,street,house_number,createDate) {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const response = model.createUser(firstName,lastName,email,phone,gender,birth_date,rollId,hashedPassword,city,street,house_number);
+        const response = model.createUser(firstName,lastName,email,phone,gender,birth_date,rollId,hashedPassword,city,street,house_number,createDate);
         return response[0];
     } catch (err) {
         throw err;
