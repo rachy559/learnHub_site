@@ -20,7 +20,7 @@ const PORTRUN = process.env.PORTRUN || 3000;
  const upload=require('./routes/uploadRoute');
  const lessons=require('./routes/lessonsRoute');
  const filter=require('./routes/filterRoute');
-
+ const emailRoute = require('./routes/emailRoute');
 
  app.use('/tutors', tutors);
  app.use('/',comments);
@@ -33,7 +33,7 @@ const PORTRUN = process.env.PORTRUN || 3000;
  app.use('/upload',upload);
  app.use('/lessons',lessons);
  app.use('/filter',filter);
-
+ app.use('/send-email', emailRoute);
  app.use(authenticateToken);
 
  const calendar=require('./routes/calendarRoute');
@@ -42,6 +42,7 @@ const PORTRUN = process.env.PORTRUN || 3000;
  app.use('/manager',authorizeRoll(['MANAGER']),manager);
  app.use('/calendar',authorizeRoll(['STUDENT']),calendar);
 
+ 
 
  app.listen(PORTRUN, () => {
   console.log(`App listening on port ${PORTRUN}`);

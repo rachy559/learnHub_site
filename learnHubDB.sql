@@ -103,10 +103,10 @@ CREATE TABLE subject_of_tutor(
 
 CREATE TABLE files_for_tutors(
     file_id INT,
-    tutor_id INT,
-	PRIMARY KEY (file_id, tutor_id),
+    userId INT,
+	PRIMARY KEY (file_id, userId),
     FOREIGN KEY (file_id) REFERENCES files (file_id),
-    FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
+    FOREIGN KEY (userId) REFERENCES users (userId)
 );
 
 
@@ -331,7 +331,7 @@ INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES
 
 
 -- Insert data into files_for_tutors table
-INSERT INTO files_for_tutors (file_id, tutor_id) VALUES
+INSERT INTO files_for_tutors (file_id, userId) VALUES
 (1, 3),
 (2, 4),
 (6, 8),

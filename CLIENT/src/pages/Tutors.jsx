@@ -7,6 +7,7 @@ const Tutors = () => {
     const { allTutors, setAllTutors } = useContext(TutorsContext);
     const { selectedLanguages, selectedSubjects, selectedGender } = useContext(FilterContext);
     const [initialTutors, setInitialTutors] = useState([]);
+    const [isClick, setIsClick] = useState(false);
 
     useEffect(() => {
         setInitialTutors(allTutors);
@@ -33,11 +34,17 @@ const Tutors = () => {
         const extension = fileUrl.split('.').pop().toLowerCase();
         return acceptedExtensions.includes(extension);
     };
-    
+
+    console.log("allTutors=3", allTutors)
+
     return (
         <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
-            <Filter />
-            <button className='search' onClick={handleSearch}>Search</button>
+            <img className='filters' src='../pictures/image.png' onClick={() => { setIsClick(!isClick) }} />
+            {isClick ? (
+                <>
+                    <Filter />
+                    <button className='search' onClick={handleSearch}>Search</button>
+                </>) : (<></>)}
             <div className='allTutors'>
                 {allTutors.map((tutor, key) => (
                     <div className="tutorDiv" key={key}>

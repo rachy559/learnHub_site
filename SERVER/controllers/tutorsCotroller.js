@@ -31,6 +31,14 @@ async function getTutor(id) {
 }
 
 
+async function getAllNotConfirmTutors() {
+    try {
+        const response =await model.getAllNotConfirmTutors();
+        return response;
+    } catch (err) {
+        throw err;
+    }
+}
 
 
-module.exports={ getAllTutors,createTutor,getTutor};
+module.exports={ getAllTutors,createTutor,getTutor,getAllNotConfirmTutors};

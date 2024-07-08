@@ -41,6 +41,7 @@ const Manager_homePage = () => {
             <nav className="app-nav">
                 <NavLink
                     to="/confirmTutors"
+                    state={{ allNotConfirmTutors }}
                 >
                     <div className="bell-icon-container">
                         <FaBell />

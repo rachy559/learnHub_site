@@ -37,7 +37,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         intended_for_gender: "",
         languages: [],
         subjects: [],
-        email: userContext.user.email
+        email: ""
     });
 
     const [formDataStudent, setFormDataStudent] = useState({
@@ -60,17 +60,49 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
-    function createProfileTutor() {
-        // serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
-        //     userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
+    const sendEmail = async () => {
+        const emailData = {
+          email: 'learnhubproject2024@gmail.com', // או כתובת האימייל שאתה רוצה לשלוח אליה
+          subject: ' בקשת משתמש לאישור מרצה',
+          text: `
+        <div style="direction: rtl; text-align: right;">
+            ${userContext.user.firstName} ${userContext.user.lastName} מבקש להיות מרצה ומחכה לאישור.
+            כנס לאזור האישי שלך על מנת לאשר/לא לאשר את המשתמש.
+        </div>
+    `,
+        };
+      
+        try {
+          
 
-        //     // navigate('/tutorProfile')
-        // })
-        setIsConfirm(true)
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => {
-            navigate('/homePage');
-        }, 5000);
+          serverRequests('POST','send-email',emailData).then((result)=>{
+            if (result) {
+                console.log('Email sent successfully');
+                // הוסף כאן פעולה במקרה של הצלחה
+              } else {
+                console.error('Error sending email:', result.message);
+                // הוסף כאן פעולה במקרה של כישלון
+              }
+          })
+      
+         
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      
+
+    function createProfileTutor() {
+        serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
+            userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
+            setIsConfirm(true)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            sendEmail();
+            setTimeout(() => {
+                navigate('/homePage');
+            }, 5000);
+        })
+        
     }
 
     function closeModal() {
@@ -99,7 +131,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 [name]: value
             }));
         }
-        else if (userContext.user.rollId === 3) {
+        else if (userContext.user.rollId === 4) {
             setFormDataTutor((prevFormData) => ({
                 ...prevFormData,
                 [name]: value
@@ -159,7 +191,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
                             serverRequests('POST', 'users', user).then((response) => {
                                 console.log("res", response);
-                                userContext.setUser({ ...userContext.user, ...user });
+                                userContext.setUser({ ...userContext.user, ...response });
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
                             });
                             alert(`You can continue filling in your details ${user.firstName}! 😀`);

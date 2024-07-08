@@ -30,7 +30,7 @@ router.post('/', upload.single('file'), async (req, res) => {
   try{
     console.log("f",req.body.tutor_id)
     const file = req.file;
-    const tutorId = req.tutor_id; 
+    const tutorId = req.body.tutor_id; 
     console.log("f",file.filename,tutorId)
     const response = await controller.createFile(file.filename,tutorId);
     res.status(201).send({response});
