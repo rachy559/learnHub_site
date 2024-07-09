@@ -40,4 +40,12 @@ async function getAllStudentsLessons(){
     }
 }
 
-module.exports={ getAllLessons, createLesson, createSubject, createLanguage,getAllStudentsLessons};
+async function updatePayedLesson(id,isPayed,lessonId){
+    try{
+        return await model.updatePayedLesson(id,isPayed,lessonId);
+    }catch(err){
+        throw err;
+    }
+}
+
+module.exports={ getAllLessons, createLesson, createSubject, createLanguage,getAllStudentsLessons,updatePayedLesson};

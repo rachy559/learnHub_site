@@ -10,7 +10,7 @@ async function getLessons() {
     l.language_name AS language,
     le.priceLesson AS price,
     le.lesson_id,
-    le.isPayed,
+    lfs.isPayed,
     le.zoomLink,
     le.lessonTime AS lesson_time,
     CASE
@@ -36,6 +36,8 @@ JOIN
     addresses a ON u.address_id = a.address_id
 JOIN 
     subject_of_lesson sol ON le.lesson_id = sol.lesson_id
+JOIN 
+    lesson_for_student lfs ON le.lesson_id = lfs.lesson_id
 JOIN 
     subjects s ON sol.subject_id = s.subject_id
 JOIN 
@@ -121,10 +123,12 @@ async function getAllStudentsLessons() {
     try {
         const sql = `SELECT 
     lfs.dateLesson,
+    lfs.lesson_id,
     lfs.isPayed,
     l.priceLesson,
     CONCAT(u.firstName, ' ', u.lastName) AS studentName,
     u.phone,
+    u.userId,
     u.email
     FROM 
        lesson_for_student lfs
@@ -143,5 +147,16 @@ async function getAllStudentsLessons() {
     }
 }
 
+async function updatePayedLesson(id,isPayed,lessonId) {
+    try {
+        const sql = `UPDATE lesson_for_student SET isPayed=? WHERE student_id=? AND lesson_id=? `;
+        const [rows, fields] = await pool.query(sql,[isPayed,id,lessonId]);
+        return rows;
+    }
+    catch (err) {
+        throw err;
+    }
+}
 
-module.exports = { getLessons, createLesson, createSubject, createLanguage, getAllStudentsLessons };
+
+module.exports = { getLessons, createLesson, createSubject, createLanguage, getAllStudentsLessons,updatePayedLesson };
