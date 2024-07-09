@@ -63,8 +63,9 @@ const Manager_homePage = () => {
                     </div>
                     <a className='log' href="/homePage" onClick={() => { 
                     sessionStorage.removeItem('accessToken');
-                    sessionStorage.removeItem('refreshToken');
-                    setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a> 
+                    // sessionStorage.removeItem('refreshToken');
+                    setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
+                
                 </>
             </nav>
         </header>

@@ -24,9 +24,10 @@ const Login = ({ setShowHeaders }) => {
       try {
         serverRequests('POST', 'login', formData)
           .then((response) => {
-            const { accessToken, refreshToken, user } = response; // חילוץ היוזר והטוקן מהתגובה
+            const { accessToken, user } = response; // חילוץ היוזר והטוקן מהתגובה
+            // const { accessToken, refreshToken, user } = response; // חילוץ היוזר והטוקן מהתגובה
             sessionStorage.setItem("accessToken", accessToken);
-            sessionStorage.setItem("refreshToken", refreshToken);
+            // sessionStorage.setItem("refreshToken", refreshToken);
             if (user) {
               if (user.roles === "HOLDING") {
                 console.log("ggggg")

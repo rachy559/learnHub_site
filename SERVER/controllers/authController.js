@@ -23,10 +23,11 @@ async function login(email, password) {
     }
     const accessToken = generateAccessToken(user); 
     console.log("accessToken",accessToken);
-    const refreshToken = generateRefreshToken(user);
-    console.log("refreshToken",refreshToken);
-    refreshTokens.push(refreshToken);
-    return { status: 200, json: { accessToken, refreshToken, user } };
+    // const refreshToken = generateRefreshToken(user);
+    // console.log("refreshToken",refreshToken);
+    // refreshTokens.push(refreshToken);
+    // return { status: 200, json: { accessToken, refreshToken, user } };
+    return { status: 200, json: { accessToken, user } };
 }
     catch(err){
         return { status: 500, json: { message: 'Internal server error' } };
