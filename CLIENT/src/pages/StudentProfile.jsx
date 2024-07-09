@@ -8,7 +8,7 @@ const StudentProfile = () => {
   const userContext = useContext(UserContext);
   const [student, setStudent] = useState({});
   const [lessons, setLessons] = useState([]);
-  const route='studentProfile';
+  const route = 'studentProfile';
   const [isClick, setIsClick] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const StudentProfile = () => {
           if (user) {
             userContext.setUser({ ...userContext.user, ...user });
             console.log("user", user);
-            console.log("details",user.student_details);
+            console.log("details", user.student_details);
             setStudent({ ...user.student_details });
             console.log(user.student_details.lessons);
             setLessons(user.student_details.lessons);
@@ -53,10 +53,10 @@ const StudentProfile = () => {
   };
 
   const deleteLesson = (lesson) => {
-    const details={
-      student_id:userContext.user.userId,
-      dateLesson:lesson.lesson_date,
-      timeLesson:lesson.timeLesson
+    const details = {
+      student_id: userContext.user.userId,
+      dateLesson: lesson.lesson_date,
+      timeLesson: lesson.timeLesson
     };
     try {
       console.log(lesson)
@@ -81,10 +81,10 @@ const StudentProfile = () => {
   };
 
   const updateLesson = (lesson) => {
-    navigate('/lesson',{ state: { from: 'StudentProfile', data: {lesson:lesson }}});
+    navigate('/lesson', { state: { from: 'StudentProfile', data: { lesson: lesson } } });
   };
 
-console.log(userContext.user)
+  console.log(userContext.user)
   return (
     <>
       <div className="profile-container">
@@ -110,75 +110,75 @@ console.log(userContext.user)
           lessons.map((lesson, key) => (
             (!lesson || lesson.lesson_date >= formattedDate) ? (
               <>
-              < div key = { key } className = "subjectDiv" >
-                <div className="lessonHeader">
-                  <div className="lessonTitle">{lesson.subject_name}</div>
-                  <div className="lessonInfo">
-                    <div className="lessonPrice">₪{lesson.lesson_price} לשעה</div>
+                < div key={key} className="subjectDiv" >
+                  <div className="lessonHeader">
+                    <div className="lessonTitle">{lesson.subject_name}</div>
+                    <div className="lessonInfo">
+                      <div className="lessonPrice">₪{lesson.lesson_price} לשעה</div>
+                    </div>
                   </div>
-                </div>
-                <div className="lessonBody">
-                  <div className="lessonDetails">
-                    <p><strong>שפה:</strong> {lesson.lesson_language}</p>
-                    <p><strong>זמן שיעור:</strong> {lesson.timeLesson}</p>
-                    <p><strong>אורך שיעור:</strong> {lesson.lesson_time}</p>
-                    <p><strong>רמת שיעור:</strong> {lesson.lesson_level}</p>
-                    <p><strong>יום השיעור:</strong> {lesson.lesson_day}</p>
-                    <p><strong>תאריך שיעור:</strong> {lesson.lesson_date}</p>
-                    {lesson.zoom_link ? (
-                      <>
-                        <p><strong>פרונטלי/אונליין:</strong> אונליין</p>
-                        <p><strong>קישור זום:</strong> {lesson.zoom_link}</p>
-                      </>
-                    ) : (
-                      <p><strong>פרונטלי/אונליין:</strong> פרונטלי</p>
-                    )}
-                    {!lesson.zoom_link && (
-                      <p><strong>כתובת שיעור:</strong> {lesson.tutor_address.city}, {lesson.tutor_address.street} {lesson.tutor_address.house_number}</p>
-                    )}
-                    <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
-                    {lesson.isPayed?(
-             <label className='payed'><strong>השיעור שולם</strong></label>
+                  <div className="lessonBody">
+                    <div className="lessonDetails">
+                      <p><strong>שפה:</strong> {lesson.lesson_language}</p>
+                      <p><strong>זמן שיעור:</strong> {lesson.timeLesson}</p>
+                      <p><strong>אורך שיעור:</strong> {lesson.lesson_time}</p>
+                      <p><strong>רמת שיעור:</strong> {lesson.lesson_level}</p>
+                      <p><strong>יום השיעור:</strong> {lesson.lesson_day}</p>
+                      <p><strong>תאריך שיעור:</strong> {lesson.lesson_date}</p>
+                      {lesson.zoom_link ? (
+                        <>
+                          <p><strong>פרונטלי/אונליין:</strong> אונליין</p>
+                          <p><strong>קישור זום:</strong> {lesson.zoom_link}</p>
+                        </>
+                      ) : (
+                        <p><strong>פרונטלי/אונליין:</strong> פרונטלי</p>
+                      )}
+                      {!lesson.zoom_link && (
+                        <p><strong>כתובת שיעור:</strong> {lesson.tutor_address.city}, {lesson.tutor_address.street} {lesson.tutor_address.house_number}</p>
+                      )}
+                      <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
+                      {lesson.isPayed ? (
+                        <label className='payed'><strong>השיעור שולם</strong></label>
 
-            ):(
-              <>
-              <label className='notPayed'><strong>השיעור אינו שולם</strong></label>
-              <p><strong>פרטי החשבון להעברת התשלום:</strong></p>
-              <p><strong>מספר חשבון</strong> {student.manager_details.numAccount}</p>
-              <p><strong>מספר סניף</strong> {student.manager_details.numBranch}</p>
-              <p><strong>שם הבנק</strong> {student.manager_details.nameBank}</p>
-              <p><strong>מספר הבנק</strong> {student.manager_details.numBank}</p>
-              <p><strong> שם המוטב</strong> {student.manager_details.beneficiaryName}</p>
-              </>
-            )}
+                      ) : (
+                        <>
+                          <label className='notPayed'><strong>השיעור אינו שולם</strong></label>
+                          <p><strong>פרטי החשבון להעברת התשלום:</strong></p>
+                          <p><strong>מספר חשבון</strong> {student.manager_details.numAccount}</p>
+                          <p><strong>מספר סניף</strong> {student.manager_details.numBranch}</p>
+                          <p><strong>שם הבנק</strong> {student.manager_details.nameBank}</p>
+                          <p><strong>מספר הבנק</strong> {student.manager_details.numBank}</p>
+                          <p><strong> שם המוטב</strong> {student.manager_details.beneficiaryName}</p>
+                        </>
+                      )}
+                    </div>
+                    <img onClick={() => { deleteLesson(lesson) }} className='deleteIcon' src='../pictures/delete.png'></img>
+                    <img onClick={() => { updateLesson(lesson) }} className='updateIcon' src='../pictures/update.png'></img>
                   </div>
-                  <img onClick={() => { deleteLesson(lesson) }} className='deleteIcon' src='../pictures/delete.png'></img>
-                  <img onClick={() => { updateLesson(lesson) }} className='updateIcon' src='../pictures/update.png'></img>
                 </div>
-              </div>
               </>
-      ) : (
-      <></>
-      )
-      ))
+            ) : (
+              <></>
+            )
+          ))
         )}
-      <button className='comBtn' onClick={() => { setIsClick(true) }}>תן פידבק</button>
-      {isClick ? (
-        <div className="addComment">
-          <label className="comment">{formattedDate}</label>
-          <label className="comment">{student.first_name} {student.last_name}</label>
-          <textarea
-            placeholder="תוכן התגובה"
-            type="text"
-            name="body"
-            className='commentBody'
-            value={formData.body}
-            onChange={handleChange}
-          />
-          <button onClick={addComment} className='comBtn'>שלח תגובה</button>
-        </div>
-      ) : (<></>)}
-    </div >
+        <button className='comBtn' onClick={() => { setIsClick(true) }}>תן פידבק</button>
+        {isClick ? (
+          <div className="addComment">
+            <label className="comment">{formattedDate}</label>
+            <label className="comment">{student.first_name} {student.last_name}</label>
+            <textarea
+              placeholder="תוכן התגובה"
+              type="text"
+              name="body"
+              className='commentBody'
+              value={formData.body}
+              onChange={handleChange}
+            />
+            <button onClick={addComment} className='comBtn'>שלח תגובה</button>
+          </div>
+        ) : (<></>)}
+      </div >
     </>
   );
 }
