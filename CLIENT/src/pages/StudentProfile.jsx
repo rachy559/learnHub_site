@@ -141,15 +141,18 @@ console.log(userContext.user)
              <label className='payed'><strong>השיעור שולם</strong></label>
 
             ):(
+              <>
               <label className='notPayed'><strong>השיעור אינו שולם</strong></label>
+              <p><strong>פרטי החשבון להעברת התשלום:</strong></p>
+              <p><strong>מספר חשבון</strong> {student.manager_details.numAccount}</p>
+              <p><strong>מספר סניף</strong> {student.manager_details.numBranch}</p>
+              <p><strong>שם הבנק</strong> {student.manager_details.nameBank}</p>
+              <p><strong>מספר הבנק</strong> {student.manager_details.numBank}</p>
+              <p><strong> שם המוטב</strong> {student.manager_details.beneficiaryName}</p>
+              </>
             )}
 
-                    <p><strong>פרטי החשבון להעברת התשלום:</strong></p>
-                    <p><strong>מספר חשבון</strong> {student.manager_details.numAccount}</p>
-                    <p><strong>מספר סניף</strong> {student.manager_details.numBranch}</p>
-                    <p><strong>שם הבנק</strong> {student.manager_details.nameBank}</p>
-                    <p><strong>מספר הבנק</strong> {student.manager_details.numBank}</p>
-                    <p><strong> שם המוטב</strong> {student.manager_details.beneficiaryName}</p>
+                   
 
 
                   </div>
