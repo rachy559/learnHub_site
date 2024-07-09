@@ -34,6 +34,7 @@ async function getSingleStudent(id) {
                 'lesson_date', lfs.dateLesson,
                 'lesson_day', lfs.dayLesson,
                 'timeLesson', lfs.timeLesson,
+                'isPayed', lfs.isPayed,
                 'lesson_price', l.priceLesson,
                 'zoom_link', l.zoomLink,
                 'tutor_intended_gender', t.intended_for_gender,
