@@ -25,7 +25,6 @@ const authenticateToken = (req, res, next) => {
 
 
 const authorizeRoll = (roll) => {
-  console.log("roll",roll);
   return async (req, res, next) => {
     try {
       if (!req.user) {

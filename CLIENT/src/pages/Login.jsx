@@ -15,6 +15,8 @@ const Login = ({ setShowHeaders }) => {
     email: "",
     password: ""
   });
+  const [errors, setErrors] = useState({});
+  const updateErrorsArray = {};
 
   const navigate = useNavigate();
 

@@ -39,17 +39,16 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         subjects: [],
         email: ""
     });
-
     const [formDataStudent, setFormDataStudent] = useState({
         status: "",
         email: userContext.user.email
     });
-
+    const [errors, setErrors] = useState({});
+    const updateErrorsArray = {};
     // const [formDataFile, setFormDataFile] = useState({
     //     file: "",
     //     tutor_id: userContext.user.email
     // });
-
     const [currentLanguage, setCurrentLanguage] = useState("");
     const [currentSubject, setCurrentSubject] = useState("");
     const [file, setFile] = useState(null);
@@ -62,33 +61,33 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
     const sendEmail = async () => {
         const emailData = {
-          email: 'learnhubproject2024@gmail.com', // או כתובת האימייל שאתה רוצה לשלוח אליה
-          subject: ' בקשת משתמש לאישור מרצה',
-          text: `
+            email: 'learnhubproject2024@gmail.com', // או כתובת האימייל שאתה רוצה לשלוח אליה
+            subject: ' בקשת משתמש לאישור מרצה',
+            text: `
         <div style="direction: rtl; text-align: right;">
             ${userContext.user.firstName} ${userContext.user.lastName} מבקש להיות מרצה ומחכה לאישור.
             כנס לאזור האישי שלך על מנת לאשר/לא לאשר את המשתמש.
         </div>
     `,
         };
-      
+
         try {
-          serverRequests('POST','send-email',emailData).then((result)=>{
-            if (result) {
-                console.log('Email sent successfully');
-                // הוסף כאן פעולה במקרה של הצלחה
-              } else {
-                console.error('Error sending email:', result.message);
-                // הוסף כאן פעולה במקרה של כישלון
-              }
-          })
-      
-         
+            serverRequests('POST', 'send-email', emailData).then((result) => {
+                if (result) {
+                    console.log('Email sent successfully');
+                    // הוסף כאן פעולה במקרה של הצלחה
+                } else {
+                    console.error('Error sending email:', result.message);
+                    // הוסף כאן פעולה במקרה של כישלון
+                }
+            })
+
+
         } catch (error) {
-          console.error('Error:', error);
+            console.error('Error:', error);
         }
-      };
-      
+    };
+
 
     function createProfileTutor() {
         serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
@@ -100,7 +99,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 navigate('/homePage');
             }, 5000);
         })
-        
+
     }
 
     function closeModal() {
@@ -109,13 +108,14 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
     function createProfileStudent() {
         try {
-            serverRequests('POST', 'students', formDataStudent).then((response) => {
-                userContext.setUser({ ...userContext.user, ...response });
-            })
-            setHide(false);
-            setShowHeaders(!showHeaders);
-            navigate('/homePage')
-        }
+                serverRequests('POST', 'students', formDataStudent).then((response) => {
+                    userContext.setUser({ ...userContext.user, ...response });
+                })
+                setHide(false);
+                setShowHeaders(!showHeaders);
+                navigate('/homePage')
+            }
+        
         catch (err) {
             console.log(err);
         }
@@ -140,6 +140,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
             ...formData,
             [name]: value
         });
+        setErrors(prevErrors => {
+            return {
+                ...prevErrors,
+                [name]: ""
+            }
+        });
     };
 
     const handleAddLanguage = () => {
@@ -158,20 +164,51 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         setCurrentSubject("");
     };
 
-
     const openModal = () => {
         setIsOpen(true);
     };
 
-    const ContinueDetails = async () => {
+    const ContinueDetails = async (e) => {
         console.log(formData);
+        e.preventDefault();
+        if (!isNaN(formData.firstName)) {
+            updateErrorsArray.firstName = "שם פרטי יכול לכלול אותיות בלבד.";
+        }
+        if (!isNaN(formData.lastName)) {
+            updateErrorsArray.lastName = "שם משפחה יכול לכלול אותיות בלבד.";
+        }
+        if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            updateErrorsArray.email = "כתובת אימייל אינה תקינה.";
+        }
+        if (isNaN(formData.phone)) {
+            updateErrorsArray.phone = "מספר פלאפון חייב לכלול רק מספרים."
+        }
+        if (!isNaN(formData.city)) {
+            updateErrorsArray.city = "עיר חייב להכיל אותיות בלבד."
+        }
+        if (!isNaN(formData.street)) {
+            updateErrorsArray.street = "רחוב חייב להכיל אותיות בלבד."
+        }
+        if (isNaN(formData.house_number)) {
+            updateErrorsArray.house_number = "מספר בית חייב להכיל מספרים בלבד."
+        }
+        const today = new Date();
+        const birthDate = new Date(formData.birth_date);
+        const minValidDate = subYears(today, 18);
+        if (birthDate > minValidDate){
+            updateErrorsArray.birth_date = "מרצה יכול להיות רק מגיל 18 ומעלה."
+        }
         if (formData.lastName && formData.password && formData.confirm_password && isChecked) {
             try {
                 serverRequests('GET', USERS_API_URL, null).then((usersArr) => {
                     if (formData.confirm_password === formData.password) {
                         if (usersArr.length !== 0) {
                             alert('The email is already exists, choose another email!');
-                        } else {
+                        } 
+                        if (Object.keys(updateErrorsArray).length > 0) {
+                            setErrors(updateErrorsArray);
+                        }
+                        else {
                             const user = {
                                 firstName: formData.firstName,
                                 lastName: formData.lastName,
@@ -219,7 +256,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         const formDataFile = new FormData();
         formDataFile.append("file", file);
         formDataFile.append("tutor_id", userContext.user.userId);
-        
+
         try {
             fetch("http://localhost:3000/upload", {
                 method: 'POST',
@@ -250,8 +287,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             type="text"
                             name="firstName"
                             value={formData.firstName}
+                            required
                             onChange={handleChange}
+                            className={errors.firstName ? "input Error" : formData.firstName ? "input Valid" : "input"}
                         />
+                        {formData.firstName != "" && (formData.firstName.length < 2 || formData.firstName.length > 15 ? <h5 className="ErrorText">שם פרטי חייב לכלול בין 2-15 אותיות.</h5> : null)}
+          {errors.firstName && <h5 className="ErrorText">{errors.firstName}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -260,8 +301,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             type="text"
                             name="lastName"
                             value={formData.lastName}
+                            required
                             onChange={handleChange}
+                            className={errors.lastName ? "input Error" : formData.lastName ? "input Valid" : "input"}
                         />
+                        {formData.lastName != "" && (formData.lastName.length < 2 || formData.lastName.length > 15 ? <h5 className="ErrorText">שם משפחה חייב לכלול בין 2-15 אותיות.</h5> : null)}
+          {errors.lastName && <h5 className="ErrorText">{errors.lastName}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -270,8 +315,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             type="email"
                             name="email"
                             value={formData.email}
+                            required
                             onChange={handleChange}
+                            className={errors.email ? "input Error" : formData.email ? "input Valid" : "input"}
                         />
+                         {errors.email && <h5 className="ErrorText">{errors.email}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -280,8 +328,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             type="tel"
                             name="phone"
                             value={formData.phone}
+                            required
                             onChange={handleChange}
+                            className={errors.phone ? "input Error" : formData.phone ? "input Valid" : "input"}
                         />
+                            {formData.phone != "" && (formData.phone.length < 10 ? <h5 className="ErrorText">מספר פלאפון חייב לכלול בדיוק 10 ספרות.</h5> : null)}
+          {errors.phone && <h5 className="ErrorText">{errors.phone}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -289,6 +341,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                         <select
                             name="gender"
                             value={formDataTutor.gender}
+                            required
                             onChange={handleChange}
                         >
                             <option value="" disabled>בחר מגדר</option>
@@ -301,11 +354,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                         <input
                             placeholder="תאריך לידה"
                             type="date"
-                            // max={subYears(new Date(),10)}
                             name="birth_date"
                             value={formData.birth_date}
+                            required
                             onChange={handleChange}
                         />
+                            {errors.birth_date && <h5 className="ErrorText">{errors.birth_date}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -313,9 +367,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             placeholder="עיר"
                             type="text"
                             name="city"
+                            required
                             value={formData.city}
                             onChange={handleChange}
                         />
+                        {errors.city && <h5 className="ErrorText">{errors.city}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -323,9 +379,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             placeholder="רחוב"
                             type="text"
                             name="street"
+                            required
                             value={formData.street}
                             onChange={handleChange}
                         />
+                        {errors.street && <h5 className="ErrorText">{errors.street}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -333,10 +391,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             placeholder="מספר בית"
                             type="number"
                             name="house_number"
+                            required
                             min={`1`}
                             value={formData.house_number}
                             onChange={handleChange}
                         />
+                        {errors.house_number && <h5 className="ErrorText">{errors.house_number}</h5>}
                     </div><br /><br />
 
                     <div>
@@ -344,9 +404,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             placeholder="סיסמא"
                             type="password"
                             name="password"
+                            required
                             value={formData.password}
                             onChange={handleChange}
                         />
+                        {formData.password != "" && (formData.password.length < 8 ? <h5 className="ErrorText">ססמא חייבת להכיל לא פחות מ-8 תווים.</h5> : null)}
                     </div><br /><br />
 
                     <div>
@@ -354,9 +416,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             placeholder="אימות סיסמא"
                             type="password"
                             name="confirm_password"
+                            required
                             value={formData.confirm_password}
                             onChange={handleChange}
                         />
+                            {formData.confirm_password != ""&&(formData.confirm_password != formData.password? <h5 className="ErrorText">ססמא שגויה. נסה שוב.</h5> : null)}
                     </div><br /><br />
                     <div className="checkbox-container">
                         <input
@@ -369,9 +433,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                         <label className='security'>
                             בבחירתך להמשיך, אתה מסכים <label className='check' onClick={openModal}>לתנאי השימוש ומדיניות האבטחה</label> שלנו
                         </label>
-
                     </div>
-
                     <button className='btn' type="button" onClick={ContinueDetails}>
                         המשך
                     </button>
@@ -418,6 +480,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                         placeholder="מקצוע"
                                         type="text"
                                         name="currentSubject"
+                                        required
                                         value={currentSubject}
                                         onChange={(e) => setCurrentSubject(e.target.value)}
                                     />
@@ -435,11 +498,12 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                     />
                                     <button className='btn' type="button" onClick={handleAddLanguage}>+ הוסף</button>
                                 </div>
+                                <h4>העלאת תמונה</h4>
                                 <div className='container'>
                                     <input type='file' onChange={handleFileChange} name="file" />
                                     <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button>
                                 </div>
-
+                                <h4>העלאת רשיון הוראה</h4>
                                 <div className='container'>
                                     <input type='file' onChange={handleFileChange} name="file" />
                                     <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button>
