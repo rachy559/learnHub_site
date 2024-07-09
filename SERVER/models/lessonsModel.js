@@ -2,7 +2,8 @@ const pool = require('../DB');
 
 async function getLessons() {
     try {
-        const sql = `SELECT 
+        const sql=`
+        SELECT 
     CONCAT(u.firstName, ' ', u.lastName) AS tutor_name,
     t.tutor_id,
     s.subjectName AS subject,
@@ -19,7 +20,12 @@ async function getLessons() {
     le.levelLesson AS level,
     CONCAT(a.street, ' ', a.house_number) AS street_tutor,
     a.city AS city_tutor,
-    u.gender AS tutor_gender
+    u.gender AS tutor_gender,
+    m.beneficiaryName,
+    m.numBank,
+    m.nameBank,
+    m.numBranch,
+    m.numAccount
 FROM 
     lessons le
 JOIN 
@@ -35,9 +41,10 @@ JOIN
 JOIN 
     lesson_languages ll ON le.lesson_id = ll.lesson_id
 JOIN 
-    languages l ON ll.language_id = l.language_id;
-`;
-
+    languages l ON ll.language_id = l.language_id
+CROSS JOIN
+    manager m;
+        `
         const [rows, fields] = await pool.query(sql);
         return rows;
     } catch (err) {

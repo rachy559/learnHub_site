@@ -392,7 +392,7 @@ INSERT INTO subject_of_lesson (lesson_id, subject_id) VALUES
 
 -- Insert data into manager table
 INSERT INTO manager (manager_id,numAccount,numBranch,nameBank,numBank, beneficiaryName) VALUES
-(1, '12346','128','הפועלים','12','');
+(1, '12346','128','הפועלים','12','learnhub');
 
 -- Insert data into comments table
 INSERT INTO comments (comment_date, body, student_id) VALUES

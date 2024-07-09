@@ -12,8 +12,8 @@ async function createSingleStudent(studentStatus, userId) {
 
 async function getSingleStudent(id) {
     try {
-        const sql = `
-SELECT
+        const sql=`
+        SELECT
     JSON_OBJECT(
         'user_id', u.userId,
         'first_name', u.firstName,
@@ -25,21 +25,21 @@ SELECT
         'city', a.city,
         'street', a.street,
         'house_number', a.house_number,
-        'studentStatus' , st.studentStatus,
+        'studentStatus', st.studentStatus,
         'lessons', JSON_ARRAYAGG(
             JSON_OBJECT(
                 'lesson_id', l.lesson_id,
                 'lesson_level', l.levelLesson,
                 'lesson_time', l.lessonTime,
-                'lesson_date' , lfs.dateLesson,
-                'lesson_day' , lfs.dayLesson,
-                'timeLesson' , lfs.timeLesson,
+                'lesson_date', lfs.dateLesson,
+                'lesson_day', lfs.dayLesson,
+                'timeLesson', lfs.timeLesson,
                 'lesson_price', l.priceLesson,
                 'zoom_link', l.zoomLink,
                 'tutor_intended_gender', t.intended_for_gender,
                 'subject_name', s.subjectName,
                 'lesson_language', lang.language_name,
-                'tutor_id',  tu.userId,
+                'tutor_id', tu.userId,
                 'tutor_name', CONCAT(tu.firstName, ' ', tu.lastName),
                 'tutor_address', JSON_OBJECT(
                     'city', ta.city,
@@ -47,6 +47,13 @@ SELECT
                     'house_number', ta.house_number
                 )
             )
+        ),
+        'manager_details', JSON_OBJECT(
+            'numAccount', m.numAccount,
+            'numBranch', m.numBranch,
+            'nameBank', m.nameBank,
+            'numBank', m.numBank,
+            'beneficiaryName', m.beneficiaryName
         )
     ) AS student_details
 FROM
@@ -62,11 +69,12 @@ FROM
     LEFT JOIN languages lang ON ll.language_id = lang.language_id
     LEFT JOIN users tu ON l.tutor_id = tu.userId
     LEFT JOIN addresses ta ON tu.address_id = ta.address_id
+    LEFT JOIN manager m ON TRUE -- מבצע הצטרפות לטבלת המנהלים בלי תנאי
 WHERE
     st.student_id = ?
 GROUP BY
-    u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number;
-`;
+    u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number, st.studentStatus, m.numAccount, m.numBranch, m.nameBank, m.numBank, m.beneficiaryName;
+        `
         const result = await pool.query(sql, [id]);
         return result[0];
     } catch (err) {

@@ -226,6 +226,14 @@ const Lesson = () => {
                     <p><strong>כתובת שיעור:</strong> {data.lesson.city_tutor}, {data.lesson.street_tutor}</p>
                   )}
                   <p><strong>מגדר:</strong> {data.lesson.tutor_gender}</p>
+
+                  <p><strong>פרטי החשבון להעברת התשלום:</strong></p>
+                  <p><strong>מספר חשבון</strong> {data.lesson.numAccount}</p>
+                  <p><strong>מספר סניף</strong> {data.lesson.numBranch}</p>
+                  <p><strong>שם הבנק</strong> {data.lesson.nameBank}</p>
+                  <p><strong>מספר הבנק</strong> {data.lesson.numBank}</p>
+                  <p><strong> שם המוטב</strong> {data.lesson.beneficiaryName}</p>
+
                 </div>
 
               </div>
