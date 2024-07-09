@@ -133,7 +133,6 @@ CREATE TABLE lessons(
 	zoomLink varchar(255),
 	accessibility bool NOT NULL,
 	tutor_id INT,
-    isPayed bool,
 	FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
 );
 
@@ -151,6 +150,7 @@ CREATE TABLE lesson_for_student(
     dayLesson varchar(30),
 	timeLesson varchar(30),
     dateLesson DATE NOT NULL,
+    isPayed bool,
 	PRIMARY KEY (lesson_id, student_id,dateLesson,timeLesson),
 	FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id),
 	FOREIGN KEY (student_id) REFERENCES students (student_id)
@@ -353,23 +353,23 @@ INSERT INTO students (student_id, studentStatus) VALUES
 (9,'Primary');
 
 -- Insert data into lessons table
-INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id,isPayed) VALUES
-('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 3, FALSE),
-('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE,  4, FALSE),
-('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE,  5, FALSE),
-('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE,  3, FALSE),
-('Master', 180, 60, NULL, FALSE , 5, FALSE),
-('Master', 180, 60, 'http://zoom.com/lesson5', FALSE,  5, FALSE);
+INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id) VALUES
+('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 3),
+('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE,  4),
+('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE,  5),
+('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE,  3),
+('Master', 180, 60, NULL, FALSE , 5),
+('Master', 180, 60, 'http://zoom.com/lesson5', FALSE,  5);
 
 -- Insert data into lesson_for_student table
-INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLesson) VALUES
-(1,2,'ראשון','11','2024-01-01'),
-(1,6,'שני','19','2024-01-01'),
-(2,2,'שני','14','2024-01-01'),
-(4,7,'רביעי','16','2024-01-01'),
-(4,6,'חמישי','17','2024-01-01'),
-(6,2,'שישי','10','2024-07-01'),
-(4,2,'חמישי','17','2024-08-15');
+INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLesson,isPayed) VALUES
+(1,2,'ראשון','11','2024-01-01',FALSE),
+(1,6,'שני','19','2024-01-01',FALSE),
+(2,2,'שני','14','2024-01-01',FALSE),
+(4,7,'רביעי','16','2024-01-01',FALSE),
+(4,6,'חמישי','17','2024-01-01',FALSE),
+(6,2,'שישי','10','2024-07-01',FALSE),
+(4,2,'חמישי','17','2024-08-15',FALSE);
 
 
 -- Insert data into lesson_languages table

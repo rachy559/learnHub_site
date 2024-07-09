@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require('../controllers/tutorsCotroller')
+const controller2 = require('../controllers/lessonsController')
 const cors = require('cors'); 
 router.use(cors());
 const jwt=require('jsonwebtoken');
@@ -29,7 +30,7 @@ router.get('/',async(req,res)=>{
 
 router.get('/:type',async(req,res)=>{
     try{
-    const tutors=await controller.getAllStudentsLessons();
+    const tutors=await controller2.getAllStudentsLessons();
     res.send(tutors);
     }catch(err){
         res.status(500).send(err)

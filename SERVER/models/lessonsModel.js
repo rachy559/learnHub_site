@@ -119,8 +119,23 @@ async function createLanguage(tutor_id, languages) {
 
 async function getAllStudentsLessons() {
     try {
-        const sql = "INSERT INTO languages (`language_name`) VALUES(?)";
-        const [rows,fields] = await pool.query(sql);
+        const sql = `SELECT 
+    lfs.dateLesson,
+    lfs.isPayed,
+    l.priceLesson,
+    CONCAT(u.firstName, ' ', u.lastName) AS studentName,
+    u.phone,
+    u.email
+    FROM 
+       lesson_for_student lfs
+    JOIN 
+       students s ON lfs.student_id = s.student_id
+    JOIN 
+       lessons l ON lfs.lesson_id = l.lesson_id
+    JOIN 
+       users u ON s.student_id = u.userId;
+`;
+        const [rows, fields] = await pool.query(sql);
         return rows;
     }
     catch (err) {

@@ -70,6 +70,7 @@ const ConfirmTutor = () => {
             rollId: 3
         }
         serverRequests('PUT',`tutors/${tutor.tutor_id}`, formData).then(()=>{
+          setIsApprove(false)
             sendEmail();
             navigate('/confirmTutors'); 
 

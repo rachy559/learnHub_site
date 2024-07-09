@@ -151,10 +151,6 @@ console.log(userContext.user)
               <p><strong> שם המוטב</strong> {student.manager_details.beneficiaryName}</p>
               </>
             )}
-
-                   
-
-
                   </div>
                   <img onClick={() => { deleteLesson(lesson) }} className='deleteIcon' src='../pictures/delete.png'></img>
                   <img onClick={() => { updateLesson(lesson) }} className='updateIcon' src='../pictures/update.png'></img>
