@@ -15,14 +15,14 @@ const Header = ({ setShowHeaders }) => {
   const showHeaders = useContext(ShowHeadersContext);
   const navigate = useNavigate();
   const [selectedProfile, setSelectedProfile] = useState('');
-  const [allNotConfirmTutors,setAllNotConfirmTutors]=useState([]);
+  const [allNotConfirmTutors, setAllNotConfirmTutors] = useState([]);
   const [styleConnect, setStyleConnect] = useState(false);
   const activeStyles = {
     fontWeight: "bold",
     color: "#fbdfa5"
   };
 
- 
+
 
   const handleProfileChange = (e) => {
     const value = e.target.value;
@@ -32,7 +32,7 @@ const Header = ({ setShowHeaders }) => {
       setUser({ ...user, rollId: 2 });
     }
     console.log("userCon", user);
-    console.log("Selected Profile:", value); 
+    console.log("Selected Profile:", value);
     setSelectedProfile(value);
     navigate(`/signUp`, { state: { selectedProfile: value } });
   };
@@ -52,76 +52,23 @@ const Header = ({ setShowHeaders }) => {
     setStyleConnect(!styleConnect);
   };
 
-  // useEffect(()=>{
-  //   serverRequests('GET', `students/${user.userId}`)
-  //   .then((userRes) => {
-  //     if (userRes) {
-  //       setUser({...user,...userRes});
-  //       console.log("user", userRes);
-  //       console.log("details",userRes.student_details);
-  //       setStudent({ ...userRes.student_details });
-  //       console.log(userRes.student_details.lessons);
-  //       setLessons(userRes.student_details.lessons);
-  //     } else {
-  //       alert("Login failed. Invalid username or password.");
-  //     }
-  //   });
-  // },[toggleSidebar])
-
-  const navigateToProfile=()=>{
+  const navigateToProfile = () => {
     console.log(user.rollId)
-    if(user.roles==='STUDENT'||user.rollId===2)
-      {
-        navigate('/studentProfile');
-      }
-    else if(user.roles==='TUTOR'||user.rollId===3)
-      {
-        navigate('/tutorProfile');
-      }
+    if (user.roles === 'STUDENT' || user.rollId === 2) {
+      navigate('/studentProfile');
+    }
+    else if (user.roles === 'TUTOR' || user.rollId === 3) {
+      navigate('/tutorProfile');
+    }
   }
 
   console.log("userCon", user);
 
   return (
-    <>  
-      {user.userId===1?(
-    //     <header className="app-header">
-    //     <div className="menu-icon" onClick={toggleMenu}>
-    //   <Hamburger   toggled={isOpen} toggle={setOpen}  />
-    //   </div>
-    //     <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' alt="Logo" /></Link>
-    //     <nav className="app-nav">
-    //     <NavLink
-    //   to="/confirmTutors"
-    // >
-     
-    //  <div className="bell-icon-container">
-    //     <FaBell />
-    //     <span className="badge-position">
-    //       {allNotConfirmTutors.length}
-    //     </span>
-    //   </div>
-   
-    //     </NavLink>
-    //       <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>תשלומים</NavLink>
-    //         <>
-    //           <div className="user-icon" onClick={toggleSidebar}>
-
-    //             <img src='../pictures/user.png' alt="User" />
-    //           </div>
-    //           <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}>
-    //             <a href="" className="closebtn" onClick={toggleSidebar}>&times;</a>
-    //             <a className='profile' onClick={navigateToProfile}><FaClipboardUser /> הצגת פרטי פרופיל</a>
-    //             <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> יציאה מהחשבון</a>
-    //           </div>
-    //         </>
-          
-    //     </nav>
-    //   </header>
-<></>
-       ):(<header className="app-header">
+    <>
+      <header className="app-header">
         <div className="menu-icon" onClick={toggleMenu}>
-        <Hamburger   toggled={isOpen} toggle={setOpen}  />
+          <Hamburger toggled={isOpen} toggle={setOpen} />
         </div>
           <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' alt="Logo" /></Link>
           <nav className="app-nav">
@@ -155,7 +102,7 @@ const Header = ({ setShowHeaders }) => {
               </>
             )}
           </nav>
-        </header>) }
+        </header>
     </>
   );
 }

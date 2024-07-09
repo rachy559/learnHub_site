@@ -1,0 +1,1 @@
+new Date(rideInfo.date).toLocaleDateString('en-CA')

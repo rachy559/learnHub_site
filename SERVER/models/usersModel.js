@@ -37,6 +37,7 @@ async function getByEmail(email) {
                 u.lastName,
                 u.email,
                 u.phone,
+                u.createDate,
                 u.gender,
                 u.birth_date,
                 a.city, 
@@ -72,15 +73,15 @@ async function getPassword(userId) {
     }
 }
 
-async function createUser(firstName,lastName,email,phone,gender,birth_date,rollId,password,city,street,house_number) {
+async function createUser(firstName,lastName,email,phone,gender,birth_date,rollId,password,city,street,house_number,createDate) {
     try {
         const sql1 = "INSERT INTO addresses (`city`,`street`,`house_number`) VALUES(?,?,?)";
         const result1 =await pool.query(sql1, [city,street,house_number]);
         const address_id = result1[0].insertId;
         console.log(address_id)
 
-        const sql = "INSERT INTO users (`firstName`, `lastName`, `email`, `phone`, `gender`, `birth_date`,`address_id`) VALUES(?,?,?,?,?,?,?)";
-        const result = await pool.query(sql, [firstName,lastName,email,phone,gender,birth_date,address_id]);
+        const sql = "INSERT INTO users (`firstName`, `lastName`, `email`, `phone`, `gender`, `birth_date`,`createDate`,`address_id`) VALUES(?,?,?,?,?,?,?,?)";
+        const result = await pool.query(sql, [firstName,lastName,email,phone,gender,birth_date,createDate,address_id]);
         console.log("resu",result[0][0],result[0])
         const userId = result[0].insertId;
 
@@ -99,20 +100,8 @@ async function createUser(firstName,lastName,email,phone,gender,birth_date,rollI
 }
 
 
-async function getAllNotConfirmTutors() {
-    try {
-        const sql = `SELECT users.*
-        FROM users
-        JOIN roll_for_user ON users.userId = roll_for_user.userId
-        WHERE roll_for_user.rollId = 4;`
-        const [rows, fields] = await pool.query(sql);
-        console.log(rows)
-        return rows;
-    } catch (err) {
-        throw err;
-    }
-}
 
 
 
-module.exports = { getPassword, getByEmail, getUsers, createUser, getUser, getAllNotConfirmTutors}
+
+module.exports = { getPassword, getByEmail, getUsers, createUser, getUser}

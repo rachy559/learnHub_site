@@ -22,6 +22,7 @@ console.log(process.env.ACCESS_TOKEN_SECRET)
  const filter=require('./routes/filterRoute');
  const refreshToken=require('./routes/rereshTokenRoute');
 
+ const emailRoute = require('./routes/emailRoute');
 
  app.use('/tutors', tutors);
  app.use('/',comments);
@@ -36,6 +37,7 @@ console.log(process.env.ACCESS_TOKEN_SECRET)
  app.use('/filter',filter);
  app.use('/refreshToken',refreshToken);
 
+ app.use('/send-email', emailRoute);
  app.use(authenticateToken);
  app.use('/auth', (req, res)=>{
   res.json(req.user);
@@ -49,6 +51,7 @@ console.log(process.env.ACCESS_TOKEN_SECRET)
 app.use('/manager',authorizeRoll('MANAGER'),manager);
 app.use('/calendar',authorizeRoll('STUDENT'),calendar);
 
+ 
 
  app.listen(PORTRUN, () => {
   console.log(`App listening on port ${PORTRUN}`);

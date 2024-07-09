@@ -1,0 +1,45 @@
+.tutor-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tutor-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .tutor-item:hover {
+    background-color: #e9e9e9;
+  }
+  
+  .tutor-item h2 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .tutor-item p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #666;
+  }
+  
+  .tutor-image {
+    max-width: 100%;
+    max-height: 200px;
+    margin: 10px 0;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  

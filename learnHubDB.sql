@@ -52,6 +52,7 @@ CREATE TABLE users(
       phone varchar(10) NOT NULL,
       gender varchar (6) NOT NULL,
 	  birth_date DATE NOT NULL,
+      createDate DATE NOT NULL,
       address_id INT,
 	  FOREIGN KEY (address_id) REFERENCES addresses (address_id)
 );
@@ -102,10 +103,10 @@ CREATE TABLE subject_of_tutor(
 
 CREATE TABLE files_for_tutors(
     file_id INT,
-    tutor_id INT,
-	PRIMARY KEY (file_id, tutor_id),
+    userId INT,
+	PRIMARY KEY (file_id, userId),
     FOREIGN KEY (file_id) REFERENCES files (file_id),
-    FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
+    FOREIGN KEY (userId) REFERENCES users (userId)
 );
 
 
@@ -215,16 +216,16 @@ INSERT INTO rolls (rollName) VALUES
 ('HOLDING');
 
 -- Insert data into users table
-INSERT INTO users (firstName, lastName, email, phone, gender, birth_date, address_id) VALUES
-('Learn', 'Hub', 'learnhubproj@gmail.com', '0527548858', 'זכר', '1980-01-01', 1),
-('Jane', 'Smith', 'jane.smith@example.com', '0987654321', 'נקבה', '1990-02-02', 2),
-('Alice', 'Johnson', 'alice.johnson@example.com', '2345678901', 'נקבה', '2000-03-03', 3),
-('Bob', 'Brown', 'bob.brown@example.com', '3456789012', 'זכר', '1985-04-04', 4),
-('Charlie', 'Davis', 'charlie.davis@example.com', '4567890123', 'זכר', '1975-05-05', 5),
-('Rachel', 'Avraham', 'rachel.avraham@example.com', '0531234567', 'נקבה', '2000-10-25', 4),
-('Moshe', 'Israel', 'moshe.israel@example.com', '0554567890', 'זכר', '1970-12-31', 5),
-('שלמה', 'קיפניס', 'kipnis@example.com', '0556373893', 'זכר', '1970-12-31', 5),
-('keli','ran','kr@gmail.com','0543423455','נקבה','1970-12-31',6);
+INSERT INTO users (firstName, lastName, email, phone, gender, birth_date,createDate, address_id) VALUES
+('Learn', 'Hub', 'learnhubproj@gmail.com', '0527548858', 'זכר', '1980-01-01', '1980-01-01', 1),
+('Jane', 'Smith', 'jane.smith@example.com', '0987654321', 'נקבה', '1990-02-02', '1980-01-01', 2),
+('Alice', 'Johnson', 'alice.johnson@example.com', '2345678901', 'נקבה', '2000-03-03', '1980-01-01', 3),
+('Bob', 'Brown', 'bob.brown@example.com', '3456789012', 'זכר', '1985-04-04', '1980-01-01', 4),
+('Charlie', 'Davis', 'charlie.davis@example.com', '4567890123', 'זכר', '1975-05-05',  '1980-01-01',5),
+('Rachel', 'Avraham', 'rachel.avraham@example.com', '0531234567', 'נקבה', '2000-10-25', '1980-01-01', 4),
+('Moshe', 'Israel', 'moshe.israel@example.com', '0554567890', 'זכר', '1970-12-31', '1980-01-01', 5),
+('שלמה', 'קיפניס', 'kipnis@example.com', '0556373893', 'זכר', '1970-12-31', '1980-01-01', 5),
+('keli','ran','kr@gmail.com','0543423455','נקבה','1970-12-31', '1980-01-01',6);
 
 
 -- Insert data into roll_for_user table
@@ -330,7 +331,7 @@ INSERT INTO subject_of_tutor (tutor_id, subject_id) VALUES
 
 
 -- Insert data into files_for_tutors table
-INSERT INTO files_for_tutors (file_id, tutor_id) VALUES
+INSERT INTO files_for_tutors (file_id, userId) VALUES
 (1, 3),
 (2, 4),
 (6, 8),

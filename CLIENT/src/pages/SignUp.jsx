@@ -9,6 +9,8 @@ Modal.setAppElement('#root');
 
 import { ShowHeadersContext, UserContext } from "../App";
 const SignUp = ({ setShowHeaders, setUserData }) => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0];
     const showHeaders = useContext(ShowHeadersContext);
     const userContext = useContext(UserContext);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -35,7 +37,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         intended_for_gender: "",
         languages: [],
         subjects: [],
-        email: userContext.user.email
+        email: ""
     });
 
     const [formDataStudent, setFormDataStudent] = useState({
@@ -43,10 +45,10 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         email: userContext.user.email
     });
 
-    const [formDataFile, setFormDataFile] = useState({
-        file: "",
-        tutor_id: userContext.user.email
-    });
+    // const [formDataFile, setFormDataFile] = useState({
+    //     file: "",
+    //     tutor_id: userContext.user.email
+    // });
 
     const [currentLanguage, setCurrentLanguage] = useState("");
     const [currentSubject, setCurrentSubject] = useState("");
@@ -58,17 +60,49 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
+    const sendEmail = async () => {
+        const emailData = {
+          email: 'learnhubproject2024@gmail.com', // או כתובת האימייל שאתה רוצה לשלוח אליה
+          subject: ' בקשת משתמש לאישור מרצה',
+          text: `
+        <div style="direction: rtl; text-align: right;">
+            ${userContext.user.firstName} ${userContext.user.lastName} מבקש להיות מרצה ומחכה לאישור.
+            כנס לאזור האישי שלך על מנת לאשר/לא לאשר את המשתמש.
+        </div>
+    `,
+        };
+      
+        try {
+          
+
+          serverRequests('POST','send-email',emailData).then((result)=>{
+            if (result) {
+                console.log('Email sent successfully');
+                // הוסף כאן פעולה במקרה של הצלחה
+              } else {
+                console.error('Error sending email:', result.message);
+                // הוסף כאן פעולה במקרה של כישלון
+              }
+          })
+      
+         
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      
+
     function createProfileTutor() {
-        // serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
-        //     userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
-           
-        //     // navigate('/tutorProfile')
-        // })
-        setIsConfirm(true)
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => {
-            navigate('/homePage');
-          }, 5000); 
+        serverRequests('POST', 'tutors', formDataTutor).then((userId) => {
+            userContext.setUser({ ...userContext.user, ...formDataTutor, userId: userId.response });
+            setIsConfirm(true)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            sendEmail();
+            setTimeout(() => {
+                navigate('/homePage');
+            }, 5000);
+        })
+        
     }
 
     function closeModal() {
@@ -97,7 +131,7 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 [name]: value
             }));
         }
-        else if (userContext.user.rollId === 3) {
+        else if (userContext.user.rollId === 4) {
             setFormDataTutor((prevFormData) => ({
                 ...prevFormData,
                 [name]: value
@@ -151,12 +185,13 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                 city: formData.city,
                                 street: formData.street,
                                 house_number: formData.house_number,
+                                createDate: formattedDate,
                                 password: formData.password,
                             };
 
                             serverRequests('POST', 'users', user).then((response) => {
-                                console.log("res", response[0]);
-                                userContext.setUser({ ...userContext.user, ...user });
+                                console.log("res", response);
+                                userContext.setUser({ ...userContext.user, ...response });
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
                             });
                             alert(`You can continue filling in your details ${user.firstName}! 😀`);
@@ -176,62 +211,40 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         }
     };
 
-    const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0];
-        if (selectedFile && selectedFile.type !== 'application/pdf') {
-            setUploadError('Please select a PDF file.');
-            setFile(null);
-            setUploadSuccess(false);
-        } else {
-            setFile(selectedFile);
-            setUploadError('');
-            setUploadSuccess(false);
-        }
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
     };
 
-    const handleFileUpload = async (event) => {
-        event.preventDefault();
-        if (!file) {
-            setUploadError('Please select a file to upload.');
-            return;
-        }
-
-        setIsUploading(true);
-        console.log("ff", file)
-        const fileFormData = new FormData();
-        fileFormData.append('file', file);
-        console.log(fileFormData)
-        serverRequests('POST', 'upload', fileFormData)
-            .then(response => {
-                setIsUploading(false);
+    const handleFileUpload = async (e) => {
+        console.log("file", file);
+        console.log(userContext.user.userId)
+        const formDataFile = new FormData();
+        formDataFile.append("file", file);
+        formDataFile.append("tutor_id", userContext.user.userId);
+        
+        try {
+            fetch("http://localhost:3000/upload", {
+                method: 'POST',
+                body: formDataFile,
+                headers: {
+                    // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryXYZ'
+                }
+            }).then((response) => {
                 console.log(response);
-                if (!response.ok) {
-                    setUploadError('Failed to upload file.');
-                    return;
-                }
-                return response.json();
             })
-            .then(data => {
-                if (data) {
-                    const link = ({ target: { name: "degree_link", value: data.url } });
-                    setUploadSuccess(true);
-                    setFile(null);
-                }
-            })
-            .catch(error => {
-                setIsUploading(false);
-                setUploadError('An error occurred while uploading the file.');
-                console.error('File upload error:', error);
-            });
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
     };
 
     return (
         <>
             <div style={{ paddingTop: '100px' }}></div>
-            {isConfirm&&<Alert style={{marginTop:'20px'}} severity="success">בקשתך נקלטה במערכת, חכה לאישור במייל ממנהל האתר</Alert>}
+            {isConfirm && <Alert style={{ marginTop: '20px' }} severity="success">בקשתך נקלטה במערכת, חכה לאישור במייל ממנהל האתר</Alert>}
             <div className="registerDiv">
                 <h1> הצטרף אלינו:</h1><br /><br />
-                {isError&&<Alert style={{marginBottom:'20px'}} severity="error">לא מלאת את כל הפרטים הנדרשים</Alert>}
+                {isError && <Alert style={{ marginBottom: '20px' }} severity="error">לא מלאת את כל הפרטים הנדרשים</Alert>}
                 <form className="registerForm">
                     <div>
                         <input
@@ -450,25 +463,25 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 >
                     <span className="close" onClick={closeModal}>&times;</span>
                     <p><strong>תנאי שימוש לאתר:</strong><br />
-ברוכים הבאים לאתר שלנו לקביעת שיעורים פרטיים. השימוש באתר מותנה בקבלת התנאים וההתניות הבאים. אם אינך מסכים לתנאים הללו, אנא הימנע משימוש באתר.<br />
-שירותים האתר מספק פלטפורמה למשתמשים לקבוע שיעורים פרטיים עם מורים. כל העסקאות וההתקשרות נעשות ישירות בין המשתמש למורה.<br />
-שימוש באתר אתה מתחייב להשתמש באתר בהתאם לחוקים והתקנות החלים, ולא להשתמש באתר לכל מטרה בלתי חוקית או מזיקה.<br />
-רישום משתמש לשם קביעת שיעורים, ייתכן שתידרש להירשם ולספק פרטים אישיים. אתה אחראי לשמור על סודיות פרטי החשבון והסיסמה שלך.<br />
-קניין רוחני כל התכנים, העיצובים, התמונות והחומרים באתר הם רכושנו הבלעדי או רכוש צדדים שלישיים, ואין להעתיקם או להשתמש בהם ללא אישור בכתב.<br />
-הגבלת אחריות אנו לא אחראים לכל נזק ישיר או עקיף הנגרם משימוש באתר או מהתכנים והמידע המופיעים בו. השירותים ניתנים "כפי שהם" וללא אחריות מכל סוג.<br />
-שינויים באתר אנו שומרים לעצמנו את הזכות לשנות או להפסיק את השירותים באתר בכל עת וללא הודעה מוקדמת.<br />
-חוק וסמכות שיפוט תנאים אלה כפופים לחוקי מדינת ישראל, וכל סכסוך יובא להכרעה בבתי המשפט המוסמכים במדינת ישראל.<br />
-</p>
+                        ברוכים הבאים לאתר שלנו לקביעת שיעורים פרטיים. השימוש באתר מותנה בקבלת התנאים וההתניות הבאים. אם אינך מסכים לתנאים הללו, אנא הימנע משימוש באתר.<br />
+                        שירותים האתר מספק פלטפורמה למשתמשים לקבוע שיעורים פרטיים עם מורים. כל העסקאות וההתקשרות נעשות ישירות בין המשתמש למורה.<br />
+                        שימוש באתר אתה מתחייב להשתמש באתר בהתאם לחוקים והתקנות החלים, ולא להשתמש באתר לכל מטרה בלתי חוקית או מזיקה.<br />
+                        רישום משתמש לשם קביעת שיעורים, ייתכן שתידרש להירשם ולספק פרטים אישיים. אתה אחראי לשמור על סודיות פרטי החשבון והסיסמה שלך.<br />
+                        קניין רוחני כל התכנים, העיצובים, התמונות והחומרים באתר הם רכושנו הבלעדי או רכוש צדדים שלישיים, ואין להעתיקם או להשתמש בהם ללא אישור בכתב.<br />
+                        הגבלת אחריות אנו לא אחראים לכל נזק ישיר או עקיף הנגרם משימוש באתר או מהתכנים והמידע המופיעים בו. השירותים ניתנים "כפי שהם" וללא אחריות מכל סוג.<br />
+                        שינויים באתר אנו שומרים לעצמנו את הזכות לשנות או להפסיק את השירותים באתר בכל עת וללא הודעה מוקדמת.<br />
+                        חוק וסמכות שיפוט תנאים אלה כפופים לחוקי מדינת ישראל, וכל סכסוך יובא להכרעה בבתי המשפט המוסמכים במדינת ישראל.<br />
+                    </p>
 
-<p><strong>מדיניות אבטחה</strong><br />
-אבטחת המידע שלך חשובה לנו, ולכן אנו נוקטים באמצעים רבים על מנת להגן על המידע האישי שלך.<br />
-איסוף מידע אנו אוספים מידע אישי, כגון שם, כתובת דוא"ל ומספר טלפון, לצורך מתן השירותים באתר.<br />
-שימוש במידע אנו משתמשים במידע שנאסף לצורך ניהול חשבונך, קביעת שיעורים והתאמת השירותים לצרכים שלך.<br />
-שיתוף מידע אנו לא משתפים מידע אישי עם צדדים שלישיים אלא אם כן נדרש לעשות כן על פי חוק או לצורך מתן השירותים.<br />
-אבטחת מידע אנו משתמשים בטכנולוגיות הצפנה ובאמצעים פיזיים, אלקטרוניים ונהלים כדי להגן על המידע האישי שלך מפני גישה לא מורשית.<br />
-גישה למידע יש לך זכות לגשת למידע האישי שלך, לעדכן אותו או למחוק אותו. לשם כך, פנה אלינו באמצעות פרטי הקשר המופיעים באתר.<br />
-שינויים במדיניות אנו שומרים לעצמנו את הזכות לעדכן את מדיניות האבטחה בכל עת. עדכונים אלו יפורסמו באתר, ואנו נודיע לך במידת הצורך.<br />
-</p>
+                    <p><strong>מדיניות אבטחה</strong><br />
+                        אבטחת המידע שלך חשובה לנו, ולכן אנו נוקטים באמצעים רבים על מנת להגן על המידע האישי שלך.<br />
+                        איסוף מידע אנו אוספים מידע אישי, כגון שם, כתובת דוא"ל ומספר טלפון, לצורך מתן השירותים באתר.<br />
+                        שימוש במידע אנו משתמשים במידע שנאסף לצורך ניהול חשבונך, קביעת שיעורים והתאמת השירותים לצרכים שלך.<br />
+                        שיתוף מידע אנו לא משתפים מידע אישי עם צדדים שלישיים אלא אם כן נדרש לעשות כן על פי חוק או לצורך מתן השירותים.<br />
+                        אבטחת מידע אנו משתמשים בטכנולוגיות הצפנה ובאמצעים פיזיים, אלקטרוניים ונהלים כדי להגן על המידע האישי שלך מפני גישה לא מורשית.<br />
+                        גישה למידע יש לך זכות לגשת למידע האישי שלך, לעדכן אותו או למחוק אותו. לשם כך, פנה אלינו באמצעות פרטי הקשר המופיעים באתר.<br />
+                        שינויים במדיניות אנו שומרים לעצמנו את הזכות לעדכן את מדיניות האבטחה בכל עת. עדכונים אלו יפורסמו באתר, ואנו נודיע לך במידת הצורך.<br />
+                    </p>
 
                 </Modal>
             </div>
