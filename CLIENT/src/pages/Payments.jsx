@@ -5,6 +5,7 @@ import { serverRequests } from '../Api';
 
 const Payments = () => {
   const [lessons, setLessons] = useState([]);
+  const [isPayed,setIsPayed]=useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +20,21 @@ const Payments = () => {
     };
     fetchData();
   }, []);
+ 
+  const updatePayed = (lesson) => {
+    try{
+      const formData={
+        isPayed: true,
+        lesson_id: lesson.lesson_id
+      }
+       serverRequests('PUT',`manager/${lesson.userId}`,formData).then(()=>{
+        setIsPayed(true);
+       })
+
+    } catch(err){
+      console.log(err);
+    }
+  };
 
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString().split('T')[0];
@@ -42,11 +58,12 @@ const Payments = () => {
                     <p><strong>שם תלמיד:</strong> {lesson.studentName}</p>
                     <p><strong>אימייל תלמיד :</strong> {lesson.email}</p>
                     <p><strong>טלפון :</strong> {lesson.phone}</p>
-              {lesson.isPayed ? (
+              {lesson.isPayed || isPayed ? (
                 <label className='payed'><strong>השיעור שולם</strong></label>
               ) : (
                 <label className='notPayed'><strong>השיעור אינו שולם</strong></label>)}
             </div>
+            <button onClick={()=>{updatePayed(lesson)}}>שולם</button>
             </div>
             </div>) : (<></>))))}
     </>

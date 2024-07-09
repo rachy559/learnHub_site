@@ -30,12 +30,21 @@ router.get('/',async(req,res)=>{
 
 router.get('/:type',async(req,res)=>{
     try{
-    const tutors=await controller2.getAllStudentsLessons();
-    res.send(tutors);
+    const lessons=await controller2.getAllStudentsLessons();
+    res.send(lessons);
     }catch(err){
         res.status(500).send(err)
     }
 })
 
+router.put('/:id',async(req,res)=>{
+    try{
+    const id = req.params.id;
+    const tutors=await controller2.updatePayedLesson(id,req.body.isPayed,req.body.lesson_id);
+    res.send(tutors);
+    }catch(err){
+        res.status(500).send(err)
+    }
+})
 
 module.exports = router;

@@ -19,7 +19,7 @@ const ConfirmTutor = () => {
   const sendEmail = async () => {
     let emailData;
     {isApprove?( emailData = {
-        email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
+        email: `${tutor.email}`, 
         subject: 'בקשתך אושרה',
         text: `
       <div style="direction: rtl; text-align: right;">
@@ -28,7 +28,7 @@ const ConfirmTutor = () => {
       </div>
   `,
       }):(emailData = {
-        email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
+        email: `${tutor.email}`, 
         subject: 'בקשתך לא אושרה',
         text: `
       <div style="direction: rtl; text-align: right;">
@@ -71,8 +71,8 @@ const ConfirmTutor = () => {
         }
         serverRequests('PUT',`tutors/${tutor.tutor_id}`, formData).then(()=>{
           setIsApprove(false)
-            sendEmail();
-            navigate('/confirmTutors'); 
+          sendEmail();
+          navigate('/confirmTutors'); 
 
         })
     } catch(err){
@@ -83,9 +83,9 @@ const ConfirmTutor = () => {
   const handleReject = () => {
     try{
         serverRequests('DELETE',`tutors/${tutor.tutor_id}`, tutor).then(()=>{
-            setIsApprove(true)
-            sendEmail();
-            navigate('/confirmTutors'); 
+          setIsApprove(true)
+          sendEmail();
+          navigate('/confirmTutors'); 
 
         })
     } catch(err){
