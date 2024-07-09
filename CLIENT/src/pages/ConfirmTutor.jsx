@@ -17,16 +17,19 @@ const ConfirmTutor = () => {
 
   const sendEmail = async (isApprove) => {
     let emailData;
-    {isApprove?( emailData = {
+    if (isApprove) {
+      emailData = {
         email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
         subject: 'בקשתך אושרה',
         text: `
-      <div style="direction: rtl; text-align: right;">
-          ${tutor.tutorName} הוכנסת בהצלחה למערכת המורים באתר LEARN HUB
-          בהצלחה!!
-      </div>
-  `,
-      }):(emailData = {
+          <div style="direction: rtl; text-align: right;">
+            ${tutor.tutorName} הוכנסת בהצלחה למערכת המורים באתר LEARN HUB
+            בהצלחה!!
+          </div>
+        `,
+      };
+    } else {
+      emailData = {
         email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
         subject: 'בקשתך לא אושרה',
         text: `
@@ -60,32 +63,26 @@ const ConfirmTutor = () => {
     setModalImage('');
   };
 
-  const handleApprove = () => {
-    try{
-        const formData={
-            rollId: 3
-        }
-        serverRequests('PUT',`tutors/${tutor.tutor_id}`, formData).then(()=>{
-          setIsApprove(false)
-            sendEmail();
-            navigate('/confirmTutors'); 
-
-        })
-    } catch(err){
-       console.log(err);
+  const handleApprove = async () => {
+    try {
+      const formData = {
+        rollId: 3
+      };
+      await serverRequests('PUT', `tutors/${tutor.tutor_id}`, formData);
+      await sendEmail(true);
+      navigate('/confirmTutors');
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const handleReject = () => {
-    try{
-        serverRequests('DELETE',`tutors/${tutor.tutor_id}`, tutor).then(()=>{
-            setIsApprove(true)
-            sendEmail();
-            navigate('/confirmTutors'); 
-
-        })
-    } catch(err){
-       console.log(err);
+  const handleReject = async () => {
+    try {
+      await serverRequests('DELETE', `tutors/${tutor.tutor_id}`, tutor);
+      await sendEmail(false);
+      navigate('/confirmTutors');
+    } catch (err) {
+      console.log(err);
     }
   };
 
