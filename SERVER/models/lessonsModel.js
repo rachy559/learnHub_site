@@ -9,6 +9,7 @@ async function getLessons() {
     l.language_name AS language,
     le.priceLesson AS price,
     le.lesson_id,
+    le.isPayed,
     le.zoomLink,
     le.lessonTime AS lesson_time,
     CASE

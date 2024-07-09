@@ -25,6 +25,7 @@ const Lessons = () => {
       try {
         const foundLanguages = await serverRequests('GET', 'lessons', null);
         if (foundLanguages.lessons) {
+          console.log(foundLanguages)
           setAllLessons(foundLanguages.lessons);
           setInitialLessons(foundLanguages.lessons);
         } else {
@@ -175,6 +176,7 @@ return (
                 <p><strong>כתובת שיעור:</strong> {lesson.city_tutor}, {lesson.street_tutor}</p>
               )}
             </div>
+           
           </div>
         </div>
       ))}

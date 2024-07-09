@@ -137,6 +137,12 @@ console.log(userContext.user)
                       <p><strong>כתובת שיעור:</strong> {lesson.tutor_address.city}, {lesson.tutor_address.street} {lesson.tutor_address.house_number}</p>
                     )}
                     <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
+                    {lesson.isPayed?(
+             <label className='payed'><strong>השיעור שולם</strong></label>
+
+            ):(
+              <label className='notPayed'><strong>השיעור אינו שולם</strong></label>
+            )}
                   </div>
                   <img onClick={() => { deleteLesson(lesson) }} className='deleteIcon' src='../pictures/delete.png'></img>
                   <img onClick={() => { updateLesson(lesson) }} className='updateIcon' src='../pictures/update.png'></img>

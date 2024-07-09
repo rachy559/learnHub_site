@@ -133,6 +133,7 @@ CREATE TABLE lessons(
 	zoomLink varchar(255),
 	accessibility bool NOT NULL,
 	tutor_id INT,
+    isPayed bool,
 	FOREIGN KEY (tutor_id) REFERENCES tutors (tutor_id)
 );
 
@@ -352,13 +353,13 @@ INSERT INTO students (student_id, studentStatus) VALUES
 (9,'Primary');
 
 -- Insert data into lessons table
-INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id) VALUES
-('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 3),
-('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE,  4),
-('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE,  5),
-('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE,  3),
-('Master', 180, 60, NULL, FALSE, 5),
-('Master', 180, 60, 'http://zoom.com/lesson5', FALSE,  5);
+INSERT INTO lessons (levelLesson, lessonTime, priceLesson, zoomLink, accessibility, tutor_id,isPayed) VALUES
+('Beginner', 60, 20, 'http://zoom.com/lesson1', TRUE, 3, FALSE),
+('Intermediate', 90, 30, 'http://zoom.com/lesson2', TRUE,  4, FALSE),
+('Advanced', 120, 40, 'http://zoom.com/lesson3', FALSE,  5, FALSE),
+('Expert', 150, 50, 'http://zoom.com/lesson4', TRUE,  3, FALSE),
+('Master', 180, 60, NULL, FALSE , 5, FALSE),
+('Master', 180, 60, 'http://zoom.com/lesson5', FALSE,  5, FALSE);
 
 -- Insert data into lesson_for_student table
 INSERT INTO lesson_for_student (lesson_id,student_id,dayLesson,timeLesson,dateLesson) VALUES

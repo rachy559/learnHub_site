@@ -356,3 +356,11 @@ div[style*="display: 'flex'"] {
 .finishBtn {
   background-color: #a8d0e1;
 }
+
+.notPayed{
+  color: red;
+}
+
+.payed{
+  color: green;
+}
