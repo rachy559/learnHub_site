@@ -137,6 +137,15 @@ console.log(userContext.user)
                       <p><strong>כתובת שיעור:</strong> {lesson.tutor_address.city}, {lesson.tutor_address.street} {lesson.tutor_address.house_number}</p>
                     )}
                     <p><strong>שם מרצה:</strong> {lesson.tutor_name}</p>
+
+                    <p><strong>פרטי החשבון להעברת התשלום:</strong></p>
+                    <p><strong>מספר חשבון</strong> {student.manager_details.numAccount}</p>
+                    <p><strong>מספר סניף</strong> {student.manager_details.numBranch}</p>
+                    <p><strong>שם הבנק</strong> {student.manager_details.nameBank}</p>
+                    <p><strong>מספר הבנק</strong> {student.manager_details.numBank}</p>
+                    <p><strong> שם המוטב</strong> {student.manager_details.beneficiaryName}</p>
+
+
                   </div>
                   <img onClick={() => { deleteLesson(lesson) }} className='deleteIcon' src='../pictures/delete.png'></img>
                   <img onClick={() => { updateLesson(lesson) }} className='updateIcon' src='../pictures/update.png'></img>
