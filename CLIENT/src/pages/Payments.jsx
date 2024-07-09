@@ -7,7 +7,7 @@ const Payments = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const foundLanguages = await serverRequests('GET', 'manager', null);
+            const foundLanguages = await serverRequests('GET', `manager/lessons`, null);
             // if (foundLanguages.lessons) {
             //   console.log(foundLanguages)
             //   setAllLessons(foundLanguages.lessons);
