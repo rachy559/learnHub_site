@@ -2,7 +2,7 @@ const pool = require('../DB');
 
 async function getLessons() {
     try {
-        const sql=`
+        const sql = `
         SELECT 
     CONCAT(u.firstName, ' ', u.lastName) AS tutor_name,
     t.tutor_id,
@@ -117,5 +117,16 @@ async function createLanguage(tutor_id, languages) {
     }
 }
 
+async function getAllStudentsLessons() {
+    try {
+        const sql = "INSERT INTO languages (`language_name`) VALUES(?)";
+        const [rows,fields] = await pool.query(sql);
+        return rows;
+    }
+    catch (err) {
+        throw err;
+    }
+}
 
-module.exports = { getLessons, createLesson, createSubject, createLanguage };
+
+module.exports = { getLessons, createLesson, createSubject, createLanguage, getAllStudentsLessons };

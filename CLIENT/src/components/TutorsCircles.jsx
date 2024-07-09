@@ -27,16 +27,11 @@ const TutorsCircles = () => {
 
                     return (
                         <div className="tutorDivCircle" key={key} >
-                                {tutor.fileUrls.split(',').filter(isImage).map((url, index) => (
-                                    <img key={index} src={`http://localhost:3000/images/${url}`} alt={`Tutor ${tutor.tutorName}`} className="tutor-image" />
-                                  ))}
                                   {tutor.fileUrls.split(',').map((url, index) => (
-                                   !isImage(url)&&
-                                   
+                                   !isImage(url)?(
                                     <img className="photo" src="../pictures/user.png" alt={tutor.tutorName} />
-                                  
+                                   ):(<img key={index} src={`http://localhost:3000/images/${url}`} alt={`Tutor ${tutor.tutorName}`} className="tutor-image" />)
                                   ))}
-                               
                             <br />
                             <span className="tutor">{tutor.tutorName}</span>
                         </div>

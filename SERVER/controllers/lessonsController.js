@@ -32,4 +32,12 @@ async function createLanguage(tutor_id,languages){
     }
 }
 
-module.exports={ getAllLessons, createLesson, createSubject, createLanguage};
+async function getAllStudentsLessons(){
+    try{
+        return await model.getAllStudentsLessons();
+    }catch(err){
+        throw err;
+    }
+}
+
+module.exports={ getAllLessons, createLesson, createSubject, createLanguage,getAllStudentsLessons};
