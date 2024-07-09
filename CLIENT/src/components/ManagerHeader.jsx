@@ -55,11 +55,11 @@ const Manager_homePage = () => {
                     <div className="user-icon" onClick={toggleSidebar} >
                     <img src='../pictures/user.png' alt="User" />
                     </div>
-                    <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}>
-                        <a href="" className="closebtn" onClick={toggleSidebar}>&times;</a>
-                        <a className='profile' onClick={navigateToProfile}><FaClipboardUser /> הצגת פרטי פרופיל</a>
-                        <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> יציאה מהחשבון</a>
-                    </div>
+                    <a className='log' href="/homePage" onClick={() => { 
+                    sessionStorage.removeItem('accessToken');
+                    sessionStorage.removeItem('refreshToken');
+                    setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
+                
                 </>
             </nav>
         </header>
