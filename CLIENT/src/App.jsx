@@ -78,14 +78,12 @@ function App() {
       setIsLogedIn(false);
       setLoading(false);
     }
-  }, [])
-
-
+  }, []);
 
   useEffect(() => {
     const fetchDataOfAllTutors = async () => {
       try {
-        await serverRequests('GET', `tutors?_limit=${limit}`, null).then((foundTutors) => {
+        await serverRequests('GET', 'tutors', null).then((foundTutors) => {
           setAllTutors(foundTutors);
         })
       } catch (error) {

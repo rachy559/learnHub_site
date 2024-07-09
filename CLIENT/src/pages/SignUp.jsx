@@ -194,9 +194,9 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         }
         const today = new Date();
         const birthDate = new Date(formData.birth_date);
-        const minValidDate = subYears(today, 18);
+        const minValidDate = subYears(today, 6);
         if (birthDate > minValidDate){
-            updateErrorsArray.birth_date = "מרצה יכול להיות רק מגיל 18 ומעלה."
+            updateErrorsArray.birth_date = ". מרצה חייב להיות מגיל 18 ומעלה. השימוש באתר ניתן מגיל 6 ומעלה."
         }
         if (formData.lastName && formData.password && formData.confirm_password && isChecked) {
             try {

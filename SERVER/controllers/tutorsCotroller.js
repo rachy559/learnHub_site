@@ -3,9 +3,9 @@ const model2 = require('../models/usersModel');
 
 const bcrypt = require('bcrypt');
 
-async function getAllTutors(limit){
+async function getAllTutors(){
     try{
-        return model.getTutors(limit);
+        return model.getTutors();
     }catch(err){
         console.log(err);
         throw err;

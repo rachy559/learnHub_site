@@ -39,6 +39,7 @@ const Tutors = () => {
 
     return (
         <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
+              <h1>המרצים שלנו</h1>
             <img className='filters' src='../pictures/image.png' onClick={() => { setIsClick(!isClick) }} />
             {isClick ? (
                 <>

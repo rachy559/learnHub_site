@@ -2,7 +2,7 @@ const pool = require('../DB');
 
 
 
-async function getTutors(limit) {
+async function getTutors() {
     try {
         const sql = `SELECT CONCAT(u.firstName," ",u.lastName," ") AS tutorName,u.email,u.phone,u.gender,u.birth_date,CONCAT(a.city,", ",a.street," ",a.house_number," ") AS tutorAddress,
         t.intended_for_gender,GROUP_CONCAT(DISTINCT sub.subjectName) AS subjects,
@@ -18,7 +18,7 @@ async function getTutors(limit) {
          LEFT JOIN files f ON fft.file_id = f.file_id 
          JOIN roll_for_user ON u.userId = roll_for_user.userId
          WHERE roll_for_user.rollId = 3
-         GROUP BY u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number, t.intended_for_gender LIMIT ${limit}`
+         GROUP BY u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number, t.intended_for_gender`
         const [rows, fields] = await pool.query(sql);
         return rows;
     } catch (err) {

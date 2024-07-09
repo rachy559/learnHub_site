@@ -8,8 +8,7 @@ router.use(cors());
 
 router.get("/", async (req, res) => {
     try {
-        const { _limit } = req.query;
-        res.send(await controller.getAllTutors(_limit));
+        res.send(await controller.getAllTutors());
     } catch (err) {
         console.log(err);
         res.status(500).send(err);
