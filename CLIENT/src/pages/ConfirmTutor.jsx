@@ -19,7 +19,7 @@ const ConfirmTutor = () => {
     let emailData;
     if (isApprove) {
       emailData = {
-        email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
+        email: `${tutor.email}`, 
         subject: 'בקשתך אושרה',
         text: `
           <div style="direction: rtl; text-align: right;">
@@ -30,7 +30,7 @@ const ConfirmTutor = () => {
       };
     } else {
       emailData = {
-        email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
+        email: `${tutor.email}`,
         subject: 'בקשתך לא אושרה',
         text: `
           <div style="direction: rtl; text-align: right;">
