@@ -16,6 +16,7 @@ import TutorProfile from './pages/TutorProfile';
 import AdminProfile from './pages/AdminProfile';
 import ConfirmTutors from './pages/ConfirmTutors';
 import ConfirmTutor from './pages/ConfirmTutor';
+import Payments from './pages/Payments';
 
 
 export const UserContext = createContext()
@@ -130,6 +131,7 @@ function App() {
                     <Route path="/adminProfile" element={<AdminProfile setUser={setUser} user={user} />} />
                     <Route path="/confirmTutors" element={<ConfirmTutors setUser={setUser} user={user} />} />
                     <Route path="/confirmTutor" element={<ConfirmTutor setUser={setUser} user={user} />} />
+                    <Route path="/payments" element={<Payments setUser={setUser} user={user} />} />
                   </Route>
                 </Routes>
               </BrowserRouter>

@@ -5,6 +5,13 @@ const TutorsCircles = () => {
     const { allTutors, setAllTutors } = useContext(TutorsContext);
     const acceptedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Accepted file extensions for images
 
+
+    const isImage = (url) => {
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
+        return imageExtensions.some(extension => url.toLowerCase().endsWith(extension));
+      };
+
+
     return (
         <>
             <h1>המרצים שלנו</h1>
@@ -20,11 +27,13 @@ const TutorsCircles = () => {
 
                     return (
                         <div className="tutorDivCircle" key={key} >
-                            {acceptedExtensions.includes(extension) ? (
-                                <img className="photo" src={tutor.fileUrls} alt={tutor.tutorName} />
-                            ) : (
-                                <img className="photo" src="../pictures/user.png" alt={tutor.tutorName} />
-                            )}
+                                {tutor.fileUrls.split(',').filter(isImage).map((url, index) => (
+                                    url?(
+                                    <img key={index} src={`http://localhost:3000/images/${url}`} alt={`Tutor ${tutor.tutorName}`} className="tutor-image" />
+                                  ):(
+                                    <img className="photo" src="../pictures/user.png" alt={tutor.tutorName} />
+                                  )))}
+                               
                             <br />
                             <span className="tutor">{tutor.tutorName}</span>
                         </div>

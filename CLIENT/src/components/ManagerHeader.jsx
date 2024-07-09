@@ -56,7 +56,7 @@ const Manager_homePage = () => {
                         </span>
                     </div>
                 </NavLink>
-                <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>תשלומים</NavLink>
+                <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/payments`}>תשלומים</NavLink>
                 <>
                     <div className="user-icon" onClick={toggleSidebar} >
                     <img src='../pictures/user.png' alt="User" />
