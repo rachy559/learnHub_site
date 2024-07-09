@@ -243,7 +243,7 @@ INSERT INTO roll_for_user (userId, rollId) VALUES
 INSERT INTO passwords (userId, password) VALUES
 (1, '$2b$10$fmU0l0lpj7dXyDjhgW70R.870/1WWwy3vQ1XTKFM.h4rxzPlQNuim'),
 (2, 'password2'),
-(3, 'password3'),
+(3, '$2b$10$fmU0l0lpj7dXyDjhgW70R.870/1WWwy3vQ1XTKFM.h4rxzPlQNuim'),
 (4, 'password4'),
 (5, 'password5'),
 (6, 'password6'),

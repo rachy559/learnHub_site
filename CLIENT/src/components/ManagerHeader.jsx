@@ -12,6 +12,10 @@ const Manager_homePage = () => {
     const [styleConnect, setStyleConnect] = useState(false);
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
+    const activeStyles = {
+        fontWeight: "bold",
+        color: "#fbdfa5"
+      };
     
     const toggleSidebar = () => {
         setStyleConnect(!styleConnect);
@@ -39,6 +43,8 @@ const Manager_homePage = () => {
         <header className="app-header">
             <Link className="app-logo" to={`/manager_homePage`}><img width={120} src='../pictures/L.png' alt="Logo" /></Link>
             <nav className="app-nav">
+            <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
+            <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/tutors`}>המרצים שלנו</NavLink>
                 <NavLink
                     to="/confirmTutors"
                     state={{ allNotConfirmTutors }}
@@ -58,8 +64,7 @@ const Manager_homePage = () => {
                     <a className='log' href="/homePage" onClick={() => { 
                     sessionStorage.removeItem('accessToken');
                     sessionStorage.removeItem('refreshToken');
-                    setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
-                
+                    setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a> 
                 </>
             </nav>
         </header>

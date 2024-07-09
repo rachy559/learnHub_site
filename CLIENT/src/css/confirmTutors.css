@@ -1,45 +1,126 @@
+.containerTutors {
+  padding: 16px;
+  margin-top: 7%;
+  margin-bottom: 15%;
+}
+
 .tutor-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .tutor-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .tutor-item:hover {
-    background-color: #e9e9e9;
-  }
-  
-  .tutor-item h2 {
-    margin: 0 0 10px;
-    font-size: 1.5em;
-    color: #333;
-  }
-  
-  .tutor-item p {
-    margin: 5px 0;
-    font-size: 1em;
-    color: #666;
-  }
-  
-  .tutor-image {
-    max-width: 100%;
-    max-height: 200px;
-    margin: 10px 0;
-    border-radius: 10px;
-    object-fit: cover;
-  }
-  
-  
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.tutor-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  /* flex: 1 1 300px; Adjust the base size of the items */
+  max-width: 100%;
+}
+
+.tutor-item:hover {
+  transform: scale(1.02);
+}
+
+.tutor-image {
+  width: 120px; 
+  height: 120px; 
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 16px;
+  margin-left: 20px;
+}
+
+.tutor-details {
+  flex-grow: 1;
+}
+
+.tutor-details label {
+  margin: 0;
+  font-size: 24px; /* Adjust as needed */
+  color: black;
+}
+
+.subjects {
+  margin: 8px 0;
+  font-size: 16px; /* Adjust as needed */
+  color: black;
+}
+
+.tutor-date {
+  font-size: 16px;
+  color: #a8dfcc;
+  margin-left: auto;
+}
+
+.tutor-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tutor-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.tutor-details-container p {
+  font-size: 18px;
+  margin: 10px 0;
+  line-height: 1.5;
+  color: #555;
+}
+
+.tutor-details-container strong {
+  color: #333;
+}
+
+.files-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.file-container {
+  width: calc(33.33% - 10px);
+  text-align: center;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.file-container:hover {
+  transform: scale(1.05);
+}
+
+.tutor-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #1a73e8;
+  font-weight: bold;
+}

@@ -72,10 +72,8 @@ const Header = ({ setShowHeaders }) => {
         </div>
           <Link className="app-logo" to={`/homePage`}><img width={120} src='../pictures/L.png' alt="Logo" /></Link>
           <nav className="app-nav">
-            <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/homePage#about-section`}>אודות</NavLink>
             <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/lessons`}>שיעורים</NavLink>
             <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/tutors`}>המרצים שלנו</NavLink>
-            <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/comments`}>המלצות</NavLink>
             {showHeaders ? (
               <>
                 <NavLink style={({ isActive }) => isActive ? activeStyles : null} to={`/login`}>התחבר</NavLink>

@@ -442,6 +442,11 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                                     <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button>
                                 </div>
 
+                                <div className='container'>
+                                    <input type='file' onChange={handleFileChange} name="file" />
+                                    <button className='btn' type='button' onClick={handleFileUpload}>העלה קבצים</button>
+                                </div>
+
                                 <button className='btn' type='button' onClick={createProfileTutor}>אישור</button>
                             </form>
 

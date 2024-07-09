@@ -117,3 +117,19 @@ h1 {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.subjectDivT{
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid black;
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  width: 300px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}

@@ -10,6 +10,8 @@ app.use(cors());
 
 const PORTRUN = process.env.PORTRUN || 3000;
 console.log(process.env.ACCESS_TOKEN_SECRET)
+const imagesPath = path.join(__dirname, 'public/images');
+app.use('/images', express.static(imagesPath));
  const comments=require('./routes/commentsRoute');
  const tutors=require('./routes/tutorsRoute');
  const lanSub=require('./routes/lanSubRoute');

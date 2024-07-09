@@ -1,14 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { TutorsContext, FilterContext } from '../App';
-import { serverRequests } from '../Api';
-import { ShowHeadersContext, UserContext } from "../App";
-import { useLocation } from 'react-router-dom';
-
+import React from 'react';
+import { useLocation,useNavigate } from 'react-router-dom';
+import '../css/confirmTutors.css';
 
 
 const ConfirmTutors = () => {
   const location = useLocation();
   const { allNotConfirmTutors } = location.state || { allNotConfirmTutors: [] };
+  const navigate = useNavigate();
 
   const isImage = (url) => {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
@@ -17,29 +15,28 @@ const ConfirmTutors = () => {
 
   return (
     <>
-      <div>
-      {allNotConfirmTutors.length > 0 ? (
-        <ul className="tutor-list">
-          {allNotConfirmTutors.map(tutor => (
-            <li key={tutor.tutor_id} className="tutor-item">
-              <h2>{tutor.tutorName}</h2>
-              <p>מקצועות: {tutor.subjects.join(', ')}</p>
-              {tutor.fileUrls.filter(isImage).map((url, index) => (
-                <img key={index} src={url} alt={`Tutor ${tutor.tutorName}`} className="tutor-image" />
-              ))}
-              <p>תאריך בקשה: {new Date(tutor.createDate).toLocaleDateString()}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>אין מרצים לאשר</p>
-      )}
+      <div className="containerTutors">
+        {allNotConfirmTutors.length > 0 ? (
+          <div className="tutor-list">
+            {allNotConfirmTutors.map(tutor => (
+              <div onClick={()=>{      navigate(`/confirmTutor`, { state: tutor } )}} key={tutor.tutor_id} className="tutor-item">
+                {tutor.fileUrls.split(',').filter(isImage).map((url, index) => (
+                  <img key={index} src={`http://localhost:3000/images/${url}`} alt={`Tutor ${tutor.tutorName}`} className="tutor-image" />
+                ))}
+                <div className="tutor-details">
+                  <label>{tutor.tutorName}</label>
+                  <p className='subjects'>מקצועות: {tutor.subjects}</p>
+                  <p className='tutor-date'>תאריך בקשה: {new Date(tutor.createDate).toLocaleDateString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>אין מרצים לאשר</p>
+        )}
       </div>
     </>
   );
-
-
-
 }
 
 export default ConfirmTutors;

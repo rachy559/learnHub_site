@@ -15,6 +15,8 @@ import Lesson from './components/CalendarWork';
 import TutorProfile from './pages/TutorProfile';
 import AdminProfile from './pages/AdminProfile';
 import ConfirmTutors from './pages/ConfirmTutors';
+import ConfirmTutor from './pages/ConfirmTutor';
+
 
 export const UserContext = createContext()
 export const ShowHeadersContext = createContext();
@@ -54,6 +56,7 @@ function App() {
       console.log("here i am",refreshToken);
       serverRequests('POST', 'refreshToken', refreshToken)
       .then((response)=>{
+        console.log("tok",response)
         const { newAccessToken } = response; // חילוץ היוזר והטוקן מהתגובה
         sessionStorage.setItem('accessToken',newAccessToken);
         setIsLogedIn(true);
@@ -61,7 +64,7 @@ function App() {
         serverRequests('GET', 'auth')
         .then((user)=>{
           setUser(user);
-          setShowHeaders(false);
+          console.log("lgrlefjb")
         })
       })
       .catch(err=>{
@@ -113,8 +116,11 @@ function App() {
             <TutorsContext.Provider value={{ allTutors, setAllTutors }}>
               <BrowserRouter basename='/'>
                 <Routes>
+#
                   <Route path="/" element={<Layout setShowHeaders={setShowHeaders} setUser={setUser} />}>
-                    <Route path="/" element={<Navigate to="/homePage" />} />
+                    {user.roles==='MANAGER'?(<Route path="/" element={<Navigate to="/manager_homePage" />} />
+                    ):(<Route path="/" element={<Navigate to="/homePage" />} />)}
+
                     <Route path="/homePage" element={<HomePage />} />
                     <Route path="/tutors" element={<Tutors />} />
                     <Route path="/login" element={<LogIn setShowHeaders={setShowHeaders} setUser={setUser} />} />
@@ -126,6 +132,7 @@ function App() {
                     <Route path="/tutorProfile" element={<TutorProfile setUser={setUser} user={user} />} />
                     <Route path="/adminProfile" element={<AdminProfile setUser={setUser} user={user} />} />
                     <Route path="/confirmTutors" element={<ConfirmTutors setUser={setUser} user={user} />} />
+                    <Route path="/confirmTutor" element={<ConfirmTutor setUser={setUser} user={user} />} />
                   </Route>
                 </Routes>
               </BrowserRouter>

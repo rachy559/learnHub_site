@@ -181,6 +181,7 @@ GROUP BY
 
 async function getAllNotConfirmTutors() {
     try {
+        console.log("erty")
         const sql = `SELECT CONCAT(u.firstName," ",u.lastName," ") AS tutorName,u.email,u.phone,u.createDate, u.gender,u.birth_date,CONCAT(a.city,", ",a.street," ",a.house_number," ") AS tutorAddress,
         t.intended_for_gender,GROUP_CONCAT(DISTINCT sub.subjectName) AS subjects,
         GROUP_CONCAT(DISTINCT lang.language_name) AS languages,
@@ -195,9 +196,9 @@ async function getAllNotConfirmTutors() {
          LEFT JOIN files f ON fft.file_id = f.file_id 
          JOIN roll_for_user ON u.userId = roll_for_user.userId
          WHERE roll_for_user.rollId = 4
-         GROUP BY u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number, t.intended_for_gender LIMIT ${limit}`
+         GROUP BY u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number, t.intended_for_gender`
         const [rows, fields] = await pool.query(sql);
-        console.log(rows)
+        console.log("ww",rows)
         return rows;
     } catch (err) {
         throw err;
