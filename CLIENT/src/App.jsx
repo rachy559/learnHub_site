@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     const accessToken = sessionStorage.getItem("accessToken");
-    const refreshToken = sessionStorage.getItem("refreshToken");  
+    // const refreshToken = sessionStorage.getItem("refreshToken");  
     if(accessToken){
       setIsLogedIn(true);
       setLoading(false);
@@ -50,28 +50,28 @@ function App() {
       //איך לעשות שהתוקן ימחק מסשן אחרי סיום התוקף שלו?
       //איך לעשות שאחרי שעובר זמן התוקן, האתר יתנתק משמע ההדר חוזר להיות רגיל?
     }
-    else if(refreshToken){
-      console.log("here i am",refreshToken);
-      serverRequests('POST', 'refreshToken', refreshToken)
-      .then((response)=>{
-        const { newAccessToken } = response; // חילוץ היוזר והטוקן מהתגובה
-        sessionStorage.setItem('accessToken',newAccessToken);
-        setIsLogedIn(true);
-        setLoading(false);
-        serverRequests('GET', 'auth')
-        .then((user)=>{
-          setUser(user);
-          setShowHeaders(false);
-        })
-      })
-      .catch(err=>{
-        console.error('error refreshing token:', err);
-        setIsLogedIn(false);
-      })
-      .finally(()=>{
-        setLoading(true);
-      });
-    }
+    // else if(refreshToken){
+    //   console.log("here i am",refreshToken);
+    //   serverRequests('POST', 'refreshToken', refreshToken)
+    //   .then((response)=>{
+    //     const { newAccessToken } = response; // חילוץ היוזר והטוקן מהתגובה
+    //     sessionStorage.setItem('accessToken',newAccessToken);
+    //     setIsLogedIn(true);
+    //     setLoading(false);
+    //     serverRequests('GET', 'auth')
+    //     .then((user)=>{
+    //       setUser(user);
+    //       setShowHeaders(false);
+    //     })
+    //   })
+    //   .catch(err=>{
+    //     console.error('error refreshing token:', err);
+    //     setIsLogedIn(false);
+    //   })
+    //   .finally(()=>{
+    //     setLoading(true);
+    //   });
+    // }
     else{
       setIsLogedIn(false);
       setLoading(false);

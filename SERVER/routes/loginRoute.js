@@ -16,8 +16,10 @@ router.post("/", async (req, res) => {
         if (jsonRes.status !== 200) {
             return res.status(jsonRes.status).send('Error occured');
         }
-        const { accessToken, refreshToken, user } = jsonRes.json;
-        console.log("accses", accessToken, "refresh", refreshToken);
+        // const { accessToken, refreshToken, user } = jsonRes.json;
+        const { accessToken, user } = jsonRes.json;
+        console.log("accses", accessToken);
+        // console.log("accses", accessToken, "refresh", refreshToken);
         res.status(jsonRes.status).send(jsonRes.json);
     } catch (err) {
         console.error("Login error:", err);

@@ -25,12 +25,13 @@ const authenticateToken = (req, res, next) => {
 
 
 const authorizeRoll = (roll) => {
+  console.log("roll",roll);
   return async (req, res, next) => {
     try {
       if (!req.user) {
         res.status(401).send('Access denied');
       }
-      console.log(req.user);
+      console.log("user",req.user);
       const userRollName=req.user.rolls;
       if(!roll==userRollName)
         return res.status(403).json({ message: 'Unauthorized' });

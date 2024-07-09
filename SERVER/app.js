@@ -20,8 +20,7 @@ console.log(process.env.ACCESS_TOKEN_SECRET)
  const upload=require('./routes/uploadRoute');
  const lessons=require('./routes/lessonsRoute');
  const filter=require('./routes/filterRoute');
- const refreshToken=require('./routes/rereshTokenRoute');
-
+//  const refreshToken=require('./routes/rereshTokenRoute');
  const emailRoute = require('./routes/emailRoute');
 
  app.use('/tutors', tutors);
@@ -35,9 +34,10 @@ console.log(process.env.ACCESS_TOKEN_SECRET)
  app.use('/upload',upload);
  app.use('/lessons',lessons);
  app.use('/filter',filter);
- app.use('/refreshToken',refreshToken);
-
+//  app.use('/refreshToken',refreshToken);
  app.use('/send-email', emailRoute);
+
+
  app.use(authenticateToken);
  app.use('/auth', (req, res)=>{
   res.json(req.user);
@@ -46,8 +46,6 @@ console.log(process.env.ACCESS_TOKEN_SECRET)
  const calendar=require('./routes/calendarRoute');
  const manager=require('./routes/managerRoute');
 
-//  app.use('/manager',authorizeRoll(['MANAGER']),manager);
-//  app.use('/calendar',authorizeRoll(['STUDENT']),calendar);
 app.use('/manager',authorizeRoll('MANAGER'),manager);
 app.use('/calendar',authorizeRoll('STUDENT'),calendar);
 

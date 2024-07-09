@@ -96,7 +96,7 @@ const Header = ({ setShowHeaders }) => {
                 {/* <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}> */}
                   <a className='log' href="/homePage" onClick={() => { 
                     sessionStorage.removeItem('accessToken');
-                    sessionStorage.removeItem('refreshToken');
+                    // sessionStorage.removeItem('refreshToken');
                     setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
                 {/* </div> */}
               </>
