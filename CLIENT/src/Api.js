@@ -1,9 +1,9 @@
 export async function serverRequests(method, location, details) {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('accessToken');
     if (method == 'GET') {
         try {
             const fetchResponse = await fetch(`http://localhost:3000/${location}`, {
-                headers:{
+                headers: {
                     'authorization': `Barear=${token}`,
                 }
             })
@@ -20,7 +20,6 @@ export async function serverRequests(method, location, details) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(details)
-        // credentials: 'include' // כוללת אישורים לבקשה כדי לאפשר עוגיות
     };
     try {
         const fetchResponse = await fetch(`http://localhost:3000/${location}`, settings);

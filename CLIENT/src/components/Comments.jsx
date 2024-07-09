@@ -31,7 +31,7 @@ const Comments = () => {
 
     return (
         <>
-            <h2>תגובות</h2>
+            <h1>תגובות</h1>
             <div className="comments-container">
                 <span
                     className={`arrow ${currentIndex === 0 ? 'disabled' : ''}`}

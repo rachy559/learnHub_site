@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { generateAccessToken } = require('../tokenUtils');
 
 router.post('/', (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.body.refreshToken;
     if (!refreshToken) {
         return res.status(401).send('Access denied');
     }
@@ -12,11 +12,11 @@ router.post('/', (req, res) => {
         if (err) {
             return res.status(403).send('Invalid refresh token');
         }
-        // צור access token חדש
-        const newAccessToken = generateAccessToken({ id: user.id, email: user.email });
-        res.cookie('accessToken', newAccessToken, { httpOnly: true, secure: true, maxAge: 15 * 1000 }); // 15 שניות
+        console.log('usertoaccess',user);
+        const newAccessToken = generateAccessToken(user);
         res.send({ newAccessToken });
     });
 });
 
 module.exports = router;
+

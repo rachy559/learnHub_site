@@ -10,6 +10,7 @@ router.get("/comments", async (req, res) => {
     try {
        res.send(await controller.getAllComments());
     } catch (err) {
+        console.log(err);
         res.status(500).send(err);
     }
 })

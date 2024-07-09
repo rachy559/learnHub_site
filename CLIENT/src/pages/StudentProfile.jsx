@@ -28,9 +28,10 @@ const StudentProfile = () => {
           if (user) {
             userContext.setUser({ ...userContext.user, ...user });
             console.log("user", user);
+            console.log("details",user.student_details);
             setStudent({ ...user.student_details });
-            setLessons(user.student_details.lessons);
             console.log(user.student_details.lessons);
+            setLessons(user.student_details.lessons);
           } else {
             alert("Login failed. Invalid username or password.");
           }

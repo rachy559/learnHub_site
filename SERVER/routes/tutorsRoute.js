@@ -11,6 +11,7 @@ router.get("/", async (req, res) => {
         const { _limit } = req.query;
         res.send(await controller.getAllTutors(_limit));
     } catch (err) {
+        console.log(err);
         res.status(500).send(err);
     }
 })
@@ -22,6 +23,7 @@ router.post("/", async(req, res) => {
         const response = await controller.createTutor(req.body.intended_for_gender,subjects,languages,req.body.email)
         res.status(201).send({response})
     } catch(err){
+        console.log(err);
         res.status(404).send('User not found');
     }
 });
@@ -32,6 +34,7 @@ router.get("/:id", async(req, res) => {
         const response = await controller.getTutor(id)
         res.send(response)
     } catch(err){
+        console.log(err);
         res.status(404).send('User not found');
     }
 });

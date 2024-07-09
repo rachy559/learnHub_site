@@ -7,6 +7,7 @@ async function getAllTutors(limit){
     try{
         return model.getTutors(limit);
     }catch(err){
+        console.log(err);
         throw err;
     }
 }
@@ -17,6 +18,7 @@ async function createTutor(intended_for_gender,subjects,languages,email) {
         const response1=await model2.getByEmail(email);
         return await model.createSingleTutor(intended_for_gender,subjects,languages,response1.userId,days);
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }
@@ -26,6 +28,7 @@ async function getTutor(id) {
         const response =await model.getSingleTutor(id);
         return response[0];
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }

@@ -14,7 +14,7 @@ async function getUser(email, password) {
 async function getRolls(userId) {   //מחזירה את כל התפקידים הקיימים עבור המשתמש המסוים
     try {
         const sql = `SELECT rollName FROM rolls r JOIN roll_for_user ru ON r.rollId = ru.rollId WHERE ru.userId = ?`;
-        const [userRolls] = await db.query(sql, [userId]);
+        const [userRolls] = await pool.query(sql, [userId]);
         return userRolls.map(roll => roll.rollName);
     } catch (err) {
         throw err;

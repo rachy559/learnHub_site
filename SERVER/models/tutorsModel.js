@@ -8,6 +8,7 @@ async function getTutors(limit) {
         const [rows, fields] = await pool.query(sql);
         return rows;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }
@@ -69,6 +70,7 @@ async function createSingleTutor(intended_for_gender, subjects, languages, userI
         return userId;
 
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }
@@ -158,6 +160,7 @@ GROUP BY
         const response = await pool.query(sql, [id]);
         return response[0];
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }

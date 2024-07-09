@@ -52,6 +52,22 @@ const Header = ({ setShowHeaders }) => {
     setStyleConnect(!styleConnect);
   };
 
+  // useEffect(()=>{
+  //   serverRequests('GET', `students/${user.userId}`)
+  //   .then((userRes) => {
+  //     if (userRes) {
+  //       setUser({...user,...userRes});
+  //       console.log("user", userRes);
+  //       console.log("details",userRes.student_details);
+  //       setStudent({ ...userRes.student_details });
+  //       console.log(userRes.student_details.lessons);
+  //       setLessons(userRes.student_details.lessons);
+  //     } else {
+  //       alert("Login failed. Invalid username or password.");
+  //     }
+  //   });
+  // },[toggleSidebar])
+
   const navigateToProfile=()=>{
     console.log(user.rollId)
     if(user.roles==='STUDENT'||user.rollId===2)
@@ -126,15 +142,16 @@ const Header = ({ setShowHeaders }) => {
               </>
             ) : (
               <>
-                <div className="user-icon" onClick={toggleSidebar}>
+                <div className="user-icon"  onClick={navigateToProfile}>
                   {console.log(user.fileUrls)}
                   <img src='../pictures/user.png' alt="User" />
                 </div>
-                <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}>
-                  <a href="" className="closebtn" onClick={toggleSidebar}>&times;</a>
-                  <a className='profile' onClick={navigateToProfile}><FaClipboardUser /> הצגת פרטי פרופיל</a>
-                  <a href="/homePage" onClick={() => { setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> יציאה מהחשבון</a>
-                </div>
+                {/* <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}> */}
+                  <a className='log' href="/homePage" onClick={() => { 
+                    sessionStorage.removeItem('accessToken');
+                    sessionStorage.removeItem('refreshToken');
+                    setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
+                {/* </div> */}
               </>
             )}
           </nav>

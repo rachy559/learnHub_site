@@ -21,7 +21,7 @@ async function getById(id) {
 async function create(firstName,lastName,email,phone,gender,birth_date,rollId,password,city,street,house_number) {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const response = model.createUser(firstName,lastName,email,phone,gender,birth_date,rollId,hashedPassword,city,street,house_number);
+        const response = await model.createUser(firstName,lastName,email,phone,gender,birth_date,rollId,hashedPassword,city,street,house_number);
         return response[0];
     } catch (err) {
         throw err;

@@ -6,6 +6,7 @@ async function getComments() {
     const [rows, fields] = await pool.query(sql);
         return rows;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }
@@ -16,6 +17,7 @@ async function createNewComment(comment_date, body, student_id) {
         const [rows, fields] = await pool.query(sql,[comment_date, body, student_id]);
         return rows;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }

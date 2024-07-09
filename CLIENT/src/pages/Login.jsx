@@ -19,36 +19,37 @@ const Login = ({ setShowHeaders }) => {
   const navigate = useNavigate();
 
   function handleLogin() {
-    
+
     const fetchUsers = async () => {
       try {
         serverRequests('POST', 'login', formData)
-        .then((response) => {
-          const { user, token } = response; // חילוץ היוזר והטוקן מהתגובה
-          if (user) {
-            if(user.roles==="HOLDING")
-            {
-              console.log("ggggg")
-              setIsError(true)
+          .then((response) => {
+            const { accessToken, refreshToken, user } = response; // חילוץ היוזר והטוקן מהתגובה
+            sessionStorage.setItem("accessToken", accessToken);
+            sessionStorage.setItem("refreshToken", refreshToken);
+            if (user) {
+              if (user.roles === "HOLDING") {
+                console.log("ggggg")
+                setIsError(true)
+              }
+              else {
+                console.log("here", user)
+                alert(`Login successful! Welcome back ${user.firstName}😎`);
+                setShowHeaders(false);
+                userContext.setUser({ ...userContext.user, ...user })
+                if (user.userId === 1) {
+                  navigate(`/manager_homePage`);
+                }
+                else {
+                  navigate(`/homePage`);
+                }
+              }
+
+            } else {
+              alert("Login failed. Invalid username or password.");
             }
-            else{
-            console.log("here",user)
-            alert(`Login successful! Welcome back ${user.firstName}😎`);
-            setShowHeaders(false);
-            userContext.setUser({ ...userContext.user, ...user })
-            if(user.userId===1)
-            {
-              navigate(`/manager_homePage`);
-            }
-            else{
-              navigate(`/homePage`);
-            }}
-            
-          } else {
-            alert("Login failed. Invalid username or password.");
-          }
-          
-        })
+
+          })
       } catch (err) {
         alert("Login failed. An error occurred.");
         console.log(err);
@@ -70,7 +71,7 @@ const Login = ({ setShowHeaders }) => {
     <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
       <div className='registerDiv'>
         <h1>שמחים שחזרת</h1><br></br>
-        {isError&&<Alert style={{marginBottom:'20px'}} severity="error">משתמש לא מאושר ע"י מנהל המערכת</Alert>}
+        {isError && <Alert style={{ marginBottom: '20px' }} severity="error">משתמש לא מאושר ע"י מנהל המערכת</Alert>}
         <form className='registerForm'>
           <div>
             <input
@@ -95,14 +96,14 @@ const Login = ({ setShowHeaders }) => {
           </button>
 
         </form>
-        </div>
-        <NavLink
-          to="/signUp"
-        >
-          עדין לא רשום אצלנו? הרשם
-        </NavLink>
       </div>
-      );
+      <NavLink
+        to="/signUp"
+      >
+        עדין לא רשום אצלנו? הרשם
+      </NavLink>
+    </div>
+  );
 };
 
-      export default Login;
+export default Login;

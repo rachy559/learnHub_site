@@ -7,9 +7,9 @@ const TutorsCircles = () => {
 
     return (
         <>
-            <h2>המרצים שלנו</h2>
+            <h1>המרצים שלנו</h1>
             <div className="allTutorCircles">
-                {allTutors.map((tutor, key) => {
+                {allTutors?.length && allTutors.map((tutor, key) => {
                     let extension = '';
                     let fileName = '';
 

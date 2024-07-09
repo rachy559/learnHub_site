@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
             return res.status(jsonRes.status).send('Error occured');
         }
         const { accessToken, refreshToken, user } = jsonRes.json;
-        console.log("accses",accessToken,"refresh",refreshToken);
+        console.log("accses", accessToken, "refresh", refreshToken);
         res.status(jsonRes.status).send(jsonRes.json);
     } catch (err) {
         console.error("Login error:", err);
@@ -56,5 +56,5 @@ module.exports = router
 //   });
 
 
-        // res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15000 }); // 15 seconds
-        // res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 }); // 7 days
+// res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 15000 }); // 15 seconds
+// res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 }); // 7 days
