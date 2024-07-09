@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../css/confirmTutors.css';
 import { serverRequests } from '../Api';
 
@@ -9,46 +9,45 @@ const ConfirmTutor = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState('');
-  const [isApprove, setIsApprove] = useState(false);
 
   const isImage = (url) => {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
     return imageExtensions.some(extension => url.toLowerCase().endsWith(extension));
   };
 
-  const sendEmail = async () => {
+  const sendEmail = async (isApprove) => {
     let emailData;
-    {isApprove?( emailData = {
-        email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
+    if (isApprove) {
+      emailData = {
+        email: `${tutor.email}`, 
         subject: 'בקשתך אושרה',
         text: `
-      <div style="direction: rtl; text-align: right;">
-          ${tutor.tutorName} הוכנסת בהצלחה למערכת המורים באתר LEARN HUB
-          בהצלחה!!
-      </div>
-  `,
-      }):(emailData = {
-        email: `${tutor.email}`, // או כתובת האימייל שאתה רוצה לשלוח אליה
+          <div style="direction: rtl; text-align: right;">
+            ${tutor.tutorName} הוכנסת בהצלחה למערכת המורים באתר LEARN HUB
+            בהצלחה!!
+          </div>
+        `,
+      };
+    } else {
+      emailData = {
+        email: `${tutor.email}`, 
         subject: 'בקשתך לא אושרה',
         text: `
-      <div style="direction: rtl; text-align: right;">
-          ${tutor.tutorName} אנו מצטערים לא נמצאת מתאים להכנס למערכת המורים שלנו.
-          יום טוב!!
-      </div>
-  `,
-      })}
-   
-  
+          <div style="direction: rtl; text-align: right;">
+            ${tutor.tutorName} אנו מצטערים לא נמצאת מתאים להכנס למערכת המורים שלנו.
+            יום טוב!!
+          </div>
+        `,
+      };
+    }
+    
     try {
-      serverRequests('POST','send-email',emailData).then((result)=>{
-        if (result) {
-            console.log('Email sent successfully');
-          } else {
-            console.error('Error sending email:', result.message);
-          }
-      })
-  
-     
+      const result = await serverRequests('POST', 'send-email', emailData);
+      if (result) {
+        console.log('Email sent successfully');
+      } else {
+        console.error('Error sending email:', result.message);
+      }
     } catch (error) {
       console.error('Error:', error);
     }
@@ -64,32 +63,26 @@ const ConfirmTutor = () => {
     setModalImage('');
   };
 
-  const handleApprove = () => {
-    try{
-        const formData={
-            rollId: 3
-        }
-        serverRequests('PUT',`tutors/${tutor.tutor_id}`, formData).then(()=>{
-          setIsApprove(false)
-            sendEmail();
-            navigate('/confirmTutors'); 
-
-        })
-    } catch(err){
-       console.log(err);
+  const handleApprove = async () => {
+    try {
+      const formData = {
+        rollId: 3
+      };
+      await serverRequests('PUT', `tutors/${tutor.tutor_id}`, formData);
+      await sendEmail(true);
+      navigate('/confirmTutors');
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const handleReject = () => {
-    try{
-        serverRequests('DELETE',`tutors/${tutor.tutor_id}`, tutor).then(()=>{
-            setIsApprove(true)
-            sendEmail();
-            navigate('/confirmTutors'); 
-
-        })
-    } catch(err){
-       console.log(err);
+  const handleReject = async () => {
+    try {
+      await serverRequests('DELETE', `tutors/${tutor.tutor_id}`, tutor);
+      await sendEmail(false);
+      navigate('/confirmTutors');
+    } catch (err) {
+      console.log(err);
     }
   };
 
