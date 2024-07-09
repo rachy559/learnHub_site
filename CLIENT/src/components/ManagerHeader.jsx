@@ -18,7 +18,7 @@ const Manager_homePage = () => {
       };
     
     const toggleSidebar = () => {
-        setStyleConnect(!styleConnect);
+        navigate('/adminProfile')
     };
     
     const navigateToProfile = () => {
