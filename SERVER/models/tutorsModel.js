@@ -184,6 +184,7 @@ async function getAllNotConfirmTutors() {
         console.log("erty")
         const sql = `SELECT CONCAT(u.firstName," ",u.lastName," ") AS tutorName,u.email,u.phone,u.createDate, u.gender,u.birth_date,CONCAT(a.city,", ",a.street," ",a.house_number," ") AS tutorAddress,
         t.intended_for_gender,GROUP_CONCAT(DISTINCT sub.subjectName) AS subjects,
+        t.tutor_id,
         GROUP_CONCAT(DISTINCT lang.language_name) AS languages,
         GROUP_CONCAT(DISTINCT f.fileUrl) AS fileUrls
          FROM users u JOIN tutors t ON u.userId = t.tutor_id 
@@ -198,12 +199,43 @@ async function getAllNotConfirmTutors() {
          WHERE roll_for_user.rollId = 4
          GROUP BY u.userId, u.firstName, u.lastName, u.email, u.phone, u.gender, u.birth_date, a.city, a.street, a.house_number, t.intended_for_gender`
         const [rows, fields] = await pool.query(sql);
-        console.log("ww",rows)
+        console.log("ww", rows)
         return rows;
     } catch (err) {
         throw err;
     }
 }
 
+async function updateRoleUser(id, rollId) {
+    try {
+        console.log("hello")
+        const sql = `UPDATE roll_for_user
+        SET rollId = ?  
+        WHERE userId = ? `;
+        const [rows, fields] = await pool.query(sql, [rollId, id]);
+        console.log("r", rows)
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
 
-module.exports = { getTutors, createSingleTutor, getSingleTutor,getAllNotConfirmTutors }
+async function deleteTutor(tutorId) {
+    try {
+        console.log("hellokkkk")
+        await pool.query('DELETE FROM subject_of_tutor WHERE tutor_id = ?', [tutorId]);
+        await pool.query('DELETE FROM files_for_tutors WHERE userId = ?', [tutorId]);
+        await pool.query('DELETE FROM tutors_languages WHERE tutor_id = ?', [tutorId]);
+        await pool.query('DELETE FROM calander_work WHERE tutorId = ?', [tutorId]);
+        await pool.query('DELETE FROM roll_for_user WHERE userId = ?', [tutorId]);
+        await pool.query('DELETE FROM passwords WHERE userId = ?', [tutorId]);
+        await pool.query('DELETE FROM tutors WHERE tutor_id = ?', [tutorId]);
+        const response = await pool.query('DELETE FROM users WHERE userId = ?', [tutorId]);
+        return response[0];   
+    } catch (err) {
+        throw err;
+    }
+}
+
+
+module.exports = { getTutors, createSingleTutor, getSingleTutor, getAllNotConfirmTutors, updateRoleUser, deleteTutor }

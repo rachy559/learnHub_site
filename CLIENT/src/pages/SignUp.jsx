@@ -73,8 +73,6 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         };
       
         try {
-          
-
           serverRequests('POST','send-email',emailData).then((result)=>{
             if (result) {
                 console.log('Email sent successfully');

@@ -1,6 +1,8 @@
 const model = require('../models/usersModel');
 const bcrypt = require('bcrypt');
-const crypto = require('crypto')
+const crypto = require('crypto');
+const { identitytoolkit_v3 } = require('googleapis');
+const { rollback } = require('../DB');
 
 async function getUsers(query){
     try{
@@ -37,5 +39,7 @@ async function getByEmail(email) {
         throw err;
     }
 }
+
+
 
 module.exports = { getById, getUsers, create,getByEmail };

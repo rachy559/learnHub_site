@@ -8,6 +8,7 @@ const ConfirmTutors = () => {
   const { allNotConfirmTutors } = location.state || { allNotConfirmTutors: [] };
   const navigate = useNavigate();
 
+  
   const isImage = (url) => {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
     return imageExtensions.some(extension => url.toLowerCase().endsWith(extension));

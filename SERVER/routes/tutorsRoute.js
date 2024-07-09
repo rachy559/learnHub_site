@@ -40,5 +40,24 @@ router.get("/:id", async(req, res) => {
     }
 });
 
+router.put("/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log("kol")
+        res.status(201).send(await controller.updateRoleUser(id,req.body.rollId));
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const response = await controller.deleteTutor(id);
+        res.status(201).send(response);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
 
 module.exports = router;

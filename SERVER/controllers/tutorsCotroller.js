@@ -44,5 +44,22 @@ async function getAllNotConfirmTutors() {
     }
 }
 
+async function updateRoleUser(id,rollId) {
+    try {
+        const response = await model.updateRoleUser(id,rollId);
+        return response;
+    } catch (err) {
+        throw err;
+    }
+}
 
-module.exports={ getAllTutors,createTutor,getTutor,getAllNotConfirmTutors};
+async function deleteTutor(id) {
+    try {
+        const response = await model.deleteTutor(id);
+        return response;
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports={ getAllTutors,createTutor,getTutor,getAllNotConfirmTutors,updateRoleUser,deleteTutor};

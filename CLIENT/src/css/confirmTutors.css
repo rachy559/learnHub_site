@@ -110,6 +110,7 @@
 
 .file-container:hover {
   transform: scale(1.05);
+  cursor: pointer;
 }
 
 .tutor-image {
@@ -123,4 +124,59 @@ a {
   text-decoration: none;
   color: #1a73e8;
   font-weight: bold;
+}
+
+/* Modal */
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  padding-top: 80px;
+  left: 25%;
+  bottom: 200px;
+  top: 30%;
+  width: 50%;
+  height: 60%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 700px;
+}
+
+.caption {
+  margin: auto;
+  display: block;
+  width: 20%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.approval-buttons{
+  margin-right: 80%;
+}
+
+.reject-button{
+  margin-right: 7px;
 }
