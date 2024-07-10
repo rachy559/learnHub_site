@@ -3,7 +3,6 @@ import { TutorsContext } from '../App';
 
 const TutorsCircles = () => {
     const { allTutors, setAllTutors } = useContext(TutorsContext);
-    const acceptedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Accepted file extensions for images
 
     const isImage = (url) => {
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
@@ -15,7 +14,7 @@ const TutorsCircles = () => {
             <h1>המרצים שלנו</h1>
             <div className="allTutorCircles">
                 {allTutors?.length && allTutors.map((tutor, key) => {
-                    let imageUrl = "../pictures/user.png"; // default image
+                    let imageUrl = "../pictures/user.png"; 
 
                     if (tutor.fileUrls && typeof tutor.fileUrls === 'string') {
                         const urls = tutor.fileUrls.split(',');

@@ -25,7 +25,6 @@ const Lessons = () => {
       try {
         const foundLanguages = await serverRequests('GET', 'lessons', null);
         if (foundLanguages.lessons) {
-          console.log(foundLanguages)
           setAllLessons(foundLanguages.lessons);
           setInitialLessons(foundLanguages.lessons);
         } else {
@@ -75,11 +74,8 @@ const Lessons = () => {
   };
 
   const changePage = (lesson) => {
-
-    console.log(user)
     if (Object.keys(user).length === 0) {
       setIsWarn(true)
-
     } else {
       if (user.roles === 'STUDENT') {
         navigate('/lesson', { state: { from: 'Lessons', data: { lesson: lesson } } })
@@ -109,7 +105,6 @@ const handleSearch = () => {
   });
 
   setAllLessons(filteredLessons);
-
 };
 
 return (

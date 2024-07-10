@@ -5,7 +5,7 @@ import Comments from '../components/Comments';
 const HomePage = () => {
     return (
         <>
-            <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
+            <div style={{ paddingTop: '100px' }}> 
                 <img className='picture_homepage' src="../pictures/backround.png" alt="" />
                 <TutorsCircles />
                 <div className="about-container" id="about-section">

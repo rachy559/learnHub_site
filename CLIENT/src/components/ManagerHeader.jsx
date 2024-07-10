@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import { serverRequests } from '../Api';
-import { ShowHeadersContext, UserContext } from "../App";
-import { FaClipboardUser } from "react-icons/fa6";
+import { UserContext } from "../App";
 import { RiLogoutCircleLine } from "react-icons/ri";
-
 import { FaBell } from "react-icons/fa";
 
 const ManagerHeader = () => {

@@ -8,7 +8,7 @@ import { addYears, subYears } from 'date-fns';
 Modal.setAppElement('#root');
 
 import { ShowHeadersContext, UserContext } from "../App";
-const SignUp = ({ setShowHeaders, setUserData }) => {
+const SignUp = ({ setShowHeaders }) => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split('T')[0];
     const showHeaders = useContext(ShowHeadersContext);
@@ -45,23 +45,16 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
     });
     const [errors, setErrors] = useState({});
     const updateErrorsArray = {};
-    // const [formDataFile, setFormDataFile] = useState({
-    //     file: "",
-    //     tutor_id: userContext.user.email
-    // });
     const [currentLanguage, setCurrentLanguage] = useState("");
     const [currentSubject, setCurrentSubject] = useState("");
     const [file, setFile] = useState(null);
-    const [uploadError, setUploadError] = useState('');
-    const [uploadSuccess, setUploadSuccess] = useState(false);
-    const [isUploading, setIsUploading] = useState(false);
 
 
     const USERS_API_URL = `users?email=${formData.email}`;
 
     const sendEmail = async () => {
         const emailData = {
-            email: 'learnhubproject2024@gmail.com', // או כתובת האימייל שאתה רוצה לשלוח אליה
+            email: 'learnhubproject2024@gmail.com', 
             subject: ' בקשת משתמש לאישור מרצה',
             text: `
         <div style="direction: rtl; text-align: right;">
@@ -75,10 +68,8 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
             serverRequests('POST', 'send-email', emailData).then((result) => {
                 if (result) {
                     console.log('Email sent successfully');
-                    // הוסף כאן פעולה במקרה של הצלחה
                 } else {
                     console.error('Error sending email:', result.message);
-                    // הוסף כאן פעולה במקרה של כישלון
                 }
             })
 
@@ -225,7 +216,6 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                             };
 
                             serverRequests('POST', 'users', user).then((response) => {
-                                console.log("res", response);
                                 userContext.setUser({ ...userContext.user, ...response });
                                 localStorage.setItem('loggedInUser', JSON.stringify(response[0]));
                             });
@@ -240,7 +230,6 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
                 console.error(error.message);
             }
         } else {
-            // alert('You didnt fill all fields.');
             setIsError(true)
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -250,20 +239,14 @@ const SignUp = ({ setShowHeaders, setUserData }) => {
         setFile(e.target.files[0]);
     };
 
-    const handleFileUpload = async (e) => {
-        console.log("file", file);
-        console.log(userContext.user.userId)
+    const handleFileUpload = async () => {
         const formDataFile = new FormData();
         formDataFile.append("file", file);
         formDataFile.append("tutor_id", userContext.user.userId);
-
         try {
             fetch("http://localhost:3000/upload", {
                 method: 'POST',
                 body: formDataFile,
-                headers: {
-                    // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryXYZ'
-                }
             }).then((response) => {
                 console.log(response);
             })

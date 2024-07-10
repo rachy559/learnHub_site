@@ -10,10 +10,8 @@ const Filter = () => {
 
     useEffect(() => {
         try {
-          console.log("kjj")
           serverRequests('GET', 'filter', null).then((foundFilters) => {
-            console.log("resLen", foundFilters)
-            if (foundFilters) {  // בדוק אם התשובה מוצלחת
+            if (foundFilters) { 
               const { languages, subjects } = foundFilters;
               if (Array.isArray(languages) && Array.isArray(subjects)) {
                 setAllLanguages(languages);
@@ -48,14 +46,6 @@ const Filter = () => {
         setSelectedGender(prev =>
           prev.includes(gender) ? prev.filter(s => s !== gender) : [...prev, gender]
         );
-      };
-
-      const handleSearch = () => {
-        console.log('Selected Languages:', selectedLanguages);
-        console.log('Selected Subjects:', selectedSubjects);
-        console.log('Selected Genders:', selectedGender);
-        console.log('Selected Options:', selectedOptions);
-        // Add logic here to filter lessons based on selected languages and subjects
       };
 
     return (

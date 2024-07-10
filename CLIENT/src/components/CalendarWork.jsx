@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../css/lesson.css';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import { useLocation } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -12,13 +12,10 @@ Modal.setAppElement('#root');
 const Lesson = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
   const { user, setUser } = useContext(UserContext);
-  console.log(user)
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString().split('T')[0];
   const { from, data } = location.state || {};
-  console.log("lesson", data, " ", from);
   const [formData, setFormData] = useState({
     lessonDate: "",
     lessonHour: "",
@@ -42,7 +39,6 @@ const Lesson = () => {
   useEffect(() => {
     try {
       serverRequests('GET', `calendar/${data.lesson.tutor_id}`).then((response) => {
-        console.log("response", response);
         setAvailableTimes(response.availableTimes);
         setPrescribedTimes(response.prescribedTimes);
       });
@@ -108,7 +104,6 @@ const Lesson = () => {
       })
     } catch (err) {
       alert("Failed. An error occurred.");
-      console.log(err);
     }
   };
 

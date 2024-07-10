@@ -26,18 +26,14 @@ const Login = ({ setShowHeaders }) => {
       try {
         serverRequests('POST', 'login', formData)
           .then((response) => {
-            const { accessToken, user } = response; // חילוץ היוזר והטוקן מהתגובה
-            // const { accessToken, refreshToken, user } = response; // חילוץ היוזר והטוקן מהתגובה
+            const { accessToken, user } = response; 
             sessionStorage.setItem("accessToken", accessToken);
-            // sessionStorage.setItem("refreshToken", refreshToken);
             if (user) {
               if (user.roles === "HOLDING") {
-                console.log("ggggg")
                 setIsError(true)
               }
               else {
-                console.log("here", user)
-                alert(`Login successful! Welcome back ${user.firstName}😎`);
+                alert(`שמחים לראותך שוב ${user.firstName}😎`);
                 setShowHeaders(false);
                 userContext.setUser({ ...userContext.user, ...user })
                 if (user.userId === 1) {
@@ -49,12 +45,12 @@ const Login = ({ setShowHeaders }) => {
               }
 
             } else {
-              alert("Login failed. Invalid username or password.");
+              alert("התחברות נכשלה");
             }
 
           })
       } catch (err) {
-        alert("Login failed. An error occurred.");
+        alert("התחברות נכשלה");
         console.log(err);
       }
     };
@@ -71,7 +67,7 @@ const Login = ({ setShowHeaders }) => {
   };
 
   return (
-    <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
+    <div style={{ paddingTop: '100px' }}> 
       <div className='registerDiv'>
         <h1>שמחים שחזרת</h1><br></br>
         {isError && <Alert style={{ marginBottom: '20px' }} severity="error">משתמש לא מאושר ע"י מנהל המערכת</Alert>}

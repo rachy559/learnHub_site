@@ -8,7 +8,6 @@ const StudentProfile = () => {
   const userContext = useContext(UserContext);
   const [student, setStudent] = useState({});
   const [lessons, setLessons] = useState([]);
-  const route = 'studentProfile';
   const [isClick, setIsClick] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -23,17 +22,11 @@ const StudentProfile = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        console.log(userContext.user.userId);
         serverRequests('GET', `students/${userContext.user.userId}`).then((user) => {
           if (user) {
             userContext.setUser({ ...userContext.user, ...user });
-            console.log("user", user);
-            console.log("details", user.student_details);
             setStudent({ ...user.student_details });
-            console.log(user.student_details.lessons);
             setLessons(user.student_details.lessons);
-          } else {
-            alert("Login failed. Invalid username or password.");
           }
         });
       } catch (err) {

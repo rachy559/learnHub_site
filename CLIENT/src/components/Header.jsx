@@ -4,9 +4,6 @@ import { ShowHeadersContext } from "../App";
 import { UserContext } from "../App";
 import Hamburger from 'hamburger-react'
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { FaClipboardUser } from "react-icons/fa6";
-import { serverRequests } from '../Api';
-import { FaBell } from "react-icons/fa";
 import '../css/header.css';
 
 const Header = ({ setShowHeaders }) => {
@@ -15,8 +12,6 @@ const Header = ({ setShowHeaders }) => {
   const showHeaders = useContext(ShowHeadersContext);
   const navigate = useNavigate();
   const [selectedProfile, setSelectedProfile] = useState('');
-  const [allNotConfirmTutors, setAllNotConfirmTutors] = useState([]);
-  const [styleConnect, setStyleConnect] = useState(false);
   const activeStyles = {
     fontWeight: "bold",
     color: "#fbdfa5"
@@ -31,29 +26,21 @@ const Header = ({ setShowHeaders }) => {
     } else {
       setUser({ ...user, rollId: 2 });
     }
-    console.log("userCon", user);
-    console.log("Selected Profile:", value);
     setSelectedProfile(value);
     navigate(`/signUp`, { state: { selectedProfile: value } });
   };
 
   const toggleMenu = (e) => {
-    console.log(e)
     var x = e.target.className;
     if (!isOpen) {
       x = "menu-icon responsive";
     } else {
       x = "menu-icon";
     }
-    console.log(x)
   }
 
-  const toggleSidebar = () => {
-    setStyleConnect(!styleConnect);
-  };
 
   const navigateToProfile = () => {
-    console.log(user.rollId)
     if (user.roles === 'STUDENT' || user.rollId === 2) {
       navigate('/studentProfile');
     }
@@ -62,7 +49,6 @@ const Header = ({ setShowHeaders }) => {
     }
   }
 
-  console.log("userCon", user);
 
   return (
     <>
@@ -88,15 +74,11 @@ const Header = ({ setShowHeaders }) => {
             ) : (
               <>
                 <div className="user-icon"  onClick={navigateToProfile}>
-                  {console.log(user.fileUrls)}
                   <img src='../pictures/user.png' alt="User" />
                 </div>
-                {/* <div id="sidebar" className={`sidebar ${styleConnect ? 'active' : ''}`}> */}
                   <a className='log' href="/homePage" onClick={() => { 
                     sessionStorage.removeItem('accessToken');
-                    // sessionStorage.removeItem('refreshToken');
                     setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
-                {/* </div> */}
               </>
             )}
           </nav>

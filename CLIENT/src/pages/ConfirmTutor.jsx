@@ -25,8 +25,7 @@ const ConfirmTutor = () => {
           <div style="direction: rtl; text-align: right;">
             ${tutor.tutorName} הוכנסת בהצלחה למערכת המורים באתר LEARN HUB
             בהצלחה!!
-          </div>
-        `,
+          </div>`,
       };
     } else {
       emailData = {

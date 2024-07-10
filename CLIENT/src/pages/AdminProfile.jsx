@@ -14,12 +14,10 @@ const AdminProfile = () => {
     useEffect(() => {
         const fetchAdminData = async () => {
           try {
-            console.log(userContext.user.userId);
             serverRequests('GET', `manager/${userContext.user.userId}`)
             .then((user) => {
               if (user) {
                 userContext.setUser({ ...userContext.user, ...user });
-                console.log("user", user);
                 setAdmin(user);
               } else {
                 alert("Login failed. Invalid username or password.");
