@@ -31,11 +31,20 @@ const Payments = () => {
         timeLesson: lesson.timeLesson,
         dateLesson: new Date(lesson.dateLesson).toLocaleDateString()
       }
-      setFormData(formDataPayed)
+      // setFormData(formDataPayed)
       setUser_id(lesson.userId)
        serverRequests('PUT',`manager/${lesson.userId}`,formDataPayed).then(()=>{
         setIsPayed(true);
-        setUser_id(lesson.userId)
+        setUser_id(lesson.userId);
+        setLessons((prevLessons) =>
+          prevLessons.map((l) =>
+            l.lesson_id === lesson.lesson_id &&
+            l.timeLesson === lesson.timeLesson &&
+            l.dateLesson === lesson.dateLesson
+              ? { ...l, isPayed: true }
+              : l
+          )
+        );
        })
 
     } catch(err){
@@ -66,7 +75,14 @@ const Payments = () => {
                     <p><strong>שם תלמיד:</strong> {lesson.studentName}</p>
                     <p><strong>אימייל תלמיד :</strong> {lesson.email}</p>
                     <p><strong>טלפון :</strong> {lesson.phone}</p>
-              {lesson.isPayed || (isPayed&&(lesson.userId===user_id&&formData.dateLesson===new Date(lesson.dateLesson).toLocaleDateString()&&formData.timeLesson===lesson.timeLesson&&lesson.lesson_id===formData.lesson_id)) ? (
+              {/* {lesson.isPayed || (isPayed&&(lesson.userId===user_id&&formData.dateLesson===new Date(lesson.dateLesson).toLocaleDateString()&&formData.timeLesson===lesson.timeLesson&&lesson.lesson_id===formData.lesson_id)) ? (
+                <label className='payed'><strong>השיעור שולם</strong></label>
+              ) : (
+                <>
+                <label className='notPayed'><strong>השיעור אינו שולם</strong></label>
+                <button onClick={()=>{updatePayed(lesson)}}>שולם</button>
+                </>)} */}
+                {lesson.isPayed ?(
                 <label className='payed'><strong>השיעור שולם</strong></label>
               ) : (
                 <>
