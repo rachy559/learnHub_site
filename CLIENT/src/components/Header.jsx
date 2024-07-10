@@ -49,6 +49,12 @@ const Header = ({ setShowHeaders }) => {
     }
   }
 
+  const logOut = () => {
+    navigate('/homePage')
+    sessionStorage.removeItem('accessToken');
+    setShowHeaders(!showHeaders);
+  }
+
 
   return (
     <>
@@ -78,7 +84,7 @@ const Header = ({ setShowHeaders }) => {
                 </div>
                   <a className='log' href="/homePage" onClick={() => { 
                     sessionStorage.removeItem('accessToken');
-                    setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
+                    setShowHeaders(!showHeaders); }}><img className='user-icon' src='../public/pictures/log.png'></img> </a>
               </>
             )}
           </nav>

@@ -122,6 +122,7 @@ styles for the header */
   bottom: 0;
   width: 100%;
   text-align: center;
+  height: 10%;
 }
 
 
@@ -248,3 +249,4 @@ styles for the header */
   /* margin-left: -15px; */
   width: 40%;
 }
+

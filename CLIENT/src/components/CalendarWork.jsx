@@ -159,15 +159,17 @@ const Lesson = () => {
   }
 
   return (
+    <>
+      <div style={{ paddingTop: '50px' }}></div>
+     <h2 className='headLabel'>השיעור הבא שלך בהקלקה אחת!</h2>
     <div className="lesson-container">
-      <h2></h2>
+     
       <Calendar
         calendarType='hebrew'
         className='calendar'
         onChange={handleDateChange}
         minDate={new Date()}
       />
-
       {isClick && (
         <div className='available-times-container'>
           <h3 className='he'>השעות הפנויות היום:</h3>
@@ -281,6 +283,7 @@ const Lesson = () => {
 
       </Modal>
     </div>
+    </>
   );
 };
 

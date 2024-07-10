@@ -9,9 +9,7 @@
   }
   
   .calendar {
-    margin-top: 10%;
     margin-right: 10%;
-    margin-bottom: 20px; /* Adjust as needed to separate from footer */
     border: none;
   }
   
@@ -35,7 +33,6 @@
 }
 
   .available-times-container {
-    margin-top: 10%;
     flex: 1;
     margin-left: 15%;
     display: flex;

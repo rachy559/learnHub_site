@@ -242,7 +242,7 @@ INSERT INTO roll_for_user (userId, rollId) VALUES
 
 -- Insert data into passwords table
 INSERT INTO passwords (userId, password) VALUES
-(1, '$2b$10$fmU0l0lpj7dXyDjhgW70R.870/1WWwy3vQ1XTKFM.h4rxzPlQNuim'),
+(1, '$2b$10$imK9A4Ps..aNdAYgcN5Bx.rfUGP6DkkreBMgVYFwDkTMuZBMTZqUe'),
 (2, 'password2'),
 (3, '$2b$10$fmU0l0lpj7dXyDjhgW70R.870/1WWwy3vQ1XTKFM.h4rxzPlQNuim'),
 (4, 'password4'),
@@ -250,7 +250,7 @@ INSERT INTO passwords (userId, password) VALUES
 (6, 'password6'),
 (7, 'password7'),
 (8, 'sh'),
-(9,'$2b$10$fmU0l0lpj7dXyDjhgW70R.870/1WWwy3vQ1XTKFM.h4rxzPlQNuim');
+(9,'$2b$10$imK9A4Ps..aNdAYgcN5Bx.rfUGP6DkkreBMgVYFwDkTMuZBMTZqUe');
 
 -- Insert data into languages table
 INSERT INTO languages (language_name) VALUES
