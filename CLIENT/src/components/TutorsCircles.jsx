@@ -5,33 +5,31 @@ const TutorsCircles = () => {
     const { allTutors, setAllTutors } = useContext(TutorsContext);
     const acceptedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Accepted file extensions for images
 
-
     const isImage = (url) => {
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
         return imageExtensions.some(extension => url.toLowerCase().endsWith(extension));
-      };
-
+    };
 
     return (
         <>
             <h1>המרצים שלנו</h1>
             <div className="allTutorCircles">
                 {allTutors?.length && allTutors.map((tutor, key) => {
-                    let extension = '';
-                    let fileName = '';
+                    let imageUrl = "../pictures/user.png"; // default image
 
                     if (tutor.fileUrls && typeof tutor.fileUrls === 'string') {
-                        fileName = tutor.fileUrls.toLowerCase();
-                        extension = fileName.split('.').pop();
+                        const urls = tutor.fileUrls.split(',');
+                        for (let url of urls) {
+                            if (isImage(url)) {
+                                imageUrl = `http://localhost:3000/images/${url}`;
+                                break;
+                            }
+                        }
                     }
 
                     return (
                         <div className="tutorDivCircle" key={key} >
-                                  {tutor.fileUrls.split(',').map((url, index) => (
-                                   !isImage(url)?(
-                                    <img className="photo" src="../pictures/user.png" alt={tutor.tutorName} />
-                                   ):(<img key={index} src={`http://localhost:3000/images/${url}`} alt={`Tutor ${tutor.tutorName}`} className="tutor-image" />)
-                                  ))}
+                            <img className="photo" src={imageUrl} alt={tutor.tutorName} />
                             <br />
                             <span className="tutor">{tutor.tutorName}</span>
                         </div>

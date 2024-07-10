@@ -35,11 +35,20 @@ const Tutors = () => {
         return acceptedExtensions.includes(extension);
     };
 
-    console.log("allTutors=3", allTutors)
+    const getImageUrl = (fileUrls) => {
+        if (!fileUrls) return '../pictures/user.png';
+        const urls = fileUrls.split(',');
+        for (let url of urls) {
+            if (isImageFile(url)) {
+                return `http://localhost:3000/images/${url}`;
+            }
+        }
+        return '../pictures/user.png';
+    };
 
     return (
         <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
-              <h1>המרצים שלנו</h1>
+            <h1>המרצים שלנו</h1>
             <img className='filters' src='../pictures/image.png' onClick={() => { setIsClick(!isClick) }} />
             {isClick ? (
                 <>
@@ -49,11 +58,7 @@ const Tutors = () => {
             <div className='allTutors'>
                 {allTutors.map((tutor, key) => (
                     <div className="tutorDiv" key={key}>
-                        {isImageFile(tutor.fileUrls) ? (
-                            <img className="photo" src={tutor.fileUrls} alt={tutor.tutorName} />
-                        ) : (
-                            <img className="photo" src='../pictures/user.png' alt={tutor.tutorName} />
-                        )}
+                        <img className="photo" src={getImageUrl(tutor.fileUrls)} alt={tutor.tutorName} />
                         <br />
                         <span className="tutor"><strong>שם המרצה:</strong> {tutor.tutorName} </span>
                         <span className="tutor"><strong>תאריך לידה:</strong>{new Date(tutor.birth_date).toLocaleDateString()} </span>

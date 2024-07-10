@@ -7,9 +7,8 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 
 import { FaBell } from "react-icons/fa";
 
-const Manager_homePage = () => {
+const ManagerHeader = () => {
     const [allNotConfirmTutors, setAllNotConfirmTutors] = useState([]);
-    const [styleConnect, setStyleConnect] = useState(false);
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const activeStyles = {
@@ -21,10 +20,6 @@ const Manager_homePage = () => {
         navigate('/adminProfile')
     };
     
-    const navigateToProfile = () => {
-        navigate('/adminProfile');
-    }
-
     useEffect(() => {
         const fetchDataOfAllTutors = async () => {
             try {
@@ -63,7 +58,6 @@ const Manager_homePage = () => {
                     </div>
                     <a className='log' href="/homePage" onClick={() => { 
                     sessionStorage.removeItem('accessToken');
-                    // sessionStorage.removeItem('refreshToken');
                     setShowHeaders(!showHeaders); }}><RiLogoutCircleLine /> </a>
                 
                 </>
@@ -73,4 +67,4 @@ const Manager_homePage = () => {
 
 }
 
-export default Manager_homePage;
+export default ManagerHeader;
