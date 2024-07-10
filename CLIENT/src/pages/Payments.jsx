@@ -6,7 +6,6 @@ import { serverRequests } from '../Api';
 const Payments = () => {
   const [lessons, setLessons] = useState([]);
   const [isPayed,setIsPayed]=useState(false);
-  const [formData,setFormData]=useState({});
   const [user_id,setUser_id]=useState("");
 
   useEffect(() => {
@@ -31,7 +30,6 @@ const Payments = () => {
         timeLesson: lesson.timeLesson,
         dateLesson: new Date(lesson.dateLesson).toLocaleDateString()
       }
-      // setFormData(formDataPayed)
       setUser_id(lesson.userId)
        serverRequests('PUT',`manager/${lesson.userId}`,formDataPayed).then(()=>{
         setIsPayed(true);
@@ -75,13 +73,6 @@ const Payments = () => {
                     <p><strong>שם תלמיד:</strong> {lesson.studentName}</p>
                     <p><strong>אימייל תלמיד :</strong> {lesson.email}</p>
                     <p><strong>טלפון :</strong> {lesson.phone}</p>
-              {/* {lesson.isPayed || (isPayed&&(lesson.userId===user_id&&formData.dateLesson===new Date(lesson.dateLesson).toLocaleDateString()&&formData.timeLesson===lesson.timeLesson&&lesson.lesson_id===formData.lesson_id)) ? (
-                <label className='payed'><strong>השיעור שולם</strong></label>
-              ) : (
-                <>
-                <label className='notPayed'><strong>השיעור אינו שולם</strong></label>
-                <button onClick={()=>{updatePayed(lesson)}}>שולם</button>
-                </>)} */}
                 {lesson.isPayed ?(
                 <label className='payed'><strong>השיעור שולם</strong></label>
               ) : (

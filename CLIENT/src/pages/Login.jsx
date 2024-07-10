@@ -8,7 +8,6 @@ import '../css/signup.css';
 
 
 const Login = ({ setShowHeaders }) => {
-  const showHeaders = useContext(ShowHeadersContext);
   const userContext = useContext(UserContext);
   const [isError, setIsError] = useState(false);
   const [formData, setFormData] = useState({
