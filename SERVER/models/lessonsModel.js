@@ -150,8 +150,12 @@ async function getAllStudentsLessons() {
 
 async function updatePayedLesson(id,isPayed,lessonId,timeLesson,dateLesson) {
     try {
+
+        const [day, month, year] = dateLesson.split('/');
+        const formattedDateLesson = `${year}-${month}-${day}`;
+
         const sql = `UPDATE lesson_for_student SET isPayed=? WHERE student_id=? AND lesson_id=? AND timeLesson=? AND dateLesson=?`;
-        const [rows, fields] = await pool.query(sql,[isPayed,id,lessonId,timeLesson,dateLesson]);
+        const [rows, fields] = await pool.query(sql,[isPayed,id,lessonId,timeLesson,formattedDateLesson]);
         return rows;
     }
     catch (err) {
