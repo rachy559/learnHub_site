@@ -40,7 +40,7 @@ router.get('/:type',async(req,res)=>{
 router.put('/:id',async(req,res)=>{
     try{
     const id = req.params.id;
-    const tutors=await controller2.updatePayedLesson(id,req.body.isPayed,req.body.lesson_id);
+    const tutors=await controller2.updatePayedLesson(id,req.body.isPayed,req.body.lesson_id,req.body.timeLesson,req.body.dateLesson);
     res.send(tutors);
     }catch(err){
         res.status(500).send(err)
