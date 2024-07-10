@@ -40,9 +40,9 @@ async function getAllStudentsLessons(){
     }
 }
 
-async function updatePayedLesson(id,isPayed,lessonId){
+async function updatePayedLesson(id,isPayed,lessonId,timeLesson,dateLesson){
     try{
-        return await model.updatePayedLesson(id,isPayed,lessonId);
+        return await model.updatePayedLesson(id,isPayed,lessonId,timeLesson,dateLesson);
     }catch(err){
         throw err;
     }

@@ -123,6 +123,7 @@ async function getAllStudentsLessons() {
     try {
         const sql = `SELECT 
     lfs.dateLesson,
+    lfs.timeLesson,
     lfs.lesson_id,
     lfs.isPayed,
     l.priceLesson,
@@ -147,10 +148,10 @@ async function getAllStudentsLessons() {
     }
 }
 
-async function updatePayedLesson(id,isPayed,lessonId) {
+async function updatePayedLesson(id,isPayed,lessonId,timeLesson,dateLesson) {
     try {
-        const sql = `UPDATE lesson_for_student SET isPayed=? WHERE student_id=? AND lesson_id=? `;
-        const [rows, fields] = await pool.query(sql,[isPayed,id,lessonId]);
+        const sql = `UPDATE lesson_for_student SET isPayed=? WHERE student_id=? AND lesson_id=? AND timeLesson=? AND dateLesson=?`;
+        const [rows, fields] = await pool.query(sql,[isPayed,id,lessonId,timeLesson,dateLesson]);
         return rows;
     }
     catch (err) {
