@@ -36,7 +36,6 @@ async function getTutor(id) {
 
 async function getAllNotConfirmTutors() {
     try {
-        console.log("wertyu")
         const response =await model.getAllNotConfirmTutors();
         return response;
     } catch (err) {

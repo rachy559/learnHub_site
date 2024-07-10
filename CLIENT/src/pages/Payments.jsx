@@ -84,6 +84,7 @@ const Payments = () => {
             
             </div>
             </div>) : (<></>))))}
+            <div style={{ paddingTop: '150px' }}></div>
     </>
   );
 

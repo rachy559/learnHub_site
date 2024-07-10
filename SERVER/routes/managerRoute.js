@@ -23,7 +23,6 @@ router.get('/',async(req,res)=>{
 router.get('/:type',async(req,res)=>{
     try{
         const type = req.params;
-        console.log("type",type);
         if(type.type=='1'){
             const manager=await controllerManager.getManagerDetails(type);
             res.status(200).send(manager);

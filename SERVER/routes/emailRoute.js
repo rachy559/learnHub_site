@@ -5,7 +5,6 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.post("/", async (req, res) => {
-    console.log(req.body.email, req.body.subject, req.body.text)
   if (!req.body.email || !req.body.subject || !req.body.text) {
     return res.status(400).json({ success: false, message: "Necessary details to send the email are missing" });
   }

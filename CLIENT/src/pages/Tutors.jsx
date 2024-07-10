@@ -72,6 +72,7 @@ const Tutors = () => {
                     </div>
                 ))}
             </div>
+            
         </div>
     );
 };

@@ -22,7 +22,6 @@ const students = require('./routes/studentsRoute');
 const upload = require('./routes/uploadRoute');
 const lessons = require('./routes/lessonsRoute');
 const filter = require('./routes/filterRoute');
-//  const refreshToken=require('./routes/rereshTokenRoute');
 const emailRoute = require('./routes/emailRoute');
 
 app.use('/tutors', tutors);
@@ -36,7 +35,6 @@ app.use('/students', students);
 app.use('/upload', upload);
 app.use('/lessons', lessons);
 app.use('/filter', filter);
-//  app.use('/refreshToken',refreshToken);
 app.use('/send-email', emailRoute);
 
 

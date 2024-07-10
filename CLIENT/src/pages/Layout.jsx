@@ -19,6 +19,7 @@ const Layout = () => {
       
         <Outlet />
       <Footer />
+      <div style={{ paddingTop: '150px' }}></div>
     </div>
   )
 }

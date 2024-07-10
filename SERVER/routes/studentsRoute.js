@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const controller = require('../controllers/studentsController')
-// const controller = require('../controllers/studentsController')
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const cors = require('cors');

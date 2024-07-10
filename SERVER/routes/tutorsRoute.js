@@ -19,7 +19,6 @@ router.post("/", async(req, res) => {
     try{
         const subjects=req.body.subjects.toString();
         const languages=req.body.languages.toString();
-        console.log("rty", req.body.intended_for_gender,subjects,languages,req.body.email)
         const response = await controller.createTutor(req.body.intended_for_gender,subjects,languages,req.body.email)
         res.status(201).send({response})
     } catch(err){
@@ -42,7 +41,6 @@ router.get("/:id", async(req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        console.log("kol")
         res.status(201).send(await controller.updateRoleUser(id,req.body.rollId));
     } catch (err) {
         res.status(500).send(err);

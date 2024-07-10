@@ -213,7 +213,6 @@ async function updateRoleUser(id, rollId) {
         SET rollId = ?  
         WHERE userId = ? `;
         const [rows, fields] = await pool.query(sql, [rollId, id]);
-        console.log("r", rows)
         return rows;
     } catch (err) {
         throw err;

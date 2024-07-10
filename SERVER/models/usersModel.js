@@ -20,7 +20,6 @@ async function getUsers(query) {
         console.log(query.email)
         const sql=`SELECT * FROM users NATURAL JOIN addresses where email=?`;
         const [rows, fields] = await pool.query(sql,[query.email]);
-        console.log("r",rows)
         return rows;
     } catch (err) {
         throw err;
@@ -89,7 +88,6 @@ async function createUser(firstName,lastName,email,phone,gender,birth_date,rollI
         await pool.query(sql2, [userId, password]);
         
         const sql3 = "INSERT INTO roll_for_user (`userId`, `rollId`) VALUES(?, ?)";
-        console.log("role",rollId)
         await pool.query(sql3, [userId, rollId]);
         return userId; 
 

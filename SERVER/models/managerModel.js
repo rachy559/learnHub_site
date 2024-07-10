@@ -31,7 +31,6 @@ WHERE
         return manager[0][0];
     } catch (err) {
         console.error(err);
-        console.error(err);
         throw err;
     }
 }
