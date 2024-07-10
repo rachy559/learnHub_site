@@ -49,12 +49,6 @@ const Header = ({ setShowHeaders }) => {
     }
   }
 
-  const logOut = () => {
-    navigate('/homePage')
-    sessionStorage.removeItem('accessToken');
-    setShowHeaders(!showHeaders);
-  }
-
 
   return (
     <>

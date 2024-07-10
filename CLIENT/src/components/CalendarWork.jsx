@@ -64,7 +64,7 @@ const Lesson = () => {
     : [];
 
   const filteredOccupiedTimes = selectedDate ?
-    prescribedTimes.filter((time) => new Date(time.lessonDate).toDateString() === selectedDate.toDateString() /*&& time.lessonHour === lesson.tutor_id*/)
+    prescribedTimes.filter((time) => new Date(time.lessonDate).toDateString() === selectedDate.toDateString())
     : [];
 
   const formatTime = (time) => {

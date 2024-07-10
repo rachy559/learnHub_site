@@ -29,7 +29,7 @@ const Tutors = () => {
     };
 
     const isImageFile = (fileUrl) => {
-        if (!fileUrl) return false; // Check if fileUrl is null or undefined
+        if (!fileUrl) return false; 
         const acceptedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         const extension = fileUrl.split('.').pop().toLowerCase();
         return acceptedExtensions.includes(extension);
@@ -47,7 +47,7 @@ const Tutors = () => {
     };
 
     return (
-        <div style={{ paddingTop: '100px' }}> {/* Ensures content is below the fixed header */}
+        <div style={{ paddingTop: '100px' }}> 
             <h1>המרצים שלנו</h1>
             <img className='filters' src='../pictures/image.png' onClick={() => { setIsClick(!isClick) }} />
             {isClick ? (

@@ -19,9 +19,7 @@ const AdminProfile = () => {
               if (user) {
                 userContext.setUser({ ...userContext.user, ...user });
                 setAdmin(user);
-              } else {
-                alert("Login failed. Invalid username or password.");
-              }
+              } 
             });
           } catch (err) {
             console.error(err);
